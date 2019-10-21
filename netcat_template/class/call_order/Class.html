@@ -1,0 +1,11 @@
+<!-- FormPrefix --><?
+
+if (!$inside_admin) {
+    echo $addForm;
+}
+
+?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?if ($inside_admin) {    echo $f_AdminButtons;    ?>    <div class='nc_item'>От: <a href='telto:<? echo $f_Phone ?>'> <?= 'Имя: ' .$f_Name . ' Телефон: ' . $f_Phone ?> </a></div>    <?}?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

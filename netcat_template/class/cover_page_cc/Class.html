@@ -1,0 +1,476 @@
+<!-- FormPrefix --><div class="kovriki--new-rug-constructor"><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?
+/* Служебная часть */
+for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {
+    if ($fetch_row[$f_RowNum] instanceof Iterator) {
+        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");
+    } else {
+        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");
+    }
+    foreach ($iteration_RecordTemplate[$f_RowNum] as $value) {
+        extract($value);
+    }
+    eval($cc_env["convert2txt"]);
+    ob_start();
+    /* Конец служебной части */
+    ?> <?= $f_AdminButtons; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'].'/netcat_template/class/cover_page_cc/ProductCardNew.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/ReviewClass.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/vars.inc.php';
+
+$seoTemplates = $nc_core->db->get_results('
+            SELECT *
+            FROM Classificator_seo_templates
+', OBJECT, 'seo_templates_Name');
+
+global $page;
+
+$markName = ($parent_sub_tree[2][Subdivision_ID] === $catalogID) ?
+        $markName = $parent_sub_tree[2][Subdivision_Name] :
+        $parent_sub_tree [1][Subdivision_Name];
+        
+$markSub = ($parent_sub_tree[2][Subdivision_ID] === $catalogID) ?
+        $markName = $parent_sub_tree[2] :
+        $parent_sub_tree [1];
+
+
+$modelName = $current_sub['Subdivision_Name'];
+$page = new ProductCard(
+		new Review($MYSQL_DB_NAME,$MYSQL_HOST,$MYSQL_USER,$MYSQL_PASSWORD),
+        (int)$current_catalogue['Catalogue_ID'],
+        $seoTemplates['Title коврика']->Value ?? [],
+        $seoTemplates['Description коврика']->Value ?? [],
+        $seoTemplates['Описание коврика в табах товара']->Value ?? [],
+		$markName,
+		$modelName
+);
+
+$order_num = (time()) - 1500000000;
+    $catalogID = $db->get_var("SELECT Subdivision_ID FROM Subdivision WHERE Subdivision_Name='Каталог' AND Catalogue_ID=".$catalogue);
+    
+$item = new nc_netshop_item($res[$f_RowNum]);
+
+$nc_core = nc_Core::get_object();
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'main-color'" );            
+$arr = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `Parent_Sub_ID` = " . $arr[0]->Subdivision_ID );            
+$mainColors = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'border-color'" );            
+$arr = $nc_core->db->last_result;
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `Parent_Sub_ID` = " . $arr[0]->Subdivision_ID );            
+$borderColors = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'podpyatnik'" );            
+$podpyatnik = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'shildik-l'" );            
+$shildik_l = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'shildik-xl'" );            
+$shildik_xl = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'voditelskoe'" );            
+$voditelskoe = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'back-row'" );            
+$back_row = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'front-row'" );            
+$front_row = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'komplekt'" );            
+$komplekt = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'passazhirskiy'" );            
+$passazhirskiy = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'bagazhnik'" );            
+$bagazhnik = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'tretiy-ryad'" );            
+$tretiy_ryad = $nc_core->db->last_result;
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `EnglishName` = 'shtatnye-mesta'" );            
+$shtatnye_mesta = $nc_core->db->last_result;
+
+?>
+
+
+<div class="inner">
+  <div class="rug-constructor">
+    <div class="left">
+      <div class="navigation">
+        <a href="/">Главная</a>
+        <a href="<?=$markSub['Hidden_URL']?>"><?= $markName; ?></a>
+        <span><?=$modelName; ?></span>
+      </div>
+      <div class="title"><?= $markName . ' ' . $modelName ?></div>
+      <div class="step-1 active">
+        <div class="what-rug">
+          <p>Какие коврики вам нужны?</p>
+          <span>Кликните на нужные коврики</span>
+        </div>
+        <div class="list-of-rugs">
+          <div class="item active">
+            <div class="img">
+              <img src="/style/images/rug-1.svg" alt="" />
+              <img src="/style/images/rug-1-active.svg" alt="" class="active-img" />
+            </div>
+            <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $voditelskoe[0]->Subdivision_ID );            
+             $vod = $nc_core->db->last_result; 
+             $vod = new nc_netshop_item(array('Sub_Class_ID' => $vod[0]->Sub_Class_ID, 'Message_ID' => $vod[0]->Message_ID));
+             
+             echo '<input id="vod" type="hidden" name="cart' . $vod['RowID'] .'" value="1" min="0" data-price="'.$vod['ItemPrice'].'"/>';
+            ?>
+            <p>Водительское</p>
+          </div>
+          <div class="item active">
+            <div class="img">
+              <img src="/style/images/rug-2.svg" alt="" />
+              <img src="/style/images/rug-2-active.svg" alt="" class="active-img" />
+            </div>
+             <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $passazhirskiy[0]->Subdivision_ID );            
+             $pas = $nc_core->db->last_result; 
+             $pas = new nc_netshop_item(array('Sub_Class_ID' => $pas[0]->Sub_Class_ID, 'Message_ID' => $pas[0]->Message_ID));
+             
+             echo '<input id="pas" type="hidden" name="cart' . $pas['RowID'] .'" value="1" min="0" data-price="'.$pas['ItemPrice'].'" />';
+            ?>
+            <p>Пассажирское</p>
+          </div>
+        </div>
+        <div class="list-of-rugs">
+          <div class="item big active">
+            <div class="img">
+              <img src="/style/images/rug-3.svg" alt="" />
+              <img src="/style/images/rug-3-active.svg" alt="" class="active-img" />
+            </div>
+            <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $back_row[0]->Subdivision_ID );            
+             $bback = $nc_core->db->last_result; 
+             $bback = new nc_netshop_item(array('Sub_Class_ID' => $bback[0]->Sub_Class_ID, 'Message_ID' => $bback[0]->Message_ID));
+             
+             echo '<input id="back" type="hidden" name="cart' . $bback['RowID'] .'" value="1" min="0" data-price="'.$bback['ItemPrice'].'" />';
+            ?>
+            <p>Задний ряд</p>
+          </div>
+          <div class="two-items">
+            <p>Дополнительные коврики:</p>
+            <div>
+              <div class="img">
+                <img src="/style/images/rug-4.svg" alt="" class="img" />
+                <img src="/style/images/rug-4-active.svg" alt="" class="active-img img" />
+              </div>
+             <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $bagazhnik[0]->Subdivision_ID );            
+             $bag = $nc_core->db->last_result; 
+             $bag = new nc_netshop_item(array('Sub_Class_ID' => $bag[0]->Sub_Class_ID, 'Message_ID' => $bag[0]->Message_ID));
+             
+             echo '<input id="bag" type="hidden" name="cart' . $bag['RowID'] .'" value="1" min="0" data-price="'.$bag['ItemPrice'].'"/>';
+            ?>
+              <p>багажник</p>
+            </div>
+            <div>
+              <div class="img">
+                <img src="/style/images/rug-5.svg" alt="" class="img" />
+                <img src="/style/images/rug-5-active.svg" alt="" class="active-img img" />
+              </div>
+              <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $tretiy_ryad[0]->Subdivision_ID );            
+             $tret = $nc_core->db->last_result; 
+             $tret = new nc_netshop_item(array('Sub_Class_ID' => $tret[0]->Sub_Class_ID, 'Message_ID' => $tret[0]->Message_ID));
+             
+             echo '<input id="tret" type="hidden" name="cart' . $tret['RowID'] .'" value="1" min="0" data-price="'.$tret['ItemPrice'].'"/>';
+            ?>
+              <p>Третий ряд</p>
+            </div>
+          </div>
+        </div>
+        <div class="next-step">
+          <span>следующий шаг</span>
+          <img src="/style/images/arrow-step.svg" alt="" />
+        </div>
+      </div>
+      <div class="step-2">
+        <div class="structure">
+          <div class="text">
+            <div>Выберите структуру ячеек</div>
+          </div>
+          <div class="list-of-structure">
+            <div class="item active krugleshki_s" data-front="column"><img src="/style/images/structure-1.png" alt="" /></div>
+            <div class="item krugleshki_s" data-front="row"><img src="/style/images/structure-2.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="main-color">
+          <p>Основной цвет коврика:</p>
+          <div class="list-colors-of-pugs">
+          <?
+          foreach($mainColors as $mainColor) { ?>          
+            <div class="<?= $mainColor->EnglishName; ?> ccolor">
+          <? $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $mainColor->Subdivision_ID );            
+          $mainColorM = $nc_core->db->last_result;
+          
+          if($mainColorM) {          
+          $mainColorI = new nc_netshop_item(array('Sub_Class_ID' => $mainColorM[0]->Sub_Class_ID, 'Message_ID' => $mainColorM[0]->Message_ID));
+          echo '<input class="ccolor" type="hidden" name="cart' . $mainColorI['RowID'] .'" value="1" min="0" data-price="'.$mainColorI['ItemPrice'].'"/>';          
+          }
+          
+          ?>
+          </div>
+            <? } ?>
+          </div>
+        </div>
+        <div class="main-color">
+          <p>Цвет окантовки:</p>
+          <div class="list-colors-of-pugs-2">
+          
+               <?
+          foreach($borderColors as $borderColor) { ?>
+          <div class="<?= str_replace('-copy', '', $borderColor->EnglishName) ?> borderColor">
+          <? $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $borderColor->Subdivision_ID );            
+          $borderColorM = $nc_core->db->last_result;
+          
+          if($borderColorM) {          
+          $borderColorI = new nc_netshop_item(array('Sub_Class_ID' => $borderColorM[0]->Sub_Class_ID, 'Message_ID' => $borderColorM[0]->Message_ID));
+          echo '<input class="borderColor" type="hidden" name="cart' . $borderColorI['RowID'] .'" value="1" min="0" data-price="'.$borderColorI['ItemPrice'].'"/>';          
+          }     
+          ?>
+            </div>            
+            <? } ?>      
+            
+          </div>
+        </div>
+        <div class="additional-elements">
+          <div class="item">
+            <div class="label">
+              <div class="checkbox">
+              <img src="/style/images/checked.svg" alt="" />
+                 <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $podpyatnik[0]->Subdivision_ID );            
+             $podp = $nc_core->db->last_result; 
+             $podp = new nc_netshop_item(array('Sub_Class_ID' => $podp[0]->Sub_Class_ID, 'Message_ID' => $podp[0]->Message_ID));
+             
+             echo '<input id="podp" type="hidden" name="cart' . $podp['RowID'] .'" value="1" min="0" data-price="'.$podp['ItemPrice'].'"/>';
+            ?>
+              </div>
+                   
+              <p>Подпятник</p>
+            </div>
+            <div class="label">
+              <div class="checkbox">
+              <img src="/style/images/checked.svg" alt="" />
+                            <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $shtatnye_mesta[0]->Subdivision_ID );            
+             $shtat = $nc_core->db->last_result; 
+             $shtat = new nc_netshop_item(array('Sub_Class_ID' => $shtat[0]->Sub_Class_ID, 'Message_ID' => $shtat[0]->Message_ID));
+             
+             echo '<input id="shtat" type="hidden" name="cart' . $shtat['RowID'] .'" value="1" min="0" data-price="'.$shtat['ItemPrice'].'" />';
+            ?>
+
+              </div>
+              <p>Есть штатные места для крепления</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">
+              <div class="checkbox">
+              <img src="/style/images/checked.svg" alt="" />
+              </div>
+                      <?
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $shildik_l[0]->Subdivision_ID );            
+             $shl = $nc_core->db->last_result; 
+             $shl = new nc_netshop_item(array('Sub_Class_ID' => $shl[0]->Sub_Class_ID, 'Message_ID' => $shl[0]->Message_ID));
+             
+             $nc_core->db->query("SELECT * FROM `Message153` WHERE `Subdivision_ID` = " . $shildik_xl[0]->Subdivision_ID );            
+             $shxl = $nc_core->db->last_result; 
+             $shxl = new nc_netshop_item(array('Sub_Class_ID' => $shxl[0]->Sub_Class_ID, 'Message_ID' => $shxl[0]->Message_ID));
+             
+            
+            ?>
+              <p>Шильдик</p>
+              <div class="data">
+                <div class="block size-block">
+                  <p class="size">S
+                  <? echo '<input id="shl" type="hidden" name="cart' . $shl['RowID'] .'" value="2" min="0"  data-price="'.$shl['ItemPrice'].'" />'; ?>
+                  </p>
+                  <p class="size">XL
+                  <? echo '<input id="shxl" type="hidden" name="cart' . $shxl['RowID'] .'" value="2" min="0"  data-price="'.$shxl['ItemPrice'].'" />'; ?>
+                  </p>                  
+                </div>
+                <div class="block quantity-block">
+                  <span>Кол-во:</span>
+                  <p>2 шт</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="prev-step">
+          <img src="/style/images/arrow-step.svg" alt="" />
+          <span>предыдущий шаг</span>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="tabs">
+        <ul>
+          <li><a href="#tab-1">Фото</a></li>
+          <li><a href="#tab-2">О коврике</a></li>
+          <li><a href="#tab-3">Оформление</a></li>
+          <li><a href="#tab-4">Доставка</a></li>
+        </ul>
+      </div>
+      <div class="photo" id="tab-1">
+        <div class="slider-photo">
+          <div><img src="/style/images/mat-6.jpg" alt="" class="img" /></div>
+          <div><img src="/style/images/mat-7.jpg" alt="" class="img" /></div>
+          <div><img src="/style/images/mat-6.jpg" alt="" class="img" /></div>
+          <div><img src="/style/images/mat-7.jpg" alt="" class="img" /></div>
+        </div>
+      </div>
+      <div class="about" id="tab-2">
+        <p>
+          Автоковрики высокого класса из экологически чистого материала eva, они создаются из того же материала, что и
+          детские коврики и подошвы пляжной обуви.
+        </p>
+        <ul>
+          <li>Эластичен даже в мороз!</li>
+          <li>Гипоаллергенный и экологичный.</li>
+          <li>Удерживает воду, снег, грязь и песок</li>
+          <li>Легкий и компактный</li>
+          <li>Удобно мыть</li>
+          <li>Не источают запах</li>
+          <li>Не портят обувь и брюки.</li>
+          <li>
+            Не боятся агрессивные среды
+            <p>масла, соли, технические жидкости</p>
+          </li>
+          <li>Надежное крепление</li>
+        </ul>
+      </div>
+      <div class="registration" id="tab-3" style="position: relative;">
+        <img id="imgColor" src="/style/images/rug-6.png" alt="" class="img" />
+        <img style="position: absolute; top: 60px; left: 152px;" id="imgBorderColor" src="/style/images/border-black.png" alt="" class="img" />
+        <img style="position: absolute; top: 20%; left: 53%; display: none" src="/style/podnozhka.png" alt="" class="img podp" />        
+        <img class="shtat" src="/style/clips.png" style="position: absolute; top: 65%; left:35%;width: 25px;display: none" alt="" >
+		<img class="shtat" src="/style/clips.png" style="position: absolute; top: 65%; left:59%;width: 25px;display: none" alt="" >		
+        <img src="/style/shield.png" alt="" style="position: absolute; top: 50%; left: 33%;width: 8px;display: none" class="shildik">
+        <div>
+          <span>Итого:</span>
+          <p id="price"><?= $item['ItemPrice']; ?></p>
+        </div>
+        <form id="formOrder" action="<?= nc_modules("netshop")->get_add_to_cart_url() ?>" method="post">
+    <input type="hidden" name="redirect_url" value="/cart/" />
+    <input type="hidden" name="cart_mode" value="add" />
+    <input type="hidden" name="cart<?= $item['RowID'] ?>" value="1" min="0" />
+    <button class="btn-red" type="submit">В корзину</button>
+    <? 
+    
+    echo '<input id="pas" type="hidden" name="cart' . $pas['RowID'] .'" value="1" min="0" data-price="'.$pas['ItemPrice'].'" />';
+    echo '<input id="vod" type="hidden" name="cart' . $vod['RowID'] .'" value="1" min="0" data-price="'.$vod['ItemPrice'].'" />';
+    echo '<input id="back" type="hidden" name="cart' . $bback['RowID'] .'" value="1" min="0" data-price="'.$bback['ItemPrice'].'" />';
+    ?>
+</form>        
+        <button class="btn-gray">или купить в 1 клик</button>
+      </div>
+      <div class="shipping" id="tab-4">
+        <p class="title-1">Доставка по России</p>
+        <p class="title-2">Почта России</p>
+        <p>Стоимость 400 рублей, срок до 10 дней в зависимости от региона доставки.</p>
+        <p class="title-2">Транспортной компанией</p>
+        <p>ПЭК, Деловые Линии, CDEK, КИТ, Энергия. По тарифам транспортных компаний.</p>
+        <p>
+          В среднем 450руб., срок до 5 дней. Вес стандартной посылки 2кг.(размеры 80х60х10см + подпятник и 2 шильдика).
+        </p>
+        <p>
+          Расчет возможно произвести на сайтах транспортных компаний ПЭК, Деловые Линии, КИТ, Энергия. Оплата доставки
+          при получении.
+        </p>
+        <p class="title-1">Наложенным платежом</p>
+        <p class="title-2">Оплата наложенным платежом Почта России.</p>
+        <p>Преодоплата 500 рублей.</p>
+        <p>В преодоплату входит доставка и первая комиссия Почты России.</p>
+        <p>
+          В случае отказа без причины от получения выполненного специально для Вас заказа, мы вынуждены будем включить
+          Вас в общероссийский черный список неблагонадежных покупателей, что в дальнейшем закроет для вас доступ к
+          покупке наложенным платежом в более, чем 1000 интернет магазинов России.
+        </p>
+        <p>
+          Почта России в свою очередь берет комиссию за пересылку посылки и перевод денег (Комиссия взимается 2 раза):
+        </p>
+        <p>
+          Например: Стоимость комплекта 2200 руб. + доставка 400 руб. + первая комиссия 4,5% от 2200 = 100 руб. Итого
+          2200 + 400 + 100 = 2700 руб. - 500 руб. (предоплата) = 2200 руб. Остаток суммы для перевода в наш адрес.
+        </p>
+        <p class="title-2">При пересылке денег нам.</p>
+        <p>
+          Почта России взимает комиссию за перевод средств нам 2200 руб. * 4% + 100 руб. + почтовый сбор (зависит от
+          региона)
+        </p>
+        <p>Итого посылка обходится 2200 руб. + 500 руб. + (2200 * 4% + 100 руб. + почтовый сбор) = 2800~2900 руб.</p>
+        <p>
+          Наш совет: заказывайте по 100% оплате. Ваша Экономия составит от 300 до 400 руб. Все комиссии зависят от суммы
+          заказа и региона доставки. В каждом регионе комиссия за перевод своя!
+        </p>
+        <p class="title-1">Оплата</p>
+        <p class="title-2">Электронные кошельки</p>
+        <p>Яндекс.Деньги и QIWI кошелек.</p>
+        <p class="title-2">Переводом на карту</p>
+        <p>Переводом на карту Сбербанк России, Почта Банк (ВТБ24), Ренессанс Кредит, QIWI кошелек.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.10.0/dist/css/suggestions.min.css" type="text/css"
+          rel="stylesheet">
+    <script type="text/javascript" src="/js/jqueryaucompl.js" async=""></script>
+    <script defer src="/js/text-mask.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/style//lightgallery.min.css" />
+
+
+
+
+    <?
+    /* Служебная часть */
+    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);
+}
+/* Конец служебной части */
+?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --></div>
+<script type="text/javascript">
+
+jQuery(document).on('submit', 'form#order', function() { 
+var form = jQuery(this);
+var order = form.find('input[name="label"]').val();
+var sum = form.find('input[name="sum"]').val();
+
+var sub = 'Оплата';
+var ct_node_id = '7';
+var ct_site_id = '23540';
+
+var ct_data = {         
+order: order,
+sum: sum,
+subject: sub,
+sessionId: window.call_value 
+};
+
+
+
+jQuery.ajax({  
+  url: 'https://api-node'+ct_node_id+'.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/',      
+  dataType: 'json',         
+  type: 'POST',          
+  data: ct_data,
+  async: false
+});  
+
+});
+</script><!-- /FormSuffix -->

@@ -1,0 +1,224 @@
+<?= $f_AdminButtons; ?>
+
+<?
+
+$type          = 5;
+$idTypeMessage = 158;
+
+if (isset($_POST['TypeProduct'])) {
+  $type = $_POST['TypeProduct'];
+}
+
+$marksId   = array();
+$models    = array();
+
+switch ($current_sub['EnglishName']) {
+case 'kovriki-eva':
+  $type = 1;
+  break;
+case 'podlokotniki':
+  $type = 2;
+  $idTypeMessage = 162;
+  break;
+case 'deflector':
+  $type = 5;
+  $idTypeMessage = 158;
+  break;
+}
+
+$tableName = 'Message' . $idTypeMessage;
+
+$sortMethod = $_GET['sort'];
+$sortType = null;
+$sortTable = null;
+
+switch ($sortMethod) {
+    case 'alphabet':
+        $sortType = 'Subdivision_Name';
+        $sortTable = 'Subdivision';
+        break;
+    case 'popular':
+        $sortType = 'Views';
+        $sortTable = $tableName;
+        break;
+    default:
+        $sortType = 'Subdivision_Name';
+        $sortTable = 'Subdivision';
+}
+
+//Получаем продукты(товары) с определенным типом
+
+$nc_core->db->query("SELECT `$tableName`.* 
+FROM `$tableName`, `Subdivision`  
+WHERE Type = $type 
+AND `Subdivision`.`Subdivision_ID` = (
+    SELECT Parent_Sub_ID 
+    FROM `Subdivision` 
+    WHERE `Subdivision`.`Subdivision_ID` = `$tableName`.`Mark` )
+ORDER BY `$sortTable`.`$sortType` ASC ");
+
+
+$test = $nc_core->db->last_result;
+
+//Получаем категории марок автомобилей
+if ( ! empty($test)) {
+  foreach ($test as $item) {
+    $models[] = array('Subdivision' => $nc_core->subdivision->get_by_id($item->Mark), 'Message' => $item);
+  }
+}
+
+// Список всех автомобильных брендов
+
+$nc_core->db->query("SELECT Subdivision_Name, Hidden_URL 
+FROM `Subdivision` 
+WHERE Parent_Sub_ID = 44633 
+ORDER BY Subdivision_Name ASC");
+
+$brandList = $nc_core->db->last_result;
+
+
+?>
+
+<div class="catalog-3">
+  <aside class="tabs-2">
+    <ul>
+        <?php foreach ($brandList as $brand) { ?>
+            <li>
+                <a href="<?= $brand->Hidden_URL ?>">
+                    <div class="container-for-img">
+                        <img src="/style/cars/<?= $brand->Subdivision_Name.'/marklogo.png' ?>"
+                             alt="">
+                    </div>
+                    <?= $brand->Subdivision_Name ?>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
+  </aside>
+
+  <?php
+
+  foreach ($models as $key => $value) {
+    $currentParent                                  = $nc_core->subdivision->get_parent_tree($value['Subdivision']['Subdivision_ID']);
+    $cntParent = count($currentParent);
+    if($cntParent === 4) {
+      $parents[$currentParent[2]['Subdivision_Name']] = $currentParent[2];
+      $models[$key]['Model']                          = $currentParent[2];
+    } else {
+      $parents[$currentParent[1]['Subdivision_Name']] = $currentParent[1];
+      $models[$key]['Model']                          = $currentParent[1];
+    }
+  }
+
+
+  ?>
+  <div class="content">
+    <div class="navigation">
+      <a href="/">Главная</a>
+      <span>Каталог</span>
+    </div>
+    <h2>Дефлекторы для вашего автомобиля</h2>
+    <p class="other-mw">
+      Выберите марку своего автомобиля, а мы подберем для вас наиболее подходящий автомобильный дефлектор</p>
+    <div class="control">
+      <div class="tabs">
+        <ul>
+          <li><a href="">Все модели</a></li>
+        </ul>
+      </div>
+        <div class="right">
+            <span class="left-option <?= $sortMethod == 'popular' ? 'opacity' : '' ?> ">по алфавиту</span>
+            <label for="" class="clicker <?= $sortMethod == 'popular' ? 'right-active' : 'left-active' ?>">
+                <div class="circle"></div>
+                <form id="sort-form" method="get" action="">
+                    <input id="sorting-input" type="text" name="sort" value="alphabet" >
+                </form>
+            </label>
+            <span class="right-option <?= $sortMethod == 'popular' ? '' : 'opacity' ?>">популярное</span>
+        </div>
+    </div>
+    <div class="list">
+      <?php if ( ! empty($models)): ?>
+        <?php foreach ($models as $model) : ?>
+          <?php
+
+          /*
+            * Название бренда машины берётся из полного названия модели
+            * Пример: Ford Galaxy II 2006 - 2015
+            * Поэтому важно указывать бренд в начале названия
+            * Также у некоторых серий авто из другой таблицы уже имеется название бренда
+            * И получается ссылка ввиде /brandname/brandname/seriesname
+            * Поэтому лучше указывать серии машин без указания бренда
+            */
+
+          $brandName = str_replace('Ваз', 'Lada', strstr($model['Message']->Name, ' ', true));
+          $normalName = trim(str_replace('*', '',
+              $model['Subdivision']['Subdivision_Name']));
+          $seriesName = $model['Model']['Subdivision_Name'];
+          $brandFind = strpos($brandName,'Коврик');
+          $seriesFind = strpos($seriesName, $brandName);
+
+          $productUrl = $nc_core->subdivision->get_by_id($model['Message']->Subdivision_ID);
+
+          $itemProduct =  new nc_netshop_item(array(
+            'Sub_Class_ID' => $model['Message']->Sub_Class_ID,
+            'Message_ID'   => $model['Message']->Message_ID,
+          ));
+
+
+          preg_match('/(\d*? ?-.*)/im', $normalName, $year);
+
+
+
+          ?>
+
+          <div class="item">
+            <a href="<?= $productUrl['Hidden_URL'] ?>">
+            <div class="img">
+                <?php if($brandFind !== false): ?>
+                    <?php if($seriesFind !== false): ?>
+                        <img
+                                src="/style/cars/<?= $seriesName . '/' .$normalName.'.jpg' ?>"
+                                alt="">
+                    <?php else: ?>
+                        <img
+                                src="/style/cars/<?= $seriesName . '/' .$normalName.'.jpg' ?>"
+                                alt="">
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if($seriesFind !== false): ?>
+                        <img
+                                src="/style/cars/<?= $seriesName . '/' .$normalName.'.jpg' ?>"
+                                alt="">
+                    <?php else: ?>
+                        <img
+                                src="/style/cars/<?= $brandName.'/'. $model['Model']['Subdivision_Name'] . '/' .$normalName.'.jpg' ?>"
+                                alt="">
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            </a>
+            <a href="<?= $productUrl['Hidden_URL'] ?>">
+            <div class="text">
+              <div class="date"><?= isset($year) ? $year[0] : '' ?></div>
+              <div class="model"><?= $normalName ?></div>
+              <div class="price"><?= $itemProduct['ItemPrice'] == 0 ? '2200 руб.' : nc_netshop::get_instance()->format_price($itemProduct['ItemPrice']) ?></div>
+            </div>
+            </a>
+            <div class="buttons">
+              <a class="btn-cart" href="<?= $productUrl['Hidden_URL'] ?>">
+                <img src="/style/images/cart-2.svg" alt="">
+                <span>В корзину</span>
+              </a>
+              <button class="btn-gray ajax-mfp">купить в 1 клик</button>
+            </div>
+            <div class="in-stock">В наличии</div>
+          </div>
+        <?php endforeach; ?>
+
+      <?php endif; ?>
+    </div>
+
+  </div>
+</div>
+    

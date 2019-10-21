@@ -1,0 +1,150 @@
+<!-- FormPrefix --><?= $f_AdminButtons; ?>
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+<?= htmlspecialchars_decode($f_dopText)?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><?= $f_AdminButtons; ?>
+<div class="search-in-catalog">
+  <div class="inner">
+    <div class="search">
+      <div class="navigation">
+        <a href="/">Главная</a>
+        <span>Каталог</span>
+      </div>
+      <div class="title">Найдите себе <span>подходящий коврик</span></div>
+      <p>Введите марку своего автомобиля, а мы подберем для вас наиболее подходящий автомобильный коврик</p>
+      <div class="input">
+        <input id="inputStr" type="text" placeholder="Введите марку автомобиля...">
+        <button><img src="/style/images/search.svg" alt=""></button>
+      </div>
+      <div id="searchResult" class="list-of-cars">
+
+      </div>
+    </div>
+    <script>
+      $( '#inputStr' ).on( 'change', function ( e ) {
+        const val = $( this ).val();
+        if ( val.length < 3 ) return;
+
+        $.ajax( {
+          type: 'GET',
+          url: '/netcat/modules/default/Search.php?search_query=' + val,
+          success: function ( data ) {
+            const finds = $( data );
+            $( '#searchResult' ).html( finds );
+          },
+
+          error: function ( xhr, str ) {
+            alert( 'Error ' + xhr.responseCode );
+          }
+        } );
+      } );
+    </script>
+  </div>
+</div>
+<div class="catalog-2">
+  <div class="inner">
+    <div>
+      <div class="tabs">
+        <ul>
+          <li><a href="#tab-1" class="selected">Все</a></li>
+          <li><a href="#tab-2">Иномарки</a></li>
+          <li><a href="#tab-3">Отечественные</a></li>
+        </ul>
+      </div>
+
+      <?
+      $nc_core = nc_Core::get_object();
+      $nc_core->db->query("SELECT * FROM `Subdivision` WHERE `Parent_Sub_ID` = 44633");
+
+      $arr     = $nc_core->db->last_result;
+      $temparr = [];
+      // вывод результатов
+      if ( ! empty($arr)) {
+        foreach ($arr as $row) {
+          $nc_core = nc_Core::get_object();
+          $nc_core->db->query("SELECT `Country` FROM `Message111` WHERE `Subdivision_ID` = $row->Subdivision_ID");
+          $fields = $nc_core->db->last_result;
+
+          $temparr[mb_substr($row->Subdivision_Name, 0, 1, "UTF-8")][] = [$row->Subdivision_Name, $row->Hidden_URL, $fields[0]->Country];
+        }
+      } ?>
+
+      <div class="list-of-marks" id="tab-1">
+        <?php ksort($temparr);
+        $i = 0;
+        $b = round(count($temparr) / 2);
+        foreach ($temparr as $key => $value) {
+          if ($i == $b) {
+            echo '';
+          }
+          ?>
+          <div class="item">
+            <span><?= $key ?></span>
+            <div class="list-of-links">
+              <?
+              foreach ($value as $val) { ?>
+                <a href="<?= $val[1] ?>"><?= $val[0] ?></a>
+              <? } ?>
+            </div>
+          </div>
+          <?
+          $i++;
+        }
+        ?>
+      </div>
+      <div class="list-of-marks" id="tab-2">
+        <?php
+        $i = 0;
+        $b = round(count($temparr) / 2);
+        foreach ($temparr as $key => $value) {
+          if($value[0][2] === 'ru') continue;
+          if ($i == $b) {
+            echo '';
+          }
+          ?>
+          <div class="item">
+            <span><?= $key ?></span>
+            <div class="list-of-links">
+              <?
+              foreach ($value as $val) { ?>
+                <?php if($val[2] === 'ru') continue; ?>
+                <a href="<?= $val[1] ?>"><?= $val[0] ?></a>
+              <? } ?>
+            </div>
+          </div>
+          <?
+          $i++;
+        }
+        ?>
+      </div>
+      <div class="list-of-marks" id="tab-3">
+        <?php
+        $i = 0;
+        $b = round(count($temparr) / 2);
+        foreach ($temparr as $key => $value) {
+          if($value[0][2] !== 'ru') continue;
+          if ($i == $b) {
+            echo '';
+          }
+          ?>
+          <div class="item">
+            <span><?= $key ?></span>
+            <div class="list-of-links">
+              <?
+              foreach ($value as $val) { ?>
+                <?php if($val[2] !== 'ru') continue; ?>
+                <a href="<?= $val[1] ?>"><?= $val[0] ?></a>
+              <? } ?>
+            </div>
+          </div>
+          <?
+          $i++;
+        }
+        ?>
+      </div>
+    </div>
+	
+    
+<!-- /FormSuffix -->

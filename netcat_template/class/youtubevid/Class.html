@@ -1,0 +1,25 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+
+	<div class="container profit video-box">
+    	<h2>Как коврики ЕВА держат жидкость</h2>
+    	
+    	<div>
+ 	   		<iframe width="799" height="536" src="" frameborder="0" allowfullscreen>	</iframe>
+            <script>
+            var b = false;
+            window.onscroll = function() {
+              if (b == false) {
+                  b = true;
+                  var f = document.querySelectorAll('iframe')[0];
+                    f.src = '<?=$f_videoURL?>';
+              }
+            };
+            </script>
+    	</div>
+    	
+    	
+	</div><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

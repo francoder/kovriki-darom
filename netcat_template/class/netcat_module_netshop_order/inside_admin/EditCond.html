@@ -1,0 +1,14 @@
+<?
+
+if ($message) {
+    $order = nc_netshop::get_instance($catalogue)->load_order($message);
+    if (!$order->is_status_change_possible($f_Status)) {
+        $posting = 0;
+        $warnText = 'Неверная последовательность смены статусов заказа';
+    }
+    $previous_status = $order->get('Status');
+}
+else {
+    $previous_status = null;
+}
+

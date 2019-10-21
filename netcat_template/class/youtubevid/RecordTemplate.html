@@ -1,0 +1,23 @@
+<?/* Служебная часть */for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {    if($fetch_row[$f_RowNum] instanceof Iterator) {        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");    } else {        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");    }    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {        extract($value);    }    eval($cc_env["convert2txt"]);    ob_start();/* Конец служебной части */?>
+<?= $f_AdminButtons; ?>
+
+	<div class="container profit video-box">
+    	<h2>Как коврики ЕВА держат жидкость</h2>
+    	
+    	<div>
+ 	   		<iframe width="799" height="536" src="" frameborder="0" allowfullscreen>	</iframe>
+            <script>
+            var b = false;
+            window.onscroll = function() {
+              if (b == false) {
+                  b = true;
+                  var f = document.querySelectorAll('iframe')[0];
+                    f.src = '<?=$f_videoURL?>';
+              }
+            };
+            </script>
+    	</div>
+    	
+    	
+	</div>
+<?/* Служебная часть */    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);}/* Конец служебной части */?>

@@ -1,0 +1,56 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<div class="container sa-box sa-page">
+
+  <h1 class="title">Выберите марку автомобиля</h1>
+
+
+  <div class="cars-wrapper">
+    <div class="cars cars1">
+    
+<?
+$nc_core = nc_Core::get_object();
+
+
+$nc_core->db->query("SELECT * FROM `Subdivision` WHERE `Parent_Sub_ID` = ".$parent_sub_tree [0][Subdivision_ID] );
+$arr = $nc_core->db->last_result;
+$temparr = [];
+
+
+// вывод результатов
+if (!empty($arr)) {
+    foreach ($arr as $row) {
+      $temparr[mb_substr($row->Subdivision_Name,0,1,"UTF-8")][] = [$row->Subdivision_Name, $row->Hidden_URL];
+    }
+}
+
+ksort($temparr);
+$i = 0;
+$b = round(count($temparr) / 2);
+foreach ($temparr as $key => $value) {
+
+      if ($i == $b) {
+          echo '</div><div class="cars cars2">';
+      }
+      ?>
+      <div class="word<? if(count($value) > 2) {echo ' suppa';}?>">
+        <span><?=$key?></span>
+        <?
+        foreach ($value as $val) {?>
+            <a href="<?=$val[1]?>"><?=$val[0]?></a>
+        <? }
+        
+        ?>
+      </div>
+      <?
+      $i++;
+}
+
+?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+    </div>
+</div>
+        
+        <?= htmlspecialchars_decode($f_dopText)?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --></div><!-- /FormSuffix -->

@@ -1,0 +1,311 @@
+<!-- Header --><!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P2G5K2');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title><?=($nc_core->page->get_title() ? $nc_core->page->get_title() : strip_tags(nc_browse_path($browse_path)));?></title>
+
+    <meta name='keywords' content=''>
+    <link rel="canonical" href="<?="https://".$current_catalogue['Domain'].$parent_sub_tree[0][Hidden_URL]?>" />
+    
+    <?=( $nc_core->page->get_description() ? "<meta name='description' content='".$nc_core->page->get_description()."'>" : NULL );?>
+    
+    
+    <style><?=file_get_contents($_SERVER["DOCUMENT_ROOT"].'/style/main.css')?></style>
+
+	<link rel="apple-touch-icon" sizes="76x76" href="/style/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/style/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/style/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/style/favicon/manifest.json">
+	<link rel="mask-icon" href="/style/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+    
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P2G5K2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+	<header class="container h-nav">
+		<nav>
+            <ul>
+                <li><a href="/"><img src="/style/logo.png" alt=""></a></li>
+                <li><a href="/catalog/">Каталог</a></li>
+                <li><a href="/aksessuary/">Аксессуары</a></li>
+                <li>
+                    <a>О компании</a>
+                    <span>
+                      <a href="/proizvodstvo/">Производство</a>
+                      <a href="/dostavka-i-oplata/">Доставка и оплата</a>
+                      <a href="/garantii/">Гарантии</a>
+                      <a href="/franshiza/">Франшиза</a>
+                      <a href="/optovaya-prodazha-materiala/">Оптовая продажа материала</a>
+                    </span>
+                </li>
+                <li><a href="/contacts/">Контакты</a></li>
+            <div class="geoselect">
+                <span class="TheCity"><?=$subDomains[$geoPos]?></span>
+                <div class="cities">
+                    <ul>
+                        <?=$chlyapa?>
+                    </ul>
+                </div>
+            </div>    
+            
+                
+				<li>
+                <? if (!isset($_COOKIE['identity'])) { ?>
+                    <a class="login-icon">
+					</a>
+                    <? } else { ?>
+                       <a href="/lk/" class="login-icon act" style="background-image: url(<?=$_COOKIE['photo']?>);"></a>
+                    <? }?>
+                    <div class="login-window">
+                        
+                        <div id="uLogin" data-ulogin="display=panel;redirect_uri=https://<?=$_SERVER['HTTP_HOST'];?>/loginMobile.php;theme=flat;fields=first_name,photo_big,last_name,photo;sort=default;providers=vkontakte,facebook,googleplus,odnoklassniki,instagram;hidden=;mobilebuttons=0;"></div>
+                        <p>Войти через соц.сети</p>
+                    </div>
+					<div class="phone-box">
+						<a href="tel:8(800)301-09-47">8 (800) 301-09-47</a>
+						<span class="call-me">Заказать обратный звонок</span>
+					</div>
+				</li>
+			</ul>
+                <?// echo nc_browse_sub(0, $horizontal_menu, 0, $where_cond="showtopmenu='1'") ?>
+                
+			<div class="search-box">
+				<input type="text" placeholder="...">
+				<img src="/style/search.png" alt="">
+			</div>
+		</nav>
+		
+		<a href="/" class="moblogo"><img src="/style/logo.png" alt=""></a>
+		<div class="hnav-ui">
+            <? if (!isset($_COOKIE['identity'])) { ?>
+                    <a class="login-icon"></a>
+            <? } else { ?>
+            <a href="/lk/" class="login-icon act" style="background-image: url(<?=$_COOKIE['photo']?>);"></a>
+            <? }?>
+            <div class="login-window">
+                <div id="uLoginff6dc35f" data-ulogin="display=panel;fields=first_name,last_name,photo_big;theme=flat;mobilebuttons=0;providers=vkontakte,odnoklassniki,instagram,googleplus,facebook;redirect_uri=https://<?=$_SERVER['HTTP_HOST'];?>/loginMobile.php"></div>
+                <p>Войти через соц.сети</p>
+            </div>
+			<a href="tel:8(800)301-09-47">
+				<img src="/style/phone.png" alt="" class="m-phone">
+			</a>
+			<img src="/style/burger.png" alt="" class="burger">
+		</div>
+       
+	</header><!-- /Header -->
+
+<!-- Footer -->    <footer class="container">
+      <span>
+        Коврики Даром - производство и продажа Ковриков EVA.
+        <a class="safePolice" href="/politika-konfidentsialnosti/" taget="_blank"> 
+                 Политика конфиденциальности</a>
+        <small>© Все права защищены.</small>
+      </span>
+
+      <div class="social">
+        <a class="vk" href="https://vk.com/kovrikidarom"><img src="/style/vk.png" alt="vk.com"></a>
+        <a class="instagram" href="https://www.instagram.com/evakovrikoff/"><img src="/style/instagram.jpg" alt="instagram.com"></a>
+      </div>
+
+      <a class="element79" href="https://t2agency.ru/"><img src="/style/t2.png" alt=""></a>
+
+      <div class="overlay"></div>
+    </footer>
+
+	<div class="call-window">
+        <div class="x-btn2">x</div>
+        <form action="/form1.php" method="POST">
+            <input type="tel" name="name" placeholder="Ваше имя">
+            <input type="name" name="number" placeholder="Номер телефона">
+            <input type="submit" value="Жду звонка">
+
+        </form>
+    </div>
+    
+	<script>
+    (function(h,f){"function"===typeof define&&define.amd?define([],f):"object"===typeof module&&module.exports?module.exports=f():h.Rellax=f()})(this,function(){var h=function(f,l){var b=Object.create(h.prototype),g=0,k=0,c=[],p=!1,u=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(a){setTimeout(a,1E3/60)},m=function(a,b,d){return a<=b?b:a>=d?d:a};b.options={speed:-2,center:!1};l&&
+Object.keys(l).forEach(function(a){b.options[a]=l[a]});b.options.speed=m(b.options.speed,-10,10);f||(f=".rellax");var q=document.querySelectorAll(f);if(0<q.length)b.elems=q;else throw Error("The elements you're trying to select don't exist.");var v=function(a){var e=a.getAttribute("data-rellax-percentage"),d=a.getAttribute("data-rellax-speed"),c=e||b.options.center?window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop:0,f=c+a.getBoundingClientRect().top,h=a.clientHeight||
+a.offsetHeight||a.scrollHeight,g=e?e:(c-f+k)/(h+k);b.options.center&&(g=.5);c=d?m(d,-10,10):b.options.speed;if(e||b.options.center)c=m(d||b.options.speed,-5,5);e=Math.round(100*c*(1-g));a=a.style.cssText;d="";0<=a.indexOf("transform")&&(d=a.indexOf("transform"),d=a.slice(d),d=(g=d.indexOf(";"))?" "+d.slice(11,g).replace(/\s/g,""):" "+d.slice(11).replace(/\s/g,""));return{base:e,top:f,height:h,speed:c,style:a,transform:d}},r=function(){var a=g;g=void 0!==window.pageYOffset?window.pageYOffset:(document.documentElement||
+document.body.parentNode||document.body).scrollTop;return a!=g?!0:!1},t=function(){r()&&!1===p&&n();u(t)},n=function(){for(var a=0;a<b.elems.length;a++){var e=" translate3d(0,"+(Math.round(100*c[a].speed*(1-(g-c[a].top+k)/(c[a].height+k)))-c[a].base)+"px,0)"+c[a].transform;b.elems[a].style.cssText=c[a].style+"-webkit-transform:"+e+";-moz-transform:"+e+";transform:"+e+";"}};b.destroy=function(){for(var a=0;a<b.elems.length;a++)b.elems[a].style.cssText=c[a].style;p=!0};(function(){k=window.innerHeight;
+r();for(var a=0;a<b.elems.length;a++){var e=v(b.elems[a]);c.push(e)}window.addEventListener("resize",function(){n()});t();n()})();return b};return h});
+  var callme = document.querySelector('.call-me');
+  var callwnd = document.querySelector('.call-window');
+  var overlay = document.querySelector('.overlay');
+  var xbtn2 = document.querySelector('.x-btn2');
+  var burger = document.querySelector('.burger');
+  var mnav = document.querySelector('.h-nav nav');
+
+
+  callme.addEventListener('click', function() {
+      if(!callwnd.classList.contains('a-cw')) {
+          callwnd.classList.add('a-cw');
+          overlay.classList.add('a-cw');
+      }
+  });
+
+  overlay.addEventListener('click', function() {
+      if(callwnd.classList.contains('a-cw')) {
+          callwnd.classList.remove('a-cw');
+          overlay.classList.remove('a-cw');
+      } else if(mnav.classList.contains('mnav-active')) {
+          mnav.classList.remove('mnav-active');
+          overlay.classList.remove('a-cw');
+      }
+  });
+
+
+
+  xbtn2.addEventListener('click', function() {
+      if(callwnd.classList.contains('a-cw')) {
+          callwnd.classList.remove('a-cw');
+          overlay.classList.remove('a-cw');
+      }
+  });
+
+  burger.addEventListener('click', function() {
+      if(!mnav.classList.contains('mnav-active')) {
+          mnav.classList.add('mnav-active');
+          overlay.classList.add('a-cw');
+      }
+  });
+	 var rellax = new Rellax('.rellax');
+	 var rellax2 = new Rellax('.rellax2');
+	 var rellax3 = new Rellax('.rellax3');
+	var rellax4 = new Rellax('.rellax4');
+	</script>
+    <script>  
+    var callme = document.querySelector('.call-me');
+    var callwnd = document.querySelector('.call-window');
+    var overlay = document.querySelector('.overlay');
+    var xbtn2 = document.querySelector('.x-btn2');
+    var burger = document.querySelector('.burger');
+    var mnav = document.querySelector('.h-nav nav');
+
+
+    callme.addEventListener('click', function() {
+        if(!callwnd.classList.contains('a-cw')) {
+            callwnd.classList.add('a-cw');
+            overlay.classList.add('a-cw');
+        }
+    });
+
+    overlay.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        } else if(mnav.classList.contains('mnav-active')) {
+            mnav.classList.remove('mnav-active');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+
+
+    xbtn2.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+    burger.addEventListener('click', function() {
+        if(!mnav.classList.contains('mnav-active')) {
+            mnav.classList.add('mnav-active');
+            overlay.classList.add('a-cw');
+        }
+    });
+
+        
+                  function addEventListeners(selector, event, handler, useCapture){
+                  useCapture = useCapture || false;
+
+                  Array.prototype.forEach.call(
+                      document.querySelectorAll(selector)
+                     ,function(el, ix) { 
+                        el.addEventListener(event, handler, useCapture);
+                      }
+                  );
+              }
+
+              var readyToClose = false;
+              var geoselect = document.querySelector('.geoselect');
+
+
+              addEventListeners('.geoselect', "mouseenter", function(evt){
+                  readyToClose = false;
+                if (!this.classList.contains('act')) {
+                      this.classList.add('act');
+                  }
+              });
+
+              addEventListeners('.geoselect', "mouseleave", function(evt){
+                  readyToClose = true;
+                  setTimeout(function() {
+                      if (readyToClose) {
+                          geoselect.classList.remove('act');
+                      }
+                  }, 500);
+
+              });
+              
+              var allLIcon = document.querySelectorAll('.login-icon');
+              
+         
+              function preview(token){
+                	var xhr = new XMLHttpRequest();
+                    var params = 'token=' + token;
+                    xhr.open("GET", '/login.php?' + params, true);
+
+                  xhr.onreadystatechange = function() {
+                    if (this.readyState != 4) return;
+
+                    console.log( this.responseText );
+                      var res = JSON.parse(this.responseText);
+                      
+                      allLIcon.forEach(function(item) {
+                          item.classList.add('act');
+                          item.setAttribute("href", "/lk/");
+                          item.setAttribute('style', "background-image: url(" + res.photo_big + ");");
+                      });
+                      window.location.href="https://"+window.location.host + "/lk/";
+                      
+                  }
+
+                  xhr.send();
+          }
+    </script>
+    <!-- calltouch code -->
+<script type="text/javascript">
+(function (w, d, nv, ls, yac){
+    var lwait = function (w, on, trf, dly, ma, orf, osf) { var pfx = "ct_await_", sfx = "_completed";  if(!w[pfx + on + sfx]) { var ci = clearInterval, si = setInterval, st = setTimeout , cmld = function () { if (!w[pfx + on + sfx]) {  w[pfx + on + sfx] = true; if ((w[pfx + on] && (w[pfx + on].timer))) { ci(w[pfx + on].timer);  w[pfx + on] = null;   }  orf(w[on]);  } };if (!w[on] || !osf) { if (trf(w[on])) { cmld();  } else { if (!w[pfx + on]) { w[pfx + on] = {  timer: si(function () { if (trf(w[on]) || ma < ++w[pfx + on].attempt) { cmld(); } }, dly), attempt: 0 }; } } }   else { if (trf(w[on])) { cmld();  } else { osf(cmld); st(function () { lwait(w, on, trf, dly, ma, orf); }, 0); } }} else {orf(w[on]);}};
+    var ct = function (w, d, e, c, n) { var a = 'all', b = 'tou', src = b + 'c' + 'h';  src = 'm' + 'o' + 'd.c' + a + src; var jsHost = "https://" + src, s = d.createElement(e); var jsf = function (w, d, s, h, c, n, yc) { if (yc !== null) { lwait(w, 'yaCounter'+yc, function(obj) { return (obj && obj.getClientID ? true : false); }, 50, 100, function(yaCounter) { s.async = 1; s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (yaCounter  && yaCounter.getClientID ? "ya_client_id" + yaCounter.getClientID() + ";" : "") + (c ? "client_id" + c + ";" : "") + "ref" + escape(d.referrer) + ";url" + escape(d.URL) + ";cook" + escape(d.cookie) + ";attrs" + escape("{\"attrh\":" + n + ",\"ver\":171110}") + ";"; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(s, p); }, function (f) { if(w.jQuery) {  w.jQuery(d).on('yacounter' + yc + 'inited', f ); }}); } else { s.async = 1; s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (c ? "client_id" + c + ";" : "") + "ref" + escape(d.referrer) + ";url" + escape(d.URL) + ";cook" + escape(d.cookie) + ";attrs" + escape("{\"attrh\":" + n + ",\"ver\":171110}") + ";"; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(s, p); } }; if (!w.jQuery) { var jq = d.createElement(e); jq.src = jsHost + "." + "r" + 'u/js/jquery-1.7.min.js'; jq.onload = function () { lwait(w, 'jQuery', function(obj) { return (obj ? true : false); }, 30, 100, function () { jsf(w, d, s, jsHost, c, n, yac); }); }; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(jq, p); } else { jsf(w, d, s, jsHost, c, n, yac); } };
+    var gaid = function (w, d, o, ct, n) { if (!!o) { lwait(w, o, function (obj) {  return (obj && obj.getAll ? true : false); }, 200, (nv.userAgent.match(/Opera|OPR\//) ? 10 : 20), function (gaCounter) { var clId = null; try {  var cnt = gaCounter && gaCounter.getAll ? gaCounter.getAll() : null; clId = cnt && cnt.length > 0 && !!cnt[0] && cnt[0].get ? cnt[0].get('clientId') : null; } catch (e) { console.warn("Unable to get clientId, Error: " + e.message); } ct(w, d, 'script', clId, n); }, function (f) { w[o](function () {  f(w[o]); })});} else{ ct(w, d, 'script', null, n); }};
+    var cid  = function () { try { var m1 = d.cookie.match('(?:^|;)\\s*_ga=([^;]*)');if (!(m1 && m1.length > 1)) return null; var m2 = decodeURIComponent(m1[1]).match(/(\d+\.\d+)$/); if (!(m2 && m2.length > 1)) return null; return m2[1]} catch (err) {}}();
+    if (cid === null && !!w.GoogleAnalyticsObject){
+        if (w.GoogleAnalyticsObject=='ga_ckpr') w.ct_ga='ga'; else w.ct_ga = w.GoogleAnalyticsObject;
+        if (typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1){new Promise(function (resolve) {var db, on = function () {  resolve(true)  }, off = function () {  resolve(false)}, tryls = function tryls() { try { ls && ls.length ? off() : (ls.x = 1, ls.removeItem("x"), off());} catch (e) { nv.cookieEnabled ? on() : off(); }};w.webkitRequestFileSystem ? webkitRequestFileSystem(0, 0, off, on) : "MozAppearance" in d.documentElement.style ? (db = indexedDB.open("test"), db.onerror = on, db.onsuccess = off) : /constructor/i.test(w.HTMLElement) ? tryls() : !w.indexedDB && (w.PointerEvent || w.MSPointerEvent) ? on() : off();}).then(function (pm){
+            if (pm){gaid(w, d, w.ct_ga, ct, 2);}else{gaid(w, d, w.ct_ga, ct, 3);}})}else{gaid(w, d, w.ct_ga, ct, 4);}
+    }else{ct(w, d, 'script', cid, 1);}})
+(window, document, navigator, localStorage, "46121340");
+</script>
+<!-- /calltouch code -->
+
+    <script src="//ulogin.ru/js/ulogin.js"></script>
+    <link rel="stylesheet" href="/style/main.css">
+</body>
+</html>
+<!-- /Footer -->

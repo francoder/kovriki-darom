@@ -1,0 +1,9 @@
+<?php
+
+if (!nc_module_check_by_keyword("netshop")) {
+    die (NETCAT_MODULE_NETSHOP_MODULEUNCHECKED);
+}
+
+$netshop = nc_netshop::get_instance();
+
+?>

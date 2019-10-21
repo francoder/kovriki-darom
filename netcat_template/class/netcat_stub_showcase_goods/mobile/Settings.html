@@ -1,0 +1,22 @@
+<?
+(!isset($nc_num_cols) ? $NumCols = &$cc_settings['NumCols'] : $NumCols = (int)$nc_num_cols);
+$ColWidth = ($NumCols > 1 ? 'width="' . (floor(100 / $NumCols)) . '%"' : null);
+$Pay = array('rur' => 'руб.', 'usd' => '$', 'eu' => '&euro;', 'no' => '', 'other' => $cc_settings['OtherPay']);
+$Pay = $Pay[$cc_settings['Pay']];
+
+global $cc_order;
+
+$order_component_id = $nc_core->component->get_by_id('netcat_stub_showcase_order', 'Class_ID');
+$cc_order_where = "`Class_ID` = $order_component_id";
+if ($cc_settings['OrderSub']) {
+    $cc_order_where .= " AND `Subdivision_ID` = " . intval($cc_settings['OrderSub']);
+}
+
+$cc_order = $db->get_row(
+    "SELECT sc.`Class_ID` AS class, sc.`Sub_Class_ID` AS cc, sc.`Subdivision_ID` AS sub 
+       FROM `Sub_Class` AS sc JOIN `Subdivision` AS sd USING (`Subdivision_ID`)
+      WHERE $cc_order_where
+      ORDER BY sd.`Catalogue_ID` = $catalogue DESC
+      LIMIT 1",
+    ARRAY_A
+);

@@ -1,0 +1,167 @@
+<style>
+	#userTable {
+		border: 1px solid #69c;
+		font-size: 14px;
+		background: white;
+		width: 100%;
+		border-collapse: collapse;
+		text-align: left;
+		margin: 0 auto 10px;
+	}
+
+	#userTable tbody {
+		display: table-row-group;
+		vertical-align: middle;
+		border-color: inherit;
+	}
+
+	#userTable tr {
+		display: table-row;
+		vertical-align: inherit;
+		border-color: inherit;
+	}
+
+	#userTable th {
+		font-weight: normal;
+		font-size: 14px;
+		color: #039;
+		border-bottom: 1px dashed #69c;
+		padding: 12px 12px;
+		border-right: 1px dashed #69c;
+	}
+
+	th:last-child, td:last-child {
+		width: 50px;
+	}
+
+	#userTable td:first-child {
+		width: 50px;
+	}
+
+	#userTable td {
+		display: table-cell;
+		vertical-align: inherit;
+		color: #141414;
+		padding: 7px 12px;
+		transition: .3s linear;
+		border-right: 1px dashed #69c;
+	}
+
+	#nc_objects_filter {
+		display: none !important;
+	}
+
+	#model-edit-list-parent {
+		display: flex;
+	}
+	#search-text {
+		width: calc(100% - 400px);
+		height: 30px;
+		color: #039;
+		border: 1px solid #039;
+		padding: 10px;
+	}
+
+	#model-edit-list-parent a {
+		display: block;
+		width: 200px;
+		font-weight: normal;
+		font-size: 14px;
+		background-color: #69c;
+		color: #fff;
+		text-align: center;
+		height: 50px;
+		margin-top: 5px;
+		line-height: 50px;
+		text-decoration: none;
+		border: 1px solid #039;
+		border-left: 0;
+		transition: 0.5s all;
+	}
+
+	#model-edit-list-parent a:hover {
+		background-color: #039;
+	}
+
+</style>
+<script>
+    function tableSearch() {
+        var phrase = document.getElementById('search-text');
+        var table = document.getElementById('userTable');
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+</script>
+<div id="model-edit-list-parent">
+	<input class="form-control" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
+	<a onclick="nc.load_dialog(this.href); return false;" href="/import/CreateParentModelForm.php">
+		Добавить родительскую модель
+	</a>	<a onclick="nc.load_dialog(this.href); return false;" href="/import/CreateProductForm.php">
+		Добавить модель
+	</a>
+</div>
+<table id="userTable" class="table table-striped">
+	<tr>
+		<th></th>
+		<th>Марка</th>
+		<th>Семейство</th>
+		<th>Модель</th>
+		<th>Управление</th>
+	</tr>
+    <?php
+    //$f_AdminCommon;
+    $allProducts = $nc_core->db->get_results("
+		SELECT
+		     sub1.Subdivision_ID,
+		     sub2.Parent_Sub_ID as Parent_Parent_Sub_ID,
+		     IF(sub2.Parent_Sub_ID = 4, sub2.Subdivision_Name, sub3.Subdivision_Name) as mark,
+		     IF(sub2.Parent_Sub_ID = 4, '', sub2.Subdivision_Name) as parent_model,
+		     sub1.Subdivision_Name
+		 FROM Subdivision as sub1
+		 LEFT JOIN Subdivision  as sub2 ON sub1.Parent_Sub_ID = sub2.Subdivision_ID
+		 LEFT JOIN Subdivision  as sub3 ON sub2.Parent_Sub_ID = sub3.Subdivision_ID
+		 WHERE
+		     sub1.goodID > 0 AND
+		     sub1.Catalogue_ID = 1
+		 ORDER BY mark, parent_model, Subdivision_Name
+	");
+
+
+    foreach ($allProducts as $product) {
+        if ($product->Parent_Parent_Sub_ID === '4') {
+            $imageUrl = "/style/cars/{$product->mark}/{$product->Subdivision_Name}.jpg";
+        } else {
+            $imageUrl = "/style/cars/{$product->mark}/{$product->parent_model}/{$product->Subdivision_Name}.jpg";
+        }
+        ?>
+		<tr>
+			<td>
+				<img src="<?= $imageUrl ?>" alt="" style="border: 1px solid #cecece;max-width: 50px;max-height: 50px;">
+			</td>
+			<td><?= $product->mark ?></td>
+			<td><?= $product->parent_model ?></td>
+			<td><?= $product->Subdivision_Name ?></td>
+			<td>
+				<ul class="nc-toolbar nc--left">
+					<li><a onclick="nc.load_dialog(this.href); return false;"
+					       href="/import/ChangeProduct.php?SubdivisionId=<?= $product->Subdivision_ID ?>">
+							<i class="nc-icon nc--edit" title="Изменить"></i>
+						</a></li>
+				</ul>
+			</td>
+		</tr>
+    <?php } ?>
+</table>

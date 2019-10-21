@@ -1,0 +1,72 @@
+<?= $f_AdminButtons; ?>
+
+
+<div id="callbackCart" class="mfp-hide">
+
+<div class="popup callback zoom-anim-dialog">
+    <form id="callback-form" enctype='multipart/form-data' action="" method="">
+        <? $nc_core->token->get_input() ?>
+        <input name='cc' type='hidden' value='44813'>
+        <input name='sub' type='hidden' value='2'>
+        <input name='catalogue' type='hidden' value='1'>
+        <input type='hidden' name='posting' value='1'>
+        <div id="finish-result">
+            <div class="title">Товар добавлен в корзину</div>
+            <p>Вы можете перейти к оформлению заказа, либо ознакомиться с полезными аксессуарами для вашего авто.</p>
+            <p id="note" style="margin-top: 26px;"></p>
+            <div class="reply-field">
+                <a href="/catalog/" id="btn-submit" class="btn-red" style="background-color: #292E31;">Подобрать
+                    аксессуары</a>
+            </div>
+            <div class="reply-field" style="margin-top: 30px">
+                <a href="/cart/" id="btn-submit" class="btn-red">перейти к оформлению</a>
+            </div>
+        </div>
+
+        <button title="Close (Esc)" type="button" class="mfp-close">
+            Закрыть
+            <img src="/style/images/close-button.svg" alt="">
+        </button>
+
+        <script>
+
+            jQuery( document ).ready( function ( $ ) {
+
+
+            } );
+
+
+        </script>
+    </form>
+</div>
+</div>
+
+<script type="text/javascript">
+
+jQuery( document ).on( 'submit', 'form#order', function () {
+    var form = jQuery( this );
+    var order = form.find( 'input[name="label"]' ).val();
+    var sum = form.find( 'input[name="sum"]' ).val();
+
+    var sub = 'Оплата';
+    var ct_node_id = '7';
+    var ct_site_id = '23540';
+
+    var ct_data = {
+        order: order,
+        sum: sum,
+        subject: sub,
+        sessionId: window.call_value
+    };
+
+
+    jQuery.ajax( {
+        url: 'https://api-node' + ct_node_id + '.calltouch.ru/calls-service/RestAPI/requests/' + ct_site_id + '/register/',
+        dataType: 'json',
+        type: 'POST',
+        data: ct_data,
+        async: false
+    } );
+
+} );
+</script>

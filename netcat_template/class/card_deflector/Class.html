@@ -1,0 +1,129 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+<?php
+$item = new nc_netshop_item($res[$f_RowNum]);
+$carName = $parent_sub_tree [0][Subdivision_Name];
+$markName = $parent_sub_tree [1][Subdivision_Name];
+                    
+?>
+<div class="card-of-product">
+	<div class="inner">
+		<div class="left">
+			<div>
+				<div class="navigation">
+					<a href="/">Главная</a>
+					<a href="<?=$parent_sub_tree [1][Hidden_URL]?>"><?=$parent_sub_tree [1][Subdivision_Name]?></a>
+					<span><?= $carName; ?></span>
+				</div>
+				<div class="title"><?= $carName; ?></div>
+				<p><?= $item['goodDescription']; ?></p>
+				<ul>
+					<li class="title-li">Что входит в комплект</li>
+                    <li><?= $item['goodDescription']; ?></li>					
+				</ul>
+                			<div class="kit">
+					<div class="item">
+						<img src="/style/images/image-8.svg" alt="">
+						<p>передний ряд</p>
+					</div>
+					<div class="item">
+						<img src="/style/images/image-9.svg" alt="">
+						<p>задний ряд</p>
+					</div>
+				</div>
+				<div class="colors">
+					<p>Выберите цвет комплекта</p>
+					<span>наличие может уточнить наш консультант</span>
+					<div class="list-of-colors">
+						<a class="black"></a>
+						<a class="white"></a>
+						<a class="gray"></a>
+						<a class="yellow"></a>
+						<a class="dark-yellow"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+              
+                
+          
+		<div class="right">
+			<div class="tabs">
+				<ul>
+					<li><a href="#tab-1">Оформление</a></li>
+					<li><a href="#tab-2">Доставка</a></li>
+				</ul>
+			</div>
+			<div id="tab-1">
+				<div class="slider-card-of-product">
+                      <?
+                      $nc_core->db->query("SELECT * FROM `Message155` WHERE `Subdivision_ID` = ".$parent_sub_tree [0][Subdivision_ID]."" );
+              $arr2 = $nc_core->db->last_result;
+              $nc_core->db->query("SELECT * FROM `Multifield` WHERE `Field_ID` = 575 AND `Message_ID` = ".$arr2[0]->Message_ID." ORDER BY Priority");
+              $arr3 = $nc_core->db->last_result;
+              
+              foreach($arr3 as $key=>$row) {               
+               echo '<div><img src="' . $row->Path . '" alt="" class="img"></div>';                
+              }
+              ?>					
+				</div>
+                <form action="<?= nc_modules("netshop")->get_add_to_cart_url() ?>" method="post">
+                  <input type="hidden" name="redirect_url" value="/cart/" />
+                  <input type="hidden" name="cart_mode" value="add" />
+
+				<div class="about">
+					<div class="left-block">
+						<span>Кол-во:</span>
+						    <input id="count" type="number" name="cart<?= $item['RowID'] ?>" value="1" min="0" />
+					</div>
+					<div class="right-block">
+						<span>Итого:</span>
+						<p id="sum"><?= $f_Price; ?></p>
+					</div>
+				</div>
+				<button class="btn-red">Оформить заказ</button>
+				<button class="btn-gray">или купить в 1 клик</button>
+			</div>
+            </form>
+        
+			<div id="tab-2" class="shipping">
+				<p class="title-1">Доставка по России</p>
+				<p class="title-2">Почта России</p>
+				<p>Стоимость 400 рублей, срок до 10 дней в зависимости от региона доставки.</p>
+				<p class="title-2">Транспортной компанией</p>
+				<p>ПЭК, Деловые Линии, CDEK, КИТ, Энергия.
+				По тарифам транспортных компаний.</p>
+				<p>В среднем 450руб., срок до 5 дней. Вес стандартной посылки 2кг.(размеры 80х60х10см + подпятник и 2 шильдика).</p>
+				<p>Расчет возможно произвести на сайтах транспортных компаний ПЭК, Деловые Линии, КИТ, Энергия. Оплата доставки при получении.</p>
+				<p class="title-1">Наложенным платежом</p>
+				<p class="title-2">Оплата наложенным платежом Почта России.</p>
+				<p>Преодоплата 500 рублей.</p>
+				<p>В преодоплату входит доставка и первая комиссия Почты России.</p>
+				<p>В случае отказа без причины от получения выполненного специально для Вас заказа, мы вынуждены будем включить Вас в общероссийский черный список неблагонадежных покупателей, что в дальнейшем закроет для вас доступ к покупке наложенным платежом в более, чем 1000 интернет магазинов России.</p>
+				<p>Почта России в свою очередь берет комиссию за пересылку посылки и перевод денег (Комиссия взимается 2 раза):</p>
+				<p>Например: Стоимость комплекта 2200 руб. + доставка 400 руб. + первая комиссия 4,5% от 2200 = 100 руб. Итого 2200 + 400 + 100 = 2700 руб. - 500 руб. (предоплата) = 2200 руб. Остаток суммы для перевода в наш адрес.</p>
+				<p class="title-2">При пересылке денег нам.</p>
+				<p>Почта России взимает комиссию за перевод средств нам 2200 руб. * 4% + 100 руб. + почтовый сбор (зависит от региона)</p>
+				<p>Итого посылка обходится 2200 руб. + 500 руб. + (2200 * 4% + 100 руб. + почтовый сбор) = 2800~2900 руб.</p>
+				<p>Наш совет: заказывайте по 100% оплате. Ваша Экономия составит от 300 до 400 руб. Все комиссии зависят от суммы заказа и региона доставки. В каждом регионе комиссия за перевод своя!</p>
+				<p class="title-1">Оплата</p>
+				<p class="title-2">Электронные кошельки</p>
+				<p>Яндекс.Деньги и QIWI кошелек.</p>
+				<p class="title-2">Переводом на карту</p>
+				<p>Переводом на карту Сбербанк России, Почта Банк (ВТБ24), Ренессанс Кредит, QIWI кошелек.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+const price = $('#sum').text();
+
+$('#count').on('click', function(e){
+  const current= $(this).val() * price;  
+  
+  $('#sum').text(current);
+})
+</script><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

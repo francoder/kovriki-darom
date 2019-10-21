@@ -1,0 +1,92 @@
+<!-- FormPrefix --><?= $f_AdminButtons; ?>
+  <div class="inner">
+    <div class="catalog-3">
+      <div class="navigation">
+        <?
+        $catalogID = $db->get_var("SELECT Subdivision_ID FROM Subdivision WHERE Subdivision_Name='Каталог' AND Catalogue_ID=".$catalogue);
+        if ($parent_sub_tree [1][Subdivision_ID] == $catalogID) {
+        $markName = $parent_sub_tree [0][Subdivision_Name];
+        ?>
+        <a itemprop="item" href="/">Главная</a>
+        <a itemprop="item" href="<?= $parent_sub_tree [1][Hidden_URL] ?>"><span
+              itemprop="name"><?= $parent_sub_tree [1][Subdivision_Name] ?></span></a>
+        <span itemprop="name"><?= $markName ?></span>
+      </div>
+      <div class="title">Коврики для <span><?= $markName ?></span></div>
+
+      <? } else {
+      $markName = $parent_sub_tree [0][Subdivision_Name];
+      //$markName = $parent_sub_tree [1][Subdivision_Name]." ".$markName;
+      ?>
+      <a itemprop="item" href="/"><span itemprop="name">Главная</span></a>
+      <meta itemprop="position" content="0"/>
+
+      <a itemprop="item" href="<?= $parent_sub_tree [2][Hidden_URL] ?>"><span
+            itemprop="name"><?= $parent_sub_tree [2][Subdivision_Name] ?></span></a>
+      <meta itemprop="position" content="1"/>
+
+      <a itemprop="item" href="<?= $parent_sub_tree [1][Hidden_URL] ?>"><span
+            itemprop="name"><?= $parent_sub_tree [1][Subdivision_Name] ?></span></a>
+      <meta itemprop="position" content="2"/>
+
+      <a itemprop="item" href="<?= $parent_sub_tree [0][Hidden_URL] ?>"><span
+            itemprop="name"><?= $parent_sub_tree [0][Subdivision_Name] ?></span></a>
+      <meta itemprop="position" content="3"/>
+    </div>
+    <div class="title">Коврики для <span><?= $markName ?></span></div>
+    <? } ?>
+
+    <div class="list-of-products">
+
+
+      <?
+      $cat_template['prefix'] = "";
+      $cat_template['suffix'] = "";
+
+
+
+      $catalogID = $db->get_var("SELECT Subdivision_ID FROM Subdivision WHERE Subdivision_Name='Коврики EVA' AND Catalogue_ID=".$catalogue);
+
+      if ($parent_sub_tree [1][Subdivision_ID] == $catalogID) {
+        $cat_template['unactive'] = '
+  	<a href="%URL" class="item">
+  	<div class="img">
+			<img src="/style/cars/'.$markName.'/%NAME.jpg" alt="Изображение %NAME">
+			</div>
+			<div class="text">
+				<span>%NAME</span>
+				<p></p>
+			</div>
+		</a>';
+      } else {
+        $cat_template['unactive'] = '
+  	<a href="%URL" class="item">
+  	<div class="img">
+			<img src="/style/cars/'.$parent_sub_tree [1][Subdivision_Name].'/'.$parent_sub_tree [0][Subdivision_Name].'/%NAME.jpg" alt="Изображение %NAME">
+			</div>
+			<div class="kovriki--new-text">
+				<span>%NAME</span>
+				<p></p>
+			</div>
+		</a>';
+      }
+
+      $cat_template['sortby'] = "Subdivision_Name DESC";
+
+      $ne_id = $parent_sub_tree [0][Subdivision_ID];
+      ?>
+      <?= nc_browse_sub($ne_id, $cat_template); ?>
+    </div>
+  </div>
+<?php
+
+
+if ($f_dopText !== "") {
+  echo html_entity_decode(htmlspecialchars_decode($f_dopText));
+} else {
+  echo html_entity_decode(htmlspecialchars_decode($current_sub['dopText']));
+} ?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --></div><!-- /FormSuffix -->

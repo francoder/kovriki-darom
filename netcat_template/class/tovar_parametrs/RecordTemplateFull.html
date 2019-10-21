@@ -1,0 +1,9 @@
+<?
+$item = new nc_netshop_item($resMsg);
+$item_parent_id = $item['Parent_Message_ID'] ?: $item['Message_ID'];
+$item_list_key = $item['Class_ID'] . ':' . $item_parent_id;
+
+$template_partial_loading = nc_array_value($GLOBALS['template_settings'], 'enable_partial_loading');
+
+$netshop_currency = $netshop->get_currency_code();
+?>

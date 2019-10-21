@@ -1,0 +1,33 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+
+<?
+global $nc_search;
+$areas = array("/catalog/*" => "в каталоге");
+
+$heh = $nc_search->get_results($_GET[search_query], $areas);
+foreach($heh as $value) {
+    $resname = $nc_core->subdivision->get_by_uri( $value[url], 1, "Subdivision_Name");
+    $parsub = intval($nc_core->subdivision->get_by_uri( $value[url], 1, "Parent_Sub_ID"));
+    if(($parsub !== 0) && ($parsub !== 4)) {
+      $parname = $nc_core->subdivision->get_by_id( $parsub, "Subdivision_Name");
+      ?>
+      	<a href="<?=$value[url]?>" class="item">
+			<img src="/style/cars/<?=$parname?>/<?=$resname?>.jpg" alt="">
+			<div class="text">
+            <? $name = $nc_core->subdivision->get_by_uri( $value[url], 1, "Subdivision_Name"); ?>
+				<span><?= mb_strimwidth($name, 0, 10, "..."); ?></span>
+				<p></p>
+			</div>
+		</a>
+  
+      <?
+    }
+}
+?>
+
+
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

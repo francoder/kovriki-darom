@@ -1,0 +1,157 @@
+<?= $f_AdminButtons; ?>
+<?php
+$modelName = null;
+
+if ($current_sub['Parent_Sub_ID'] !== 4) {
+    $modelName = $current_sub['Subdivision_Name'];
+} else {
+    switch ($current_sub['EnglishName']) {
+        case 'kovriki-eva':
+            $type = 1;
+            break;
+        case 'podlokotniki':
+            $type = 2;
+            $idTypeMessage = 162;
+            break;
+    }
+}
+
+$markId = (int) $parent_sub_tree[0]['Subdivision_ID'];
+
+// Список всех автомобильных брендов
+
+$nc_core->db->query("SELECT Subdivision_Name, Hidden_URL FROM `Subdivision` WHERE Parent_Sub_ID = 44633 ORDER BY Subdivision_Name ASC");
+$brandList = $nc_core->db->last_result;
+
+// Исключаем категорию "Коврики EVA" в хлебных крошках и в src изображения
+
+$brandName = str_replace('Коврики EVA', '', $parent_sub_tree [1][Subdivision_Name]);
+$markName = $parent_sub_tree [0][Subdivision_Name];
+
+// Список всех моделей выбранной марки без указания серий
+
+$sortMethod = $_GET['sort'];
+$sortType = null;
+
+switch ($sortMethod) {
+    case 'alphabet':
+        $sortType = 'Subdivision_Name';
+        break;
+    case 'popular':
+        $sortType = 'Views';
+        break;
+    default:
+        $sortType = 'Subdivision_Name';
+}
+
+$nc_core->db->query("SELECT Subdivision.Subdivision_Name, Subdivision.Hidden_URL, Message112.Price 
+FROM `Subdivision`, `Message112` 
+WHERE Subdivision.Subdivision_ID = Message112.Subdivision_ID 
+  AND Subdivision.Parent_Sub_ID = $markId 
+  AND Subdivision.goodID != 0 
+ORDER BY $sortType ASC");
+$modelList = $nc_core->db->last_result;
+
+// Получаем список серий авто конкретной марки
+
+$nc_core->db->query("SELECT Subdivision_Name, Hidden_URL 
+FROM `Subdivision` 
+WHERE Subdivision.Parent_Sub_ID = $markId 
+  AND Subdivision.goodID = 0 
+ORDER BY Subdivision_Name ASC" );
+$seriesList = $nc_core->db->last_result;
+
+
+?>
+    <div class="catalog-3">
+        <aside class="tabs-2">
+            <ul>
+                <?php foreach ($brandList as $brand) { ?>
+                    <li>
+                        <?php if($brand->Subdivision_Name === $modelName) { ?>
+                        <a href="<?= $brand->Hidden_URL ?>" style="opacity: 1">
+                            <div class="container-for-img">
+                                <img src="/style/cars/<?= $brand->Subdivision_Name.'/marklogo.png' ?>"
+                                     alt="" style="opacity: 1">
+                            </div>
+                            <?= $brand->Subdivision_Name ?></a>
+                        <?php } elseif($brand->Subdivision_Name === $brandName) { ?>
+                            <a href="<?= $brand->Hidden_URL ?>" style="opacity: 1">
+                                <div class="container-for-img">
+                                    <img src="/style/cars/<?= $brand->Subdivision_Name.'/marklogo.png' ?>"
+                                         alt="" style="opacity: 1">
+                                </div>
+                                <?= $brand->Subdivision_Name ?></a>
+                        <?php } else { ?>
+                            <a href="<?= $brand->Hidden_URL ?>">
+                                <div class="container-for-img">
+                                    <img src="/style/cars/<?= $brand->Subdivision_Name.'/marklogo.png' ?>"
+                                         alt="">
+                                </div>
+                                <?= $brand->Subdivision_Name ?></a>
+                        <?php } ?>
+                    </li>
+                <?php } ?>
+            </ul>
+        </aside>
+        <div class="content">
+            <div class="navigation">
+                <a href="/">Главная</a>
+                <meta itemprop="position" content="0"/>
+                <a itemprop="item" href="<?= $parent_sub_tree [1][Hidden_URL] ?>"><span
+                            itemprop="name"><?= $parent_sub_tree [1][Subdivision_Name] ?></span></a>
+                <meta itemprop="position" content="2"/>
+                <span><?= $markName ?></span>
+            </div>
+            <h2>Коврики для вашего автомобиля</h2>
+            <p class="other-mw">
+                Выберите марку своего автомобиля, а мы подберем для вас наиболее подходящий автомобильный коврик</p>
+            <div class="control">
+                <div class="tabs">
+                    <ul>
+                        <li><a href="" class="selected"><?= $markName ?></a></li>
+                        <?php foreach($seriesList as $series) { ?>
+                        <li><a href="<?= $series->Hidden_URL ?>"><?= $series->Subdivision_Name ?></a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+                <div class="right">
+                    <span class="left-option <?= $sortMethod == 'popular' ? 'opacity' : '' ?> ">по алфавиту</span>
+                    <label for="" class="clicker <?= $sortMethod == 'popular' ? 'right-active' : 'left-active' ?>">
+                        <div class="circle"></div>
+                        <form id="sort-form" method="get" action="">
+                            <input id="sorting-input" type="text" name="sort" value="alphabet" >
+                        </form>
+                    </label>
+                    <span class="right-option <?= $sortMethod == 'popular' ? '' : 'opacity' ?>">популярное</span>
+                </div>
+            </div>
+        <div class="list">
+            <?php foreach ($modelList as $model) { ?>
+                <?php $price = $model->Price != 0 ? $model->Price : 2200; ?>
+            <div class="item">
+                <a href="<?= $model->Hidden_URL ?>">
+                    <div class="img">
+                        <img src="/style/cars/<?= $brandName . '/' . $markName . '/' . trim(str_replace('*', '',
+                        $model->Subdivision_Name)). '.jpg'
+                        ?>"
+                             alt="">
+                    </div>
+                </a>
+                <a href="<?= $model->Hidden_URL ?>">
+                    <div class="text">
+                        <div class="model"><?= $model->Subdivision_Name ?></div>
+                        <div class="price"><?= nc_netshop::get_instance()->format_price($price) ?></div>
+                    </div>
+                </a>
+            </div>
+            <?php } ?>
+        </div>
+        <h3>В особенность технологии ковриков EVA?</h3>
+        <p>Резиновые, текстильные и велюровые коврики доставляют массу дискомфорта: пыль постоянно разносится по салону,
+            растаявший снег переливается через бортики, а осенняя жижа оставляет некрасивые потёки... Автомобильные коврики
+            EVA предотвращают распространение любой грязи.</p>
+        <p>Теперь легко подобрать тип защитной подстилки в Набережных Челнах под определенную машину: компания «Коврики
+            Даром» изготавливает и продает изделия для 69 марок автомобилей. И этот список постоянно увеличивается.</p>
+    </div>
+</div>

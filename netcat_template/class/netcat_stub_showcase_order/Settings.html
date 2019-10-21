@@ -1,0 +1,13 @@
+<? 
+
+if ($cc_settings['GoodsSub']) {
+  $goods_component_id = $db->get_var("SELECT `Class_ID` FROM `Sub_Class` WHERE `Subdivision_ID` = " . intval($cc_settings['GoodsSub']));
+}
+else {
+  $goods_component_id = $nc_core->component->get_by_id('netcat_stub_showcase_goods', 'Class_ID');
+}
+ 
+$query_select = "goods.Title AS Title, goods.Price AS Price";
+$query_from = "Message" . $goods_component_id . " as goods";
+$query_where = "goods.Message_ID = a.Goods_ID";
+

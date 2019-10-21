@@ -1,0 +1,27 @@
+<!-- FormPrefix --><?php
+// способ отображения товаров в списке (плитка/список)
+$template_partial_loading = nc_array_value($GLOBALS['template_settings'], 'enable_partial_loading');
+$list_layout_cookie = $nc_core->input->fetch_cookie('tpl_default_list_layout');
+$list_layout_class = $list_layout_cookie == 'list' && !$template_partial_loading ? 'tpl-layout-list' : 'tpl-layout-tiles';
+?>
+
+
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?
+$item = new nc_netshop_item($res[$f_RowNum]);
+$item_parent_id = $item['Parent_Message_ID'] ?: $item['Message_ID'];
+$item_list_key = $item['Class_ID'] . ':' . $item_parent_id;
+
+// запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+if ($template_partial_loading && $item->price_depends_on_user_data()) {
+    header('X-Accel-Expires: 0');
+}
+
+?>
+<?= $f_AdminButtons; ?>
+<!-- Карточка-->
+<?= $f_Name; ?>
+<?= $f_Price; ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

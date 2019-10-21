@@ -1,0 +1,75 @@
+<?php
+global $nc_search;
+$horizontal_menu['prefix']   = '<ul><li><a href="/"><img src="/style/logo.png" alt=""></a></li>';
+$geoPos = (explode('.',$_SERVER['HTTP_HOST']))[0];
+$subDomains= array(
+     "kovriki-darom" => "Набереженые Челны",
+    "msk" => "Москва",
+    "spb" => "Санкт-Петербург",
+    "ekb" => "Екатеринбург",
+    "kzn" => "Казань",
+    "ufa" => "Уфа",
+    "smr" => "Самара",
+    "irk" => "Иркутск",
+    "tyumen" => "Тюмень",
+    "ast" => "Астрахань",
+    "barn" => "Барнаул",
+    "perm" => "Пермь",
+    "tomsk" => "Томск",
+    "yl" => "Ульяновск",
+    "yar" => "Ярославль",
+    "chelyabinsk" =>"Челябинск",
+    "tol" => "Тольятти",
+    "rzn" => "Рязань",
+    "saratov" => "Саратов",
+    "rostov" => "Ростов-на-Дону",
+    "volgograd" => "Волгоград",
+    "voron" => "Воронеж",
+    "izh" => "Ижевск",
+    "kemerovo" => "Кемерово",
+    "kirov" => "Киров",
+    "krasnodar" => "Краснодар",
+    "krasnoyarsk" => "Красноярск",
+    "nnov" => "Нижний Новгород",
+    "novokz" => "Новокузнецк",
+    "novosib" => "Новосибирск",
+    "omsk" => "Омск",
+    "penza" => "Пенза",
+    "orenburg" => "Оренбург"
+);
+$chlyapa = "";
+
+foreach($subDomains as $key => $oneDomain) {
+    if ($key !== $geoPos) {
+        if($key !== "kovriki-darom") {
+            $chlyapa .= '<li><a href="https://'.$key.'.kovriki-darom.ru/">'.$oneDomain.'</a></li>';
+        } else {
+            $chlyapa .= '<li><a href="https://kovriki-darom.ru/">Набереженые Челны</a></li>';
+        } 
+    }  
+}
+
+$horizontal_menu['suffix']   = '<div class="geoselect">
+        <span class="TheCity">'.$subDomains[$geoPos].'</span>
+        <div class="cities">
+            <ul>
+                '.$chlyapa.'
+            </ul>
+        </div>
+        </div>
+
+				<li>
+					<div class="phone-box">
+						<a class="call_phone_hide" href="tel:8(800)301-09-47">8 (800) 301-09-47</a>
+						<span class="call-me">Заказать обратный звонок</span>
+					</div>
+				</li>
+			</ul>';
+$horizontal_menu['active']   = '<li><a href="%URL" class="active">%NAME</a></li>';
+$horizontal_menu['unactive'] = '<li><a href="%URL">%NAME</a></li>';
+if(isset($_GET['r'])) {
+    setcookie("r",$_GET['r'], time()+3600000);
+    $var = $nc_core->db->get_var("SELECT refStat FROM `User` WHERE referralLink = '".$_GET['r']."'");
+    $db->query("UPDATE User SET refStat = ".($var + 1)."  WHERE referralLink = '".$_GET['r']."'");
+}
+?>

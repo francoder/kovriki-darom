@@ -1,0 +1,17 @@
+<?/* Служебная часть */for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {    if($fetch_row[$f_RowNum] instanceof Iterator) {        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");    } else {        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");    }    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {        extract($value);    }    eval($cc_env["convert2txt"]);    ob_start();/* Конец служебной части */?>
+<?
+$item = new nc_netshop_item($res[$f_RowNum]);
+$item_parent_id = $item['Parent_Message_ID'] ?: $item['Message_ID'];
+$item_list_key = $item['Class_ID'] . ':' . $item_parent_id;
+
+// запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+if ($template_partial_loading && $item->price_depends_on_user_data()) {
+    header('X-Accel-Expires: 0');
+}
+
+?>
+<?= $f_AdminButtons; ?>
+<!-- Карточка-->
+<?= $f_Name; ?>
+<?= $f_Price; ?>
+<?/* Служебная часть */    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);}/* Конец служебной части */?>

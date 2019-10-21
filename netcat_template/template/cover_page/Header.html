@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/style/js/slick.min.js" defer></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <?
+    if ($current_sub["EnglishName"] == "brelki") {
+        $hardTitle = "Купить авто аксессуары в интернет магазине Kovriki-Darom в " . $current_catalogue['regionName'];
+        $hardDesc = "На сайте Коврики Даром вы можете приобрести аксессуары для вашего авто по выгодным ценам в " . $current_catalogue['regionName'] . "! Доставка по всей России.";
+    } else if ($current_sub["EnglishName"] == "podpyatnik-v2") {
+        $hardTitle = "Купить металлический подпятник для коврика в авто " . $current_catalogue['regionName2'];
+        $hardDesc = "У нас в магазине вы можете приобрести металлический подпятник для вашего авто - Коврики Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "podpyatnik-variant-1") {
+        $hardTitle = "Купить подпятник для Ева Ковриков в " . $current_catalogue['regionName'];
+        $hardDesc = "На нашем сайте Kovriki-Darom в " . $current_catalogue['regionName'] . " вы можете приобрести подпятник из метала для EVA коврика.";
+    } else if ($current_sub["EnglishName"] == "sumka-v-bagazhnik") {
+        $hardTitle = "Сумка в багажник автомобиля - купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Ищите где можно купить сумку в бгажник вашего авто? Покупайте на сайте Kovriki-Darom в " . $current_catalogue['regionName'];
+    } else if ($current_sub["EnglishName"] == "mehovye-nakidki-avtopilot") {
+        $hardTitle = "Меховые накидки автопилот для авто купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Покупайте меховые накидки в нашем интернет магазине. Доставка по всей России - Коврики-Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "mehovye-nakidki-ves-salon-avtopilot") {
+        $hardTitle = "Меховые накидки на весь салон автомобиля в " . $current_catalogue['regionName'];
+        $hardDesc = "Приобретайте меховые накидки для всего салона вашего авто на сайте Коврики Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "nakidki-dlya-sideniy") {
+        $hardTitle = "Купить накидки на сиденья автомобиля в " . $current_catalogue['regionName'] . " - Коврики Даром";
+        $hardDesc = "Покупайте меховые накидки на сиденья авто в " . $current_catalogue['regionName'] . ". Искусственный мех, короткий ворс, удобные и теплые!";
+    } else if ($current_sub["EnglishName"] == "podpyatniki") {
+        $hardTitle = "Подпятники для автоковриков ЕВА - купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Металлические подпятники для автомобильных ковриков. Заказать в " . $current_catalogue['regionName'] . ", недорого с доставкой!";
+    } else if ($current_sub["EnglishName"] == "aksessuary") {
+        $hardTitle = "Купить авто аксессуары в интернет магазине Kovriki-Darom город " . $current_catalogue['regionName2'];
+        $hardDesc = "На сайте Коврики Даром вы можете приобрести аксессуары для вашего авто по выгодным ценам в " . $current_catalogue['regionName'] . "! Доставка по всей России.";
+    }
+
+    $title = $nc_core->page->get_title();
+    if ($title === '' || $title === null) {
+        $title = $newTitle ?? $current_sub['Subdivision_Name'];
+    }
+    $title = $hardTitle ?? $title;
+
+    $description = $nc_core->page->get_description();
+
+    if ($description === '' || $description === null) {
+        $description = $hardDesc ?? ($newDesc ?? null);
+    }
+    ?>
+
+    <title><?= $title ?></title>
+    <?= ($description ? "<meta name='description' content='" . $description . "'>" : NULL); ?>
+
+    <meta name='keywords' content=''>
+    <link rel="canonical" href="<?= "https://" . $current_catalogue['Domain'] . $parent_sub_tree[0][Hidden_URL] ?>"/>
+
+    <?= ($nc_core->page->get_description() && empty($hardDesc) ? "<meta name='description' content='" . $nc_core->page->get_description() . "'>" : NULL); ?>
+
+    <script src="/style/js/jquery-1.12.4.min.js"></script>
+    <script src="/style/js/jquery.fancybox.min.js" defer></script>
+
+
+    <script>
+        (function ( $ ) {
+            $.fn.inputFilter = function ( inputFilter ) {
+                return this.on( "input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                    if ( inputFilter( this.value ) ) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if ( this.hasOwnProperty( "oldValue" ) ) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange( this.oldSelectionStart, this.oldSelectionEnd );
+                    }
+                } );
+            };
+        }( jQuery ));
+    </script>
+
+
+
+    <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.10.0/dist/css/suggestions.min.css" type="text/css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="76x76" href="/style/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/style/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/style/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/style/favicon/manifest.json">
+    <link rel="mask-icon" href="/style/favicon/safari-pinned-tab.svg" color="#5bbad5">
+
+    <link rel="stylesheet" href="/style/css/normalize.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/slick.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/jquery.fancybox.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/jquery.formstyler.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="/style/css/magnific-popup.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/resp.css" type="text/css" media="all" />
+
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5P2G5K2');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P2G5K2"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="wrapper">
+    <header id="header">
+        <div class="inner">
+            <a href="/" class="logo"><img src="/style/images/logo.png" alt=""></a>
+            <nav>
+                <div class="dropdown-menu">
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                    <div class="line-3"></div>
+                </div>
+                <div class="mobile-fixed">
+                    <ul>
+                        <li><a href="/catalog/">Каталог</a></li>
+                        <li><a href="/catalog/kovriki-eva/">Коврики EVA</a></li>
+                        <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+                        <li class="menu">
+                            <a href="">
+									<span>
+										<span class="line-1"></span>
+										<span class="line-2"></span>
+										<span class="line-3"></span>
+									</span>
+                                Полезное</a>
+                            <ul>
+                                <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+                                <li><a href="/garantii/">Гарантии</a></li>
+                                <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа</a></li>
+                                <li><a href="/franshiza">Франшиза</a></li>
+                                <li><a href="/contacts/">Контакты</a></li>
+                                <li><a href="/proizvodstvo/">Производство</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="mobile-block">
+                        <a href="" class="cart">
+                            <img src="/style/images/cart-white.svg" alt="">
+                            <span>Корзина</span>
+                        </a>
+                        <div class="bottom">
+                            <a href="tel:84999554333" class="btn">Заказать</a>
+                            <span>8 499 955 43 33</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="callback">
+                <button class="btn call-me ajax-mfp" data-reason="Оставить заявку">Заказать звонок</button>
+            </div>
+            <div class="phone">
+                <a href="tel:84999554333"><span>8 499</span> 955 43 33</a>
+            </div>
+            <div class="icons">
+                <a href="/cart/">
+                    <img src="/style/images/cart.svg" alt="">
+                </a>
+                <div class="login">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line class="arrow" x1="0.5" y1="7.68713" x2="10.5672" y2="7.68713" stroke="#D42F3B"/>
+                        <path d="M4.16333 2.8631C5.44042 1.50158 7.2558 0.651001 9.26983 0.651001C13.1358 0.651001 16.2698 3.78501 16.2698 7.651C16.2698 11.517 13.1358 14.651 9.26983 14.651C7.55594 14.651 5.98592 14.0351 4.76904 13.0124" stroke="#D42F3B" stroke-linejoin="round"/>
+                        <path class="arrow" d="M7.85742 4.8717L10.6369 7.65116L7.85742 10.4306" stroke="#D42F3B"/>
+                    </svg>
+                    <div class="login-dropdown-menu">
+                        <?php if(!isset($_COOKIE['identity'])): ?>
+                            <div class="title">Войдите в личный кабинет</div>
+                            <p>чтобы начать получать бонусы и персональные предложения</p>
+                            <div class="social-networks">
+                                <div id="uLogin" data-ulogin="display=panel;redirect_uri=https://<?=$_SERVER['HTTP_HOST'];?>/loginMobile.php;theme=flat;fields=first_name,photo_big,last_name,photo;sort=default;providers=vkontakte,facebook,googleplus,odnoklassniki,instagram;hidden=;mobilebuttons=0;"></div>
+                            </div>
+                        <?php else: ?>
+                            <div class="when-auth">
+                                <div class="name"><?= $settings['Login'] ?></div>
+                                <p>баланс: <?= $netshop->format_price($settings['balance']) ?></p>
+                                <div class="links-1">
+                                    <a href="/lk">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-4.svg" alt="" class="static">
+                                            <img src="/style/images/lk-icon-4-active.svg" alt="" class="hovered">
+                                        </div>
+                                        <div class="text">Реферальная система</div>
+                                    </a>
+                                    <a href="/lk">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-5.svg" alt="" class="static">
+                                            <img src="/style/images/lk-icon-5-active.svg" alt="" class="hovered">
+                                        </div>
+                                        <div class="text">История заказов</div>
+                                    </a>
+                                    <a href="/lk">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-6.svg" alt="" class="static">
+                                            <img src="/style/images/lk-icon-6-active.svg" alt="" class="hovered">
+                                        </div>
+                                        <div class="text">Вывод средств</div>
+                                    </a>
+                                </div>
+                                <div class="links-2">
+                                    <a href="https://wa.me/79046704747">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-7.svg" alt="">
+                                        </div>
+                                        <div class="text">Чат техподдержки</div>
+                                    </a>
+                                    <a href="tel:89046744747">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-8.svg" alt="">
+                                        </div>
+                                        <div class="text">Связаться с оператором</div>
+                                    </a>
+                                </div>
+                                <div class="links-1">
+                                    <a href="" id="logout">
+                                        <div class="img">
+                                            <img src="/style/images/lk-icon-20.svg" alt="" class="static">
+                                            <img src="/style/images/lk-icon-20-active.svg" alt="" class="hovered">
+                                        </div>
+                                        <div class="text">Выйти из аккаунта</div>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="main">

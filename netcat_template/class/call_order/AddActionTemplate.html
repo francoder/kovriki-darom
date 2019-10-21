@@ -1,0 +1,22 @@
+<?
+// значения визуальных настроек
+$res = $db->get_var("SELECT CustomSettings FROM Sub_Class WHERE Sub_Class_ID=$cc");
+$res ? eval("\$cc_settings = $res") : $cc_settings = null;
+
+// значения визуальных настроек по умолчанию
+$res = $db->get_var("SELECT CustomSettingsTemplate FROM Class WHERE Class_ID=$classID");
+eval("\$default_cc_settings = $res");
+
+
+$mailer = new CMIMEMail();
+$mailer->mailbody(strip_tags(' Имя: ' . $f_Name . ' Телефон: ' . $f_Phone ));
+$to        = $system_env['SpamFromEmail'];
+$from      = 'robot@dev.kovriki-darom.ru';
+$reply     = 'robot@dev.kovriki-darom.ru';
+$from_name = 'Коврики EVA';
+$subject   = 'Запрос обратного звонка с сайта Коврики EVA';
+$mailer->send($to, $from, $reply, $subject, $from_name);
+
+//echo "Спасибо. Сообщение отправлено. В ближайшее время с вами свяжутся по указанному email.";
+
+?>

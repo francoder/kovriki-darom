@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P2G5K2');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title><?=($nc_core->page->get_title() ? $nc_core->page->get_title() : strip_tags(nc_browse_path($browse_path)));?></title>
+
+    <meta name='keywords' content=''>
+    <link rel="canonical" href="<?="https://".$current_catalogue['Domain'].$parent_sub_tree[0][Hidden_URL]?>" />
+    
+    <?=( $nc_core->page->get_description() ? "<meta name='description' content='".$nc_core->page->get_description()."'>" : NULL );?>
+    
+    
+    <style><?=file_get_contents($_SERVER["DOCUMENT_ROOT"].'/style/main.css')?></style>
+
+	<link rel="apple-touch-icon" sizes="76x76" href="/style/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/style/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/style/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/style/favicon/manifest.json">
+	<link rel="mask-icon" href="/style/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+    
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P2G5K2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+	<header class="container h-nav">
+		<nav>
+            <ul>
+                <li><a href="/"><img src="/style/logo.png" alt=""></a></li>
+                <li><a href="/catalog/">Каталог</a></li>
+                <li><a href="/aksessuary/">Аксессуары</a></li>
+                <li>
+                    <a>О компании</a>
+                    <span>
+                      <a href="/proizvodstvo/">Производство</a>
+                      <a href="/dostavka-i-oplata/">Доставка и оплата</a>
+                      <a href="/garantii/">Гарантии</a>
+                      <a href="/franshiza/">Франшиза</a>
+                      <a href="/optovaya-prodazha-materiala/">Оптовая продажа материала</a>
+                    </span>
+                </li>
+                <li><a href="/contacts/">Контакты</a></li>
+            <div class="geoselect">
+                <span class="TheCity"><?=$subDomains[$geoPos]?></span>
+                <div class="cities">
+                    <ul>
+                        <?=$chlyapa?>
+                    </ul>
+                </div>
+            </div>    
+            
+                
+				<li>
+                <? if (!isset($_COOKIE['identity'])) { ?>
+                    <a class="login-icon">
+					</a>
+                    <? } else { ?>
+                       <a href="/lk/" class="login-icon act" style="background-image: url(<?=$_COOKIE['photo']?>);"></a>
+                    <? }?>
+                    <div class="login-window">
+                        
+                        <div id="uLogin" data-ulogin="display=panel;redirect_uri=https://<?=$_SERVER['HTTP_HOST'];?>/loginMobile.php;theme=flat;fields=first_name,photo_big,last_name,photo;sort=default;providers=vkontakte,facebook,googleplus,odnoklassniki,instagram;hidden=;mobilebuttons=0;"></div>
+                        <p>Войти через соц.сети</p>
+                    </div>
+					<div class="phone-box">
+						<a href="tel:8(800)301-09-47">8 (800) 301-09-47</a>
+						<span class="call-me">Заказать обратный звонок</span>
+					</div>
+				</li>
+			</ul>
+                <?// echo nc_browse_sub(0, $horizontal_menu, 0, $where_cond="showtopmenu='1'") ?>
+                
+			<div class="search-box">
+				<input type="text" placeholder="...">
+				<img src="/style/search.png" alt="">
+			</div>
+		</nav>
+		
+		<a href="/" class="moblogo"><img src="/style/logo.png" alt=""></a>
+		<div class="hnav-ui">
+            <? if (!isset($_COOKIE['identity'])) { ?>
+                    <a class="login-icon"></a>
+            <? } else { ?>
+            <a href="/lk/" class="login-icon act" style="background-image: url(<?=$_COOKIE['photo']?>);"></a>
+            <? }?>
+            <div class="login-window">
+                <div id="uLoginff6dc35f" data-ulogin="display=panel;fields=first_name,last_name,photo_big;theme=flat;mobilebuttons=0;providers=vkontakte,odnoklassniki,instagram,googleplus,facebook;redirect_uri=https://<?=$_SERVER['HTTP_HOST'];?>/loginMobile.php"></div>
+                <p>Войти через соц.сети</p>
+            </div>
+			<a href="tel:8(800)301-09-47">
+				<img src="/style/phone.png" alt="" class="m-phone">
+			</a>
+			<img src="/style/burger.png" alt="" class="burger">
+		</div>
+       
+	</header>

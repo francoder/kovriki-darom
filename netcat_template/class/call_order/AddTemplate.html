@@ -1,0 +1,80 @@
+<?
+echo $warnText ? "<div class='warnText'>$warnText</div>" : null;
+$res = $db->get_var("SELECT CustomSettings FROM Sub_Class WHERE Sub_Class_ID=$cc");
+($res ? eval("\$cc_settings = $res") : $cc_settings = null);
+$res = $db->get_var("SELECT CustomSettingsTemplate FROM Class WHERE Class_ID=$classID");
+eval("\$default_cc_settings = $res");
+if ( ! $inside_admin) {
+  ?>
+  </div>
+  </div>
+  <div id="callbackForm" class="mfp-hide">
+    <p/> <?
+    echo($cc_settings['TextBefore'] ? $cc_settings['TextBefore'] : $default_cc_settings[TextBefore][default_value]);
+    ?>
+
+    <div class="popup callback zoom-anim-dialog">
+      <form id="callback-form" enctype='multipart/form-data' action="" method="">
+        <? $nc_core->token->get_input() ?>
+        <input name='cc' type='hidden' value='<? echo $cc ?>'>
+        <input name='sub' type='hidden' value='<? echo $sub ?>'>
+        <input name='catalogue' type='hidden' value='<? echo $catalogue ?>'>
+        <input type='hidden' name='posting' value='1'>
+        <div id="finish-result">
+          <div class="title">Обратный звонок</div>
+          <p>Оставьте свои контактные данные и мы свяжемся с вами</p>
+          <span id="note"></span>
+          <div class="reply-field">
+            <?= nc_string_field("Name", "maxlength='55' minlength='3' size='10' required='required' placeholder='Как вас зовут'", $classID, 0); ?>
+          </div>
+          <div class="reply-field">
+            <?= nc_string_field("Phone", "maxlength='55' minlength='6' size='10' required='required' placeholder='Номер телефона'", $classID, 0); ?>
+          </div>
+          <div class="reply-field">
+            <button id="btn-submit" class="btn-red">Отправить</button>
+          </div>
+        </div>
+
+        <button title="Close (Esc)" type="button" class="mfp-close">Закрыть <img src="/style/images/close-button.svg"
+                                                                                 alt="">
+        </button>
+
+        <script>
+          $( '.mfp-close' ).click( function () {
+            $( this ).magnificPopup( 'close' );
+          } );
+
+          const prevHtml = $( '#finish-result' ).html();
+
+          $( "#callback-form" ).submit( function ( e ) {
+            e.preventDefault();
+            var str = $( this ).serialize();
+
+            $.ajax( {
+              type: 'POST',
+              url: '/netcat/add.php?isNaked=1&ajax=1',
+              data: str,
+              success: function ( msg ) {
+                //
+                //$( '#note' ).append( msg );
+                $( '#finish-result' ).empty();
+                $( '#finish-result' ).html( '<div class="title">Спасибо. <br>Сообщение отправлено.<br> В ближайшее время с вами свяжутся.</div>' );
+
+                setTimeout( function () {
+                  $( this ).magnificPopup( 'close' );
+                  $( '#finish-result' ).html( prevHtml );
+                }, 3000 );
+
+              }
+            } );
+
+            return false;
+
+          } );
+        </script>
+      </form>
+    </div>
+  </div>
+<? } ?>
+
+

@@ -1,0 +1,70 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<div class="inner">
+  <div class="navigation">
+    <a href="/">Главная</a>
+    <span>Контакты</span>
+  </div>
+  <div class="contacts-page">
+    <h3>Контакты</h3>
+    <div>
+      <div class="address">
+        <div class="title">Адрес:</div>
+        <p>Набережные Челны:</p>
+        <p>поселок Орловка, Орловская улица, 73А</p>
+        <span>адрес для самовывоза</span>
+      </div>
+      <div class="phones">
+        <div class="title">Связаться с нами:</div>
+        <div><a href="">8 800 301 09 47</a></div>
+        <div><a href="">8 800 301 09 47</a></div>
+        <div class="email">evakovrikoff@yandex.ru</div>
+      </div>
+      <div class="time-work">
+        <div class="title">Режим работы:</div>
+        <div class="row">
+          <div class="left">Пн - Пт</div>
+          <div>с 10 до 18</div>
+        </div>
+        <div class="row">
+          <div class="left">Сб</div>
+          <div>с 10 до 16</div>
+        </div>
+        <div class="row">
+          <div class="left">Вс</div>
+          <div class="red">Выходной</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="map">
+  <iframe
+    src="https://yandex.ru/map-widget/v1/?um=constructor%3A95da4d6f1abde655ab3d1a0653315656754e6f949cc972fb9f6fc75ac0ff00a1&amp;source=constructor"
+    width="100%"
+    height="395"
+    frameborder="0"
+  ></iframe>
+</div><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+			
+
+			<script type="application/ld+json">
+				{
+				  "@context": "http://schema.org",
+				  "@type": "Organization",
+				  "address": {
+					"@type": "PostalAddress",
+					"addressLocality": "<?= $f_city?>, Россия",
+					"streetAddress": "<?= $f_street?>"
+				  },
+				  "email": "<?= $f_email?>",
+				  "name": "<?= $f_compName?>",
+                  "description": "<?= $f_compDesc?>",
+				  "telephone": "<?= $f_phone1?>",
+				  "url": "<?=url();?>",
+				  "logo": "<?=url().$f_logoUrl?>"
+				}
+			</script><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

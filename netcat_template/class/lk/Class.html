@@ -1,0 +1,547 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons;
+if (isset($_COOKIE['User_ID'])) {
+    $uID = $_COOKIE['User_ID'];
+    if (isset($_GET['checkID'])) {
+        $uID = intval($_GET['checkID']);
+    }
+    
+    $settings = $db->get_row("SELECT * FROM User WHERE User_ID='".$uID."'", ARRAY_A);
+    $referrals = $db->query("SELECT * FROM User WHERE referralParent='".$settings['referralLink']."'");
+
+    $nc_core->db->query("SELECT * FROM orders WHERE referral = '".$settings['referralLink']."'", ARRAY_A );
+    $orders = $nc_core->db->last_result;
+
+
+    $nc_core->db->query("SELECT * FROM orders WHERE User_ID = '".$uID."'", ARRAY_A );
+    $myOrders = $nc_core->db->last_result;
+
+
+    $nc_core->db->query("SELECT * FROM payList WHERE User_ID = '".$uID."'", ARRAY_A );
+    $payList = $nc_core->db->last_result;
+
+
+      $refCount = $db->get_results("SELECT * FROM orders WHERE referral = '".$settings['referralLink']."' AND paySend > 0 AND User_ID != '".$settings['User_ID']."'");
+
+      $refCount = count($refCount);
+
+      if (intval($refCount) > 10) {
+        $referralStatus = 1;
+      } else if (intval($refCount) > 50) {
+        $referralStatus = 2;
+      } else if (intval($refCount) > 100) {
+        $referralStatus = 3;
+      } else {
+        $referralStatus = 0;
+      }
+
+
+
+
+      if ($referralStatus == 0) {
+        $rBon = "5%";
+      } else if ($referralStatus == 1) {
+        $rBon = "10%";
+      } else if ($referralStatus == 2) {
+        $rBon = "15%";
+      } else if ($referralStatus == 3) {
+        $rBon = "20%";
+      } else {
+        $rBon = "20%";
+      }
+
+
+    ?>
+        <div class="container lk">
+            <aside>
+                <h4>
+                    <?=$settings['Login'];?>
+                </h4>
+                <nav>
+                    <div class="refLink act">Реферальная система</div>
+                    <div class="history">История</div>
+                    <div class="balance">Вывод средств <span><?=$settings['balance']?></span></div>
+                </nav>
+                <div class="supBox">
+                    <b>Служба поддержки</b>
+                    <a href="https://vk.com/im?media=&sel=-129349599">Написать</a>
+                    <a href="tel:89046744747">Позвонить</a>
+                    <a href="tel:89046744747">+7 (904) 674-47-47</a>
+                </div>
+            </aside>
+
+
+            <main class="refWrapper act">
+                <? $rLink = $settings['referralLink'];?>
+                    <div class="refLink"><b>Скопировать реферальную ссылку</b><input name="refLink" type="text" value="kovriki-darom.ru/?r=<?=$rLink;?>" /> <button class="submitName">Подтвердить смену</button></div>
+                    <div class="refStat">
+                        <div class="refStatHead">
+                            <h2>Оплачено<b><?=$refCount?></b></h2>
+                            <div>Перешли по ссылке <span><?=$settings['refStat']?></span></div>
+                            <div>Прибыль <b><?=$settings['profit']?></b></div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td><b>Дата</b></td>
+                                    <td><b>id польз.</b></td>
+                                    <td><b>заказ</b></td>
+                                    <td><b>статус</b></td>
+                                    <td><b>сумма руб.</b></td>
+                                    <td><b>вознагр.</b></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php 
+                                if($orders) {
+                                foreach($orders as $order) {
+                                     $phpdate = strtotime( $order['Order_date'] );
+                                      $mysqldate = date( 'd.m.Y', $phpdate );
+                                      if ($order['User_ID'] !== $settings['User_ID']) {
+                                    ?>
+                                <tr>
+                                    <td data-order-id="<?= $order['id'] ?>" title="<?= '№' . $order['ord_number'] ?? ''
+                                    ?>">
+                                        <?= $mysqldate?>
+                                    </td>
+                                    <td>
+                                        <? if($order['User_ID'] !== "1") { echo $order['User_ID'];}?>
+                                    </td>
+                                    <td><a title="<?=$order['complect']?>">Заказ</a></td>
+                                    <td <?php if (($order['status'] === "Отправлен" ) || ($order[ 'status']=="Доставлен" ) || ($order[ 'status']=="Ожидает отправки" )) { echo 'class="good"'; } ?> >
+                                        <?=$order['status'];?>
+                                    </td>
+                                    <td>
+                                        <?=$order['price']?>
+                                    </td>
+                                    <td>
+                                        <? if ($order['paySend'] !== '0') { echo $order['paySend'];}?>
+                                    </td>
+                                </tr>
+                                <?php } else {
+
+                                    }
+                                }
+                                }
+                            ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="redDescription">
+
+                        <div style="text-align: right; margin-top: -62px; color: white;">Ваш реферальный бонус:
+                            <?=$rBon?>
+                        </div>
+                        <!--
+                    <p>Реферальная система на kovriki-darom.ru</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <p>Все просто</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    !-->
+                    </div>
+            </main>
+
+
+            <main class="refHistory">
+                <div class="refLink"><b>Скопировать реферальную ссылку</b> <input name="refLink" type="text" value="kovriki-darom.ru/?r=<?=$rLink;?>" /> <button class="submitName">Подтвердить смену</button></div>
+                <div class="refStat">
+                    <div class="refStatHead refMyStat">
+                        <h2>История заказов</h2>
+                        <div>Всего <span><?=count($myOrders)?></span></div>
+                        <? 
+                            $allSum = 0;
+                        foreach($myOrders as $order) { 
+                               $allSum += intval($order['price']);
+                           }
+                        ?>
+                            <div>Сумма <b><?=$allSum?></b></div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><b>Дата</b></td>
+                                <td><b>заказ</b></td>
+                                <td><b>статус</b></td>
+                                <td><b>сумма руб.</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php 
+
+                                foreach($myOrders as $order) {
+                                     $phpdate = strtotime( $order['Order_date'] );
+                                      $mysqldate = date( 'd.m.Y', $phpdate );
+                                    ?>
+                            <tr>
+                                <td>
+                                    <?= $mysqldate?>
+                                </td>
+                                <td><a title="<?=$order['complect']?>">Заказ №<?=$order['ord_number']?></a></td>
+                                <td <?php if (($order[ 'status']=="Отправлен" ) || ($order[ 'status']=="Доставлен" ) || ($order[ 'status']=="Ожидает отправки" )) { echo 'class="good"'; } ?> >
+                                    <?=$order['status'];?>
+                                </td>
+                                <td>
+                                    <?=$order['price']?>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="redDescription">
+
+                    <div style="text-align: right; margin-top: -62px; color: white;">Ваш реферальный бонус:
+                        <?=$rBon?>
+                    </div>
+                    <!--
+                    <p>Реферальная система на kovriki-darom.ru</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <p>Все просто</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    !-->
+                </div>
+            </main>
+
+
+            <main class="refPayments">
+                <div class="refLink <?=($settings['balance'] > 0) ? " hidden " : " " ?>"><b>Скопировать реферальную ссылку</b> <input name="refLink" type="text" value="kovriki-darom.ru/?r=<?=$rLink;?>" /> <button class="submitName">Подтвердить смену</button></div>
+                <div class="payInfo <?=($settings['balance'] > 0) ? " " : "hidden " ?>">
+                    <h3>Вывод средств</h3>
+                    <span>Доступно: <b><?=$settings['balance']?></b></span>
+                    <div class="inpWrap">
+                        <label for="pHnumber">Номер телефона:</label>
+                        <input type="text" name="pHnumber" id="pHnumber">
+
+                        <label for="payType">Куда выводить:</label>
+                        <select name="payType" id="payType">
+                        <option>Яндекс.Деньги</option>
+                        <option>Qiwi кошелек</option>
+                        <option>На баланс телефона</option>
+                      </select>
+
+                        <label for="requisits">Реквизиты:</label>
+                        <input type="text" name="requisits" id="requisits" placeholder="Номер телефона или кошелька">
+
+                        <label for="summ">Сумма:</label>
+                        <input type="text" name="summ" id="summ" value="<?=$settings['balance']?>">
+
+                        <div class="wonnaPay">Запросить выплату</div>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+                <div class="refStat">
+                    <div class="refStatHead refMyStat">
+                        <h2>История вывода средств</h2>
+
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><b>Дата</b></td>
+                                <td><b>Номер выплаты</b></td>
+                                <td><b>статус</b></td>
+                                <td><b>сумма руб.</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php 
+
+                                foreach($payList as $order) {
+                                     $phpdate = strtotime( $order['payDate'] );
+                                      $mysqldate = date( 'd.m.Y', $phpdate );
+                                    ?>
+                            <tr>
+                                <td>
+                                    <?= $mysqldate?>
+                                </td>
+                                <td><a title="<?=$order['complect']?>">Выплата №<?=$order['id']?></a></td>
+                                <td <?php if ($order[ 'status']=="Выплачено" ) { echo 'class="good"'; } ?> >
+                                    <?=$order['status'];?>
+                                </td>
+                                <td>
+                                    <?=$order['summ']?>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="redDescription">
+                    <div style="text-align: right; margin-top: -62px; color: white;">Ваш реферальный бонус:
+                        <?=$rBon?>
+                    </div>
+                    <!--
+                    <p>Реферальная система на kovriki-darom.ru</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <p>Все просто</p>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    <div>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</div>
+                    !-->
+                </div>
+            </main>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+        <script src="https://unpkg.com/imask"></script>
+        <script>
+            var regExpMask = new IMask(
+                document.getElementById('pHnumber'), {
+                    mask: '+{7}(000)000-00-00',
+                    lazy: false
+                });
+
+
+            var regExpMask = new IMask(
+                document.querySelector('.refLink input'), {
+                    mask: 'kovriki-d\\arom.ru/?r=`[aaaaaaaaaaaaaaaaaaaaaaaaa]',
+                    lazy: false
+                });
+
+            document.querySelector('.refLink input').value = "kovriki-darom.ru/?r=<?=$rLink;?>";
+
+            var maxLimit = document.querySelector('.payInfo > span b').textContent;
+
+            var numberMask = new IMask(
+                document.getElementById('summ'), {
+                    mask: Number,
+                    min: 1000,
+                    max: maxLimit,
+                    lazy: true
+                });
+
+
+            var refLink = document.querySelector('.refLink');
+            var historyLink = document.querySelector('.history');
+            var balance = document.querySelector('.balance');
+
+            var main1 = document.querySelector('.lk .refWrapper');
+            var main2 = document.querySelector('.lk .refHistory');
+            var main3 = document.querySelector('.lk .refPayments');
+
+            var wonnaPay = document.querySelector('.wonnaPay');
+            var wpNumber = document.getElementById('pHnumber');
+            var wpPayType = document.getElementById('payType');
+            var wpRequisits = document.getElementById('requisits');
+            var wpSumm = document.getElementById('summ');
+
+
+
+
+            refLink.addEventListener('click', function() {
+
+                historyLink.classList.remove('act');
+                refLink.classList.add('act');
+                balance.classList.remove('act');
+
+                main1.classList.add('act');
+                main2.classList.remove('act');
+                main3.classList.remove('act');
+
+            });
+
+            balance.addEventListener('click', function() {
+
+                historyLink.classList.remove('act');
+                refLink.classList.remove('act');
+                balance.classList.add('act');
+
+                main1.classList.remove('act');
+                main2.classList.remove('act');
+                main3.classList.add('act');
+
+            });
+
+            historyLink.addEventListener('click', function() {
+
+                historyLink.classList.add('act');
+                refLink.classList.remove('act');
+
+                main1.classList.remove('act');
+                main2.classList.add('act');
+                main3.classList.remove('act');
+
+            });
+
+            historyLink.addEventListener('click', function() {
+
+                historyLink.classList.add('act');
+                refLink.classList.remove('act');
+                balance.classList.remove('act');
+
+
+                main1.classList.remove('act');
+                main2.classList.add('act');
+                main3.classList.remove('act');
+
+            });
+
+
+
+
+            wpSumm.addEventListener('input', function() {
+                if (maxLimit > 1000) {
+                    if (wpSumm.value < 1000) {
+                        wonnaPay.textContent = "Минимум 1000р";
+                    } else {
+                        wonnaPay.textContent = "Запросить выплату";
+                    }
+                } else {
+                    wonnaPay.textContent = "Недостаточно средств";
+                }
+
+            });
+
+            var wonnaPay = document.querySelector('.wonnaPay');
+            var wpNumber = document.getElementById('pHnumber');
+            var wpPayType = document.getElementById('payType');
+            var wpRequisits = document.getElementById('requisits');
+            var wpSumm = document.getElementById('summ');
+
+
+            wonnaPay.addEventListener('click', function() {
+                if (maxLimit > 1000) {
+                    if (wpSumm.value < 1000) {
+                        wonnaPay.textContent = "Минимум 1000р";
+                    } else {
+                        var xhr = new XMLHttpRequest();
+
+                        var params = 'number=' + encodeURIComponent(wpNumber.value) +
+                            '&paytype=' + encodeURIComponent(wpPayType.value) +
+                            '&requizits=' + encodeURIComponent(wpRequisits.value) +
+                            '&summ=' + encodeURIComponent(wpSumm.value);
+                        xhr.open("GET", '/wonnaPayment.php?' + params, true);
+
+                        xhr.onreadystatechange = function() {
+                            if (this.readyState != 4) return;
+
+                            console.log(this.responseText);
+                        }
+
+                        document.querySelector('.inpWrap').innerHTML = '<h1 style="color: red; text-align: center; width: 100%">Заявка отправлена</h1>';
+                        setTimeout(function() {
+                            location.reload()
+                        }, 500);
+
+                        xhr.send();
+                    }
+                } else {
+                    wonnaPay.textContent = "Недостаточно средств";
+                }
+            });
+
+
+            var allRefLinks = document.querySelectorAll('input[name=refLink]');
+            var submLink = document.querySelectorAll('.submitName');
+
+
+            allRefLinks.forEach(function(rLink) {
+                rLink.addEventListener('input', function() {
+
+
+
+
+                    var xhr = new XMLHttpRequest();
+
+                    var params = 'refname=' + encodeURIComponent(rLink.value.substr(20));
+                    xhr.open("GET", '/refCheck.php?' + params, true);
+
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState != 4) return;
+
+                        if (this.responseText !== "1") {
+                            submLink.forEach(function(lnk) {
+                                if (!lnk.classList.contains('act')) {
+                                    lnk.classList.add('act');
+                                }
+                            });
+
+
+                        } else {
+                            submLink.forEach(function(lnk) {
+                                if (lnk.classList.contains('act')) {
+                                    lnk.classList.remove('act');
+                                }
+                            });
+
+                        }
+
+                    }
+
+
+
+
+                    xhr.send();
+
+                });
+            });
+
+            submLink.forEach(function(item) {
+                item.addEventListener('click', function() {
+
+
+
+
+                    var xhr = new XMLHttpRequest();
+
+                    var params = 'refname=' + encodeURIComponent(item.previousElementSibling.value.substr(20));
+                    xhr.open("GET", '/refChange.php?' + params, true);
+
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState != 4) return;
+
+                        submLink.forEach(function(lnk) {
+                            lnk.classList.remove('act');
+                        });
+
+                        allRefLinks.forEach(function(rLink) {
+                            rLink.value = item.previousElementSibling.value;
+                        });
+
+                        console.log(this.responseText);
+                    }
+
+
+                    xhr.send();
+
+
+
+                });
+            });
+        </script>
+
+
+    <? } else { echo '<div class="container"><h1 style="margin-top: 100px;">Авторизируйтесь</h1></div>'; } ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

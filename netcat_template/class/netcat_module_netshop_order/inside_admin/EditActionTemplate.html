@@ -1,0 +1,47 @@
+<?php
+
+/** @var nc_core $nc_core */
+
+$netshop = nc_netshop::get_instance($catalogue);
+$order = $netshop->load_order($message);
+
+$is_duplicate = (isset($is_duplicate) && $is_duplicate);
+$is_merged = (isset($is_merged) && $is_merged);
+
+// Сохранить f_User_ID (может быть передано для нового заказа)
+$custom_user_id = $nc_core->input->fetch_post('f_User_ID');
+if ($custom_user_id !== false) {
+    $order->set('User_ID', (int)$custom_user_id)
+          ->set('LastUser_ID', (int)$AUTH_USER_ID)
+          ->save();
+}
+
+// Сохранить изменения в способе доставки, если они есть
+$order->save_delivery_options($nc_core->input->fetch_post() ?: array());
+
+// Сохранить изменения в списке товаров, если передан массив $items
+$new_item_list = $nc_core->input->fetch_post('items');
+if ($new_item_list) {
+    $items = nc_netshop_item_collection::from_array($new_item_list);
+    $order->save_items($items, !$is_duplicate);
+}
+
+// Сохранить изменение скидки на корзину
+$cart_discount_sum = $nc_core->input->fetch_post('cart_discount_sum');
+if ($cart_discount_sum !== null && $cart_discount_sum != $order->get_order_discount_sum()) {
+    $order->update_cart_discount($cart_discount_sum);
+}
+
+// Обработать изменение статуса ($previous_status определяется в условии изменения)
+// и создание дубликата заказа
+$f_Status = $nc_core->input->fetch_post_get('f_Status');
+if (($f_Status !== null && $f_Status != $previous_status) || $is_duplicate || $is_merged || $action === 'add') {
+    $netshop->mailer->process_order_status_change($order);
+}
+
+// Готово.
+if (isset($do_not_respond) || !empty($inside_netshop) || ($inside_admin && !$isNaked)) {
+    exit;
+}
+
+echo NETCAT_MODERATION_MSG_OBJCHANGED, "<br /><br />", $goBack;

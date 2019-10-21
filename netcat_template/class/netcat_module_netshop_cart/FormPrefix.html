@@ -1,0 +1,255 @@
+<?php
+
+function dd($variable)
+{
+    echo '<pre>';
+    var_dump($variable);
+    echo '</pre>';
+}
+
+function ddd($variable)
+{
+    dd($variable);
+    die;
+}
+
+function getComponentIdFromCompItemStr($str)
+{
+    $str = mb_substr($str, 1);
+    return mb_stristr($str, ']', true);
+}
+
+function getItemIdFromCompItemStr($str)
+{
+    $pos = mb_strpos($str, '][') + 2;
+    $str = mb_substr($str, $pos);
+    return mb_substr($str, 0, -1);
+}
+
+try {
+    $allParams = [];
+
+    /*
+     * Structure:
+     * $cartItems = [
+     *      $item => [
+     *          params...
+     *      ]
+     *  ];
+     */
+    function getItemsFromCart($rawItemsFromCart, $nc_core)
+    {
+        $mainItemList = [];
+        $subItemList = [];
+        // Товары
+        foreach ($rawItemsFromCart as $item) {
+            if ($item['Type'] === 'parametr') {
+                // Тут  должна быть скидка на товар если есть промокодо
+                $discount = (int)$item['ItemDiscount'];
+                $originalPrice = (int)$item['OriginalPrice'];
+                $price = $originalPrice - $discount;
+                $subItemList[$item['Class_ID']][$item['Message_ID']] = [
+                    'name' => $item['Name'],
+                    'original_price' => $originalPrice,
+                    'price' => $price,
+                    'discount' => $discount,
+                    'sub_id' => $item['Subdivision_ID'],
+                ];
+            }
+        }
+        foreach ($rawItemsFromCart as $item) {
+            if ($item['Type'] !== 'parametr') {
+                $price = $item['OriginalPrice'];
+                $itemParamList = [];
+                if (isset($item['OrderParameters'])) {
+                    $itemParamList = [];
+                    foreach ($item['OrderParameters'] as $key => $itemStringId) {
+                        if ($key === 'count') {
+                            continue;
+                        }
+                        $componentId = getComponentIdFromCompItemStr($itemStringId);
+                        $itemId = getItemIdFromCompItemStr($itemStringId);
+                        $subElement = $subItemList[$componentId][$itemId];
+                        $posCount = $item['OrderParameters']['count'][$componentId][$itemId];
+
+                        if ($subElement === null) {
+                            continue;
+                        }
+                        $details = $nc_core->subdivision->get_by_id($subElement['sub_id']);
+                        $subElement['name'] = $details['Subdivision_Name'] . ': ' . $subElement['name'];
+                        $subElement['details'] = $details;
+                        $subElement['count'] = $posCount;
+                        $subElement['total'] = $subElement['price'] * $posCount;
+                        $itemParamList[$key] = $subElement;
+                        $price += $subElement['total'];
+                    }
+                }
+                // Тут  должна быть скидка на товар если есть промокодо
+                $discount = (int)$item['ItemDiscount'];
+                $originalPrice = (int)$item['OriginalPrice'];
+                $price -= $discount;
+                $total = $price * (int)$item['Qty'];
+                $mainItemList[$item['Message_ID']] = [
+                    'product_id' => '[' . $item['Class_ID'] . ']' . '[' . $item['Message_ID'] . ']',
+                    'name' => $item['Name'],
+                    'main_product_price' => $item['OriginalPrice'],
+                    'count' => $item['Qty'],
+                    'original_price' => $originalPrice,
+                    'price' => $price,
+                    'discount' => $discount,
+                    'total' => $total,
+                    'product_page_url' => $item['Hidden_URL'],
+                    'parameters' => $itemParamList,
+                ];
+            }
+        }
+
+        return $mainItemList;
+    }
+
+    function getTotalPrice(array $items, $couponSalePrice = 0)
+    {
+        $total = 0;
+
+        foreach ($items as $item) {
+            $total += $item['total'];
+        }
+
+        return $total - $couponSalePrice;
+    }
+
+// Купоны и скидки
+
+    $coupon_code = null;
+    $all_coupons = $netshop->promotion->get_registered_coupons();
+    if (count($all_coupons) > 0) {
+        $coupon_code = $all_coupons[0]['code'];
+        $coupon_info = $netshop->promotion->get_coupon($all_coupons[0]['code']);
+        $coupon_price = $coupon_info->get_deal()['amount'];
+    }
+
+    $cartItemList = getItemsFromCart($cart->get_items(), $nc_core);
+    $total_price = getTotalPrice($cartItemList, $coupon_price ?? null);
+
+    ?>
+
+    <div class="inner">
+    <div class="card-1">
+    <?php if (!empty($cartItemList)) {
+        ?>
+
+        <!-- сброс локального кэша блоков на случай изменения состава корзины или применения купона -->
+        <script>
+            nc_partial_clear_cache && nc_partial_clear_cache();
+        </script>
+
+        <!-- Хлебные крошки-->
+        <div class="navigation">
+            <a href="<?= $nc_core->SUB_FOLDER; ?>/"><?= $nc_core->catalogue->get_current('Catalogue_Name'); ?></a>
+            <span>Корзина</span>
+        </div>
+
+
+        <div class="title">Корзина</div>
+            <div class="row">
+                <div class="data-of-product">
+                    <div class="top">
+                        <div class="product">Товар</div>
+                        <div class="price">Цена</div>
+                        <div class="quantity">Кол-во</div>
+                        <div class="total">Итого</div>
+                    </div>
+                    <?php foreach ($cartItemList as $cartItem) {
+                        ?>
+                        <?php if (!empty($cartItem['price']) || !empty($cartItem['count'])) { ?>
+                            <div class="item">
+                                <form method="post" action="<?= nc_modules("netshop")->get_add_to_cart_url() ?>" >
+                                    <input type="hidden" name="cart<?= $cartItem['product_id'] ?>" value="0">
+                                    <button type="submit"></button>
+                                </form>
+                                <!-- Карточка -->
+                                <div class="product">
+                                    <!-- Заголовок-->
+                                    <a href="<?= $cartItem['product_page_url'] ?>"><?= $cartItem['name'] ?></a>
+                                    <?php if ($cartItem['parameters']): ?>
+                                        <div>
+                        <span class="hint">Комплектация
+                            <div>
+                                <?php foreach ($cartItem['parameters'] as $parameter) : ?>
+                                    <p><?= $parameter['name'] ?></p>
+                                <?php endforeach; ?>
+								</div>
+							</span>
+                                            <span></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="price"><?= $cartItem['price'] ?></div>
+                                <!-- Количество-->
+                                <div class="quantity"><?= $cartItem['count'] ?></div>
+                                <!-- Стоимость -->
+                                <div class="total <?= $cartItem['discount'] ? 'red' : '' ?>">
+                                    <?= $cartItem['total'] ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+                <form method="post" id="couponForm" action="/cart/" class="promo-code">
+                        <?= $netshop->promotion->get_coupon_notifications() ?>
+                        <?php if ($coupon_code !== null) { ?>
+                            <div class="after-promocode">
+                                <button class="btn-gray" type="submit" value="coupon_code" name="coupon_clear">изменить
+                                    прокод
+                                </button>
+                                <div class="title">Вы применили промокод <?= $coupon_code ?></div>
+                                <p>Ваша скидка <?= $netshop->format_price($coupon_price) ?? 0 ?></p>
+                            </div>
+                        <?php } else { ?>
+                            <div class="enter-promocode">
+                                <div class="input">
+                                    <input id="couponEnter" name="coupon_add" type="text" placeholder="Введите промокод">
+                                    <button id="couponSubmit" type="submit"><img src="/style/images/arrow-red.svg" alt="">
+                                    </button>
+                                </div>
+                                <p>и мы автоматически рассчитаем вашу скидку</p>
+                            </div>
+                        <?php } ?>
+                </form>
+            </div>
+            <div class="bottom">
+                <form method="post" action="<?= $nc_core->SUB_FOLDER; ?>/orders/add_order.html">
+                    <input type="hidden" name="total_price" value="<?= $total_price ?>">
+                    <button type="submit" style="margin-top: -20px;">
+                        Оформить заказ
+                    </button>
+                </form>
+                <div class="total-for-all">
+                    <div class="left">Итого:</div>
+                    <div class="right">
+                        <div class="price <?= $coupon_code !== null ? 'red' : '' ?>">
+                            <?= $netshop->format_price($total_price) ?>
+                        </div>
+                        <div class="ship">
+                            бесплатная доставка
+                            <span>от 4 000 рублей</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="title" style="margin-top: 60px">Возможно вас заинтересует</div>
+        </div>
+        <!-- Пересчитать корзину -->
+
+
+        <? /* Корзина пуста */ ?>
+    <? } else { ?>
+        <div
+                class='tpl-block-message tpl-block-message-cart-empty tpl-state-error'><?= NETCAT_MODULE_NETSHOP_CART_EMPTY ?></div>
+    <? }
+} catch (\Throwable $exception) {
+    ddd($exception->getMessage());
+}
+?>
+
+</div>

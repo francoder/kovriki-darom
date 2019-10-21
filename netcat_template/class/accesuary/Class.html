@@ -1,0 +1,84 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<section class="container">
+		<div class="m-page">
+              <? if ($nc_core->subdivision->get_level_count( $parent_sub_tree [0][Subdivision_ID] ) == 1) {
+                  ?>
+                    <ol itemscope itemtype="http://schema.org/BreadcrumbList">
+                        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <a itemprop="item" href="/"><span itemprop="name">Главная</span></a>
+                            <meta itemprop="position" content="0" />
+                        </li>
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <a itemprop="item" href="<?=$parent_sub_tree [0][Hidden_URL]?>"><span itemprop="name"><?=$parent_sub_tree [0][Subdivision_Name]?></span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                    </ol>
+                  <?
+              } else {?>
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList">
+                  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                      <a itemprop="item" href="/"><span itemprop="name">Главная</span></a>
+                      <meta itemprop="position" content="0" />
+                  </li>
+                  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                      <a itemprop="item" href="<?=$parent_sub_tree [1][Hidden_URL]?>"><span itemprop="name"><?=$parent_sub_tree [1][Subdivision_Name]?></span></a>
+                      <meta itemprop="position" content="1" />
+                  </li>
+                  <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                      <a itemprop="item" href="<?=$parent_sub_tree [0][Hidden_URL]?>"><span itemprop="name"><?=$parent_sub_tree [0][Subdivision_Name]?></span></a>
+                      <meta itemprop="position" content="2" />
+                   </li>
+              </ol>
+               <? } ?>
+			<h1><?=$parent_sub_tree [0][Subdivision_Name]?></h1>
+         
+         <div class="accesuary">
+         <?
+         
+          $nc_core->db->query("SELECT Subdivision_ID,Hidden_URL,Subdivision_Name FROM `Subdivision` WHERE `Checked` = 1 AND `Parent_Sub_ID` = ".$parent_sub_tree [0][Subdivision_ID]." ORDER BY Priority DESC" );
+          
+          $arr = $nc_core->db->last_result;
+          foreach($arr as $row)
+          {
+              $nc_core->db->query("SELECT * FROM `Message122` WHERE `Subdivision_ID` = ".$row->Subdivision_ID."" );
+              $arr2 = $nc_core->db->last_result;
+              
+              $nc_core->db->query("SELECT * FROM `Multifield` WHERE `Field_ID` = 319 AND `Message_ID` = ".$arr2[0]->Message_ID." ORDER BY Priority");
+              $arr3 = $nc_core->db->last_result;
+              
+              if (count($arr3) == 0) {
+                  $nc_core->db->query("SELECT * FROM `Message123` WHERE `Subdivision_ID` = ".$row->Subdivision_ID."" );
+                  $arr2 = $nc_core->db->last_result;
+                  $nc_core->db->query("SELECT * FROM `Multifield` WHERE `Field_ID` = 323 AND `Message_ID` = ".$arr2[0]->Message_ID." ORDER BY Priority");
+                  $arr3 = $nc_core->db->last_result;
+              }
+              ?>
+              
+              <div>
+                <a href="<?=$row->Hidden_URL?>">
+                  <h2><?=$row->Subdivision_Name?></h2>
+                  <span style="background-image: url(<?=$arr3[0]->Path?>)">
+                      <img src="<?=$arr3[0]->Path?>" hidden>
+                  </span>
+                </a>
+              </div>
+              
+              <?
+              
+          }
+         ?>
+          
+          
+               <div>
+                
+              </div>
+
+         
+         
+         </div>
+      </div>
+ </section><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

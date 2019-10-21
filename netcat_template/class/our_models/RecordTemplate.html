@@ -1,0 +1,25 @@
+<?/* Служебная часть */for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {    if($fetch_row[$f_RowNum] instanceof Iterator) {        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");    } else {        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");    }    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {        extract($value);    }    eval($cc_env["convert2txt"]);    ob_start();/* Конец служебной части */?>
+<?= $f_AdminButtons; ?>
+<div class="item">
+  <a href="<?= $f_href ?>">
+    <div class="img">
+      <img src="<?= $f_img ?>" alt="">
+    </div>
+  </a>
+  <div class="text">
+    <a href="<?= $f_href ?>">
+      <div class="date"><?= $f_date ?></div>
+      <div class="model"><?= $f_model ?></div>
+      <div class="price"><?= $f_price ?></div>
+    </a>
+    <div class="buttons">
+      <a href="<?= $f_href ?>" class="btn-cart">
+        <img src="/style/images/cart-2.svg" alt="">
+        <span>В корзину</span>
+      </a>
+      <button class="btn-gray ajax-mfp">купить в 1 клик</button>
+    </div>
+    <div class="in-stock">В наличии</div>
+  </div>
+</div>
+<?/* Служебная часть */    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);}/* Конец служебной части */?>

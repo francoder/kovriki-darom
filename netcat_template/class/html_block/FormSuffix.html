@@ -1,0 +1,139 @@
+<form class="franchise_window " action="/callbackFranchise.php" method="POST">
+    <div class="exit_one"></div>
+    <p>Наш менеджер свяжется с Вами в течении нескольких минут </p>
+    <span>Введите ваш телефон</span>
+    <input type="text" required class="order_fast_phone" name="number" placeholder="+7 (900) 999-99-99">
+    <span>Ваше имя</span>
+    <input type="text" required name="name">
+    <span>Ваш город</span>
+    <input type="text" name="city">
+    <button type="submit">Жду звонка</button>
+    <span class="pod_knopkoi">
+        Нажимая кнопку «Жду звонка», я даю согласиена обработку
+        <a href="/politika-konfidentsialnosti/">персональных данных</a>
+    </span>
+</form>
+
+<form class="wholesale_window "  action="/callbackWholesale.php" method="POST">
+    <div class="exit_onee"></div>
+    <p>Наш менеджер свяжется с Вами в течении нескольких минут </p>
+    <span>Введите ваш телефон</span>
+    <input type="text" required class="order_fast_phone" name="number" placeholder="+7 (900) 999-99-99">
+    <span>Ваше имя</span>
+    <input type="text" required name="name">
+    <span>Ваш город</span>
+    <input type="text" name="city">
+    <button type="submit">Жду звонка</button>
+    <span class="pod_knopkoi">
+        Нажимая кнопку «Жду звонка», я даю согласиена обработку
+        <a href="/politika-konfidentsialnosti/">персональных данных</a>
+    </span>
+</form>
+
+
+
+
+
+
+
+
+
+<div class="call-window" >
+        <div class="x-btn2">x</div>
+        <form id="myform" action="/form1.php" method="POST" >
+            <input type="text" name="name" placeholder="Ваше имя">
+            <input type="text" name="number" placeholder="Номер телефона">
+            <input type="submit" value="Жду звонка">
+
+        </form>
+    </div>
+    
+    
+    
+     <script>
+
+jQuery(document).on('submit', 'form#myform', function() { 
+var form = jQuery(this);
+var phone = form.find('input[name="number"]').val();
+var fio = form.find('input[name="name"]').val();
+
+var sub = 'Заявка на звонок';
+var ct_node_id = '7';
+var ct_site_id = '23540';
+
+var ct_data = {         
+fio: fio,
+phoneNumber: phone,
+subject: sub,
+sessionId: window.call_value 
+};
+
+
+
+jQuery.ajax({  
+  url: 'https://api-node'+ct_node_id+'.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/',      
+  dataType: 'json',         
+  type: 'POST',          
+  data: ct_data,
+  async: false
+});  
+
+});
+</script>
+    
+    
+    
+
+    <script>
+
+
+
+
+if (window.location.pathname == '/optovaya-prodazha-materiala/') {
+    var wholesale_btn = document.querySelector('.wholesale_btn');
+    var wholesale_window = document.querySelector('.wholesale_window');
+    var exit_onee = document.querySelector('.exit_onee');
+    wholesale_btn.addEventListener('click', function () {
+        if (!wholesale_window.classList.contains('act')) {
+            wholesale_window.classList.add('act');
+            overlay.classList.add('a-cw');
+        }
+    });
+
+    exit_onee.addEventListener('click', function () {
+        
+            wholesale_window.classList.remove('act');
+            overlay.classList.remove('a-cw');
+        
+    });
+}
+
+
+
+
+
+    var franchise_btn = document.querySelector('.franchise_btn');
+    var franchise_window = document.querySelector('.franchise_window');
+    var exit_one = document.querySelector('.exit_one');
+
+    franchise_btn.addEventListener('click', function () {
+        if (!franchise_window.classList.contains('act')) {
+            franchise_window.classList.add('act');
+            overlay.classList.add('a-cw');
+        }
+    });
+    
+     exit_one.addEventListener('click', function () {
+        if (franchise_window.classList.contains('act')) {
+            franchise_window.classList.remove('act');
+            overlay.classList.remove('a-cw');
+        }
+    });
+    
+  
+  
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<div class="overlay"></div>
+<script src="/js/ui.js">

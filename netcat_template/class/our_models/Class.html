@@ -1,0 +1,44 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+
+
+<div class="our-models">
+  <div class="inner">
+    <div class="top">
+      <h2>Вышлем вам коврик,
+        через <span>24 часа*</span>
+      </h2>
+      <p><span>*</span> Если вы владелец полулярных моделей
+        автопрома,  то вам не придется ждать! Мы сможем отправить вам коврик уже на следующий день!</p>
+      <a href="/catalog/" class="btn-red">все модели</a>
+    </div>
+    <div class="catalog-3">
+      <div class="list"><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?>
+<div class="item">
+  <a href="<?= $f_href ?>">
+    <div class="img">
+      <img src="<?= $f_img ?>" alt="">
+    </div>
+  </a>
+  <div class="text">
+    <a href="<?= $f_href ?>">
+      <div class="date"><?= $f_date ?></div>
+      <div class="model"><?= $f_model ?></div>
+      <div class="price"><?= $f_price ?></div>
+    </a>
+    <div class="buttons">
+      <a href="<?= $f_href ?>" class="btn-cart">
+        <img src="/style/images/cart-2.svg" alt="">
+        <span>В корзину</span>
+      </a>
+      <button class="btn-gray ajax-mfp">купить в 1 клик</button>
+    </div>
+    <div class="in-stock">В наличии</div>
+  </div>
+</div><!-- /RecordTemplate -->
+
+<!-- FormSuffix -->      </div>
+    </div>
+  </div>
+</div><!-- /FormSuffix -->

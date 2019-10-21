@@ -1,0 +1,444 @@
+</main>
+<footer id="footer">
+    <div class="inner">
+        <div class="footer-top">
+            <div class="lists">
+                <ul class="left">
+                    <li><a href="/catalog/kovriki-eva/">Автоковрики</a></li>
+                    <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+                    <li><a href="/catalog/auto-shtory/">Шторки</a></li>
+                    <li><a href="/catalog/nakidki/">Накидки</a></li>
+                </ul>
+                <ul>
+                    <li class="title">Полезное</li>
+                    <li><a href="/contacts/">О компании</a></li>
+                    <li><a href="/proizvodstvo/">Производство</a></li>
+                    <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+                    <li><a href="/garantii/">Гарантии</a></li>
+                    <li><a href="/politika-konfidentsialnosti/">Политика конфиденциальности</a></li>
+                </ul>
+                <ul>
+                    <li class="title"></li>
+                    <li><a href="/franshiza/">Франшиза</a></li>
+                    <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа материала</a></li>
+                    <!--          <li><a href="">Блог</a></li>-->
+                </ul>
+            </div>
+            <div class="social-networks">
+                <div class="title">мы в соцсетях</div>
+                <div class="list-of-social-networks">
+                    <a href="https://vk.com/kovrikidarom"><img src="/style/images/vk.svg" alt=""></a>
+                    <a href="https://www.instagram.com/kovriki_darom.ru/"><img src="/style/images/inst.svg" alt=""></a>
+                </div>
+                <a href="/lk/" class="logout">Войти в лк</a>
+            </div>
+            <div class="contacts">
+                <a href="tel:84999554333">8 499 955 43 33</a>
+                <a href="tel:89046704747" class="small-phone">8 904 670 47 47</a>
+                <p><a href="mailto:evakovrikoff@yandex.ru" class="mail">evakovrikoff@yandex.ru</a></p>
+                <button class="btn call-me ajax-mfp" data-reason="Оставить заявку">Сделать заказ</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="inner">
+            <div class="left">
+                <a href="/"><img src="/style/images/logo.png" alt=""></a>
+                <p>Коврики Даром - производство и продажа Ковриков EVA © Все права защищены.</p>
+            </div>
+            <div class="right">
+                <a href="http://t2agency.ru/"><img src="/style/images/t2agency.svg" alt=""></a>
+                <p>Дизайн, разработка          и продвижение</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+<div id="callbackForm" class="mfp-hide">
+
+    <div class="popup callback zoom-anim-dialog">
+        <form id="callback-form" enctype='multipart/form-data' action="" method="">
+            <? $nc_core->token->get_input() ?>
+            <input name='cc' type='hidden' value='44813'>
+            <input name='sub' type='hidden' value='2'>
+            <input name='catalogue' type='hidden' value='1'>
+            <input type='hidden' name='posting' value='1'>
+            <div id="finish-result">
+                <div class="title">Оставить заявку</div>
+                <p>Оставьте свои контактные данные и мы свяжемся с вами</p>
+                <p id="note"></p>
+                <div class="reply-field">
+                    <input type="text" name="f_Name" placeholder="Как вас зовут">
+                </div>
+                <div class="reply-field">
+                    <input type="text" name="f_Phone" placeholder="Номер телефона">
+                </div>
+                <div class="reply-field">
+                    <button id="btn-submit" class="btn-red">Отправить заявку</button>
+                </div>
+            </div>
+
+            <button title="Close (Esc)" type="button" class="mfp-close">Закрыть <img src="/style/images/close-button.svg"
+                                                                                     alt="">
+            </button>
+
+            <script>
+
+                jQuery(document).ready(function ( $ ) {
+                    $('input[name="f_Phone"]').inputFilter(function(value) {
+                        return /^\d*$/.test(value);
+                    });
+
+                    $('input[name="f_Name"]').inputFilter(function(value) {
+                        return /^\D*$/.test(value);
+                    });
+                });
+
+
+                $( '.mfp-close' ).click( function () {
+                    $( this ).magnificPopup( 'close' );
+                } );
+
+                const prevHtml = $( '#finish-result' ).html();
+
+                $( "#callback-form" ).submit( function ( e ) {
+                    e.preventDefault();
+
+
+                    if($('input[name="f_Phone"]').val().length < 6) {
+                        $( '#note' ).text( 'Введите номер телефона' );
+                        return ;
+                    }
+
+                    if($('input[name="f_Name"]').val().length <= 2 ) {
+                        $( '#note' ).text( 'Введите Имя' );
+                        return;
+                    }
+
+                    $( '#note' ).text('');
+
+                    var str = $( this ).serialize();
+
+                    $.ajax( {
+                        type: 'POST',
+                        url: '/netcat/add.php?isNaked=1&ajax=1',
+                        data: str,
+                        success: function ( msg ) {
+                            console.log(msg);
+                            //$( '#note' ).append( msg );
+                            $( '#finish-result' ).empty();
+                            $( '#finish-result' ).html( '<div class="title">Спасибо. <br>Сообщение отправлено.<br> В ближайшее время с вами свяжутся.</div>' );
+
+                            setTimeout( function () {
+                                $( this ).magnificPopup( 'close' );
+                                $( '#finish-result' ).html( prevHtml );
+                            }, 3000 );
+
+                        }
+                    } );
+
+                    return false;
+
+                } );
+
+
+            </script>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    jQuery( document ).on( 'submit', 'form#callback', function () {
+        var form = jQuery( this );
+        var phone = form.find( 'input[name="number"]' ).val();
+        var fio = form.find( 'input[name="name"]' ).val();
+
+        var sub = 'Купить в один клик';
+        var ct_node_id = '7';
+        var ct_site_id = '23540';
+
+        var ct_data = {
+            fio: fio,
+            phoneNumber: phone,
+            subject: sub,
+            sessionId: window.call_value
+        };
+
+
+        jQuery.ajax( {
+            url: 'https://api-node' + ct_node_id + '.calltouch.ru/calls-service/RestAPI/requests/' + ct_site_id + '/register/',
+            dataType: 'json',
+            type: 'POST',
+            data: ct_data,
+            async: false
+        } );
+
+    } );
+</script>
+
+<script>
+    var callme = document.querySelector( '.call-me' );
+    var callwnd = document.querySelector( '.call-window' );
+    var overlay = document.querySelector( '.overlay' );
+    var xbtn2 = document.querySelector( '.x-btn2' );
+    var burger = document.querySelector( '.burger' );
+    var mnav = document.querySelector( '.h-nav nav' );
+
+    /*
+    callme.addEventListener( 'click', function () {
+      if ( !callwnd.classList.contains( 'a-cw' ) ) {
+        callwnd.classList.add( 'a-cw' );
+        overlay.classList.add( 'a-cw' );
+      }
+    } );
+
+
+
+    overlay.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        } else if(mnav.classList.contains('mnav-active')) {
+            mnav.classList.remove('mnav-active');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+    xbtn2.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+    burger.addEventListener( 'click', function () {
+      if ( !mnav.classList.contains( 'mnav-active' ) ) {
+        mnav.classList.add( 'mnav-active' );
+        overlay.classList.add( 'a-cw' );
+      }
+    } );
+
+
+     */
+
+
+    function addEventListeners( selector, event, handler, useCapture ) {
+        useCapture = useCapture || false;
+
+        Array.prototype.forEach.call(
+            document.querySelectorAll( selector )
+            , function ( el, ix ) {
+                el.addEventListener( event, handler, useCapture );
+            }
+        );
+    }
+
+    var readyToClose = false;
+    var geoselect = document.querySelector( '.geoselect' );
+
+
+    addEventListeners( '.geoselect', "mouseenter", function ( evt ) {
+        readyToClose = false;
+        if ( !this.classList.contains( 'act' ) ) {
+            this.classList.add( 'act' );
+        }
+    } );
+
+    addEventListeners( '.geoselect', "mouseleave", function ( evt ) {
+        readyToClose = true;
+        setTimeout( function () {
+            if ( readyToClose ) {
+                geoselect.classList.remove( 'act' );
+            }
+        }, 500 );
+
+    } );
+
+    var allLIcon = document.querySelectorAll( '.login-icon' );
+
+
+    function preview( token ) {
+        var xhr = new XMLHttpRequest();
+        var params = 'token=' + token;
+        xhr.open( "GET", '/login.php?' + params, true );
+
+        xhr.onreadystatechange = function () {
+            if ( this.readyState != 4 ) return;
+
+            console.log( this.responseText );
+            var res = JSON.parse( this.responseText );
+
+            allLIcon.forEach( function ( item ) {
+                item.classList.add( 'act' );
+                item.setAttribute( "href", "/lk/" );
+                item.setAttribute( 'style', "background-image: url(" + res.photo_big + ");" );
+            } );
+            window.location.href = "https://" + window.location.host + "/lk/";
+
+        }
+
+        xhr.send();
+    }
+</script>
+<!-- calltouch code -->
+<script type="text/javascript">
+    (function ( w, d, nv, ls, yac ) {
+        var lwait = function ( w, on, trf, dly, ma, orf, osf ) {
+            var pfx = "ct_await_", sfx = "_completed";
+            if ( !w[pfx + on + sfx] ) {
+                var ci = clearInterval, si = setInterval, st = setTimeout, cmld = function () {
+                    if ( !w[pfx + on + sfx] ) {
+                        w[pfx + on + sfx] = true;
+                        if ( (w[pfx + on] && (w[pfx + on].timer)) ) {
+                            ci( w[pfx + on].timer );
+                            w[pfx + on] = null;
+                        }
+                        orf( w[on] );
+                    }
+                };
+                if ( !w[on] || !osf ) {
+                    if ( trf( w[on] ) ) {
+                        cmld();
+                    } else {
+                        if ( !w[pfx + on] ) {
+                            w[pfx + on] = {
+                                timer: si( function () {
+                                    if ( trf( w[on] ) || ma < ++w[pfx + on].attempt ) {
+                                        cmld();
+                                    }
+                                }, dly ), attempt: 0
+                            };
+                        }
+                    }
+                } else {
+                    if ( trf( w[on] ) ) {
+                        cmld();
+                    } else {
+                        osf( cmld );
+                        st( function () {
+                            lwait( w, on, trf, dly, ma, orf );
+                        }, 0 );
+                    }
+                }
+            } else {
+                orf( w[on] );
+            }
+        };
+        var ct = function ( w, d, e, c, n ) {
+            var a = 'all', b = 'tou', src = b + 'c' + 'h';
+            src = 'm' + 'o' + 'd.c' + a + src;
+            var jsHost = "https://" + src, s = d.createElement( e );
+            var jsf = function ( w, d, s, h, c, n, yc ) {
+                if ( yc !== null ) {
+                    lwait( w, 'yaCounter' + yc, function ( obj ) {
+                        return (obj && obj.getClientID ? true : false);
+                    }, 50, 100, function ( yaCounter ) {
+                        s.async = 1;
+                        s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (yaCounter && yaCounter.getClientID ? "ya_client_id" + yaCounter.getClientID() + ";" : "") + (c ? "client_id" + c + ";" : "") + "ref" + escape( d.referrer ) + ";url" + escape( d.URL ) + ";cook" + escape( d.cookie ) + ";attrs" + escape( "{\"attrh\":" + n + ",\"ver\":171110}" ) + ";";
+                        p = d.getElementsByTagName( e )[0];
+                        p.parentNode.insertBefore( s, p );
+                    }, function ( f ) {
+                        if ( w.jQuery ) {
+                            w.jQuery( d ).on( 'yacounter' + yc + 'inited', f );
+                        }
+                    } );
+                } else {
+                    s.async = 1;
+                    s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (c ? "client_id" + c + ";" : "") + "ref" + escape( d.referrer ) + ";url" + escape( d.URL ) + ";cook" + escape( d.cookie ) + ";attrs" + escape( "{\"attrh\":" + n + ",\"ver\":171110}" ) + ";";
+                    p = d.getElementsByTagName( e )[0];
+                    p.parentNode.insertBefore( s, p );
+                }
+            };
+            if ( !w.jQuery ) {
+                var jq = d.createElement( e );
+                jq.src = jsHost + "." + "r" + 'u/js/jquery-1.7.min.js';
+                jq.onload = function () {
+                    lwait( w, 'jQuery', function ( obj ) {
+                        return (obj ? true : false);
+                    }, 30, 100, function () {
+                        jsf( w, d, s, jsHost, c, n, yac );
+                    } );
+                };
+                p = d.getElementsByTagName( e )[0];
+                p.parentNode.insertBefore( jq, p );
+            } else {
+                jsf( w, d, s, jsHost, c, n, yac );
+            }
+        };
+        var gaid = function ( w, d, o, ct, n ) {
+            if ( !!o ) {
+                lwait( w, o, function ( obj ) {
+                    return (obj && obj.getAll ? true : false);
+                }, 200, (nv.userAgent.match( /Opera|OPR\// ) ? 10 : 20), function ( gaCounter ) {
+                    var clId = null;
+                    try {
+                        var cnt = gaCounter && gaCounter.getAll ? gaCounter.getAll() : null;
+                        clId = cnt && cnt.length > 0 && !!cnt[0] && cnt[0].get ? cnt[0].get( 'clientId' ) : null;
+                    } catch ( e ) {
+                        console.warn( "Unable to get clientId, Error: " + e.message );
+                    }
+                    ct( w, d, 'script', clId, n );
+                }, function ( f ) {
+                    w[o]( function () {
+                        f( w[o] );
+                    } )
+                } );
+            } else {
+                ct( w, d, 'script', null, n );
+            }
+        };
+        var cid = function () {
+            try {
+                var m1 = d.cookie.match( '(?:^|;)\\s*_ga=([^;]*)' );
+                if ( !(m1 && m1.length > 1) ) return null;
+                var m2 = decodeURIComponent( m1[1] ).match( /(\d+\.\d+)$/ );
+                if ( !(m2 && m2.length > 1) ) return null;
+                return m2[1]
+            } catch ( err ) {
+            }
+        }();
+        if ( cid === null && !!w.GoogleAnalyticsObject ) {
+            if ( w.GoogleAnalyticsObject == 'ga_ckpr' ) w.ct_ga = 'ga'; else w.ct_ga = w.GoogleAnalyticsObject;
+            if ( typeof Promise !== "undefined" && Promise.toString().indexOf( "[native code]" ) !== -1 ) {
+                new Promise( function ( resolve ) {
+                    var db, on = function () {
+                        resolve( true )
+                    }, off = function () {
+                        resolve( false )
+                    }, tryls = function tryls() {
+                        try {
+                            ls && ls.length ? off() : (ls.x = 1, ls.removeItem( "x" ), off());
+                        } catch ( e ) {
+                            nv.cookieEnabled ? on() : off();
+                        }
+                    };
+                    w.webkitRequestFileSystem ? webkitRequestFileSystem( 0, 0, off, on ) : "MozAppearance" in d.documentElement.style ? (db = indexedDB.open( "test" ), db.onerror = on, db.onsuccess = off) : /constructor/i.test( w.HTMLElement ) ? tryls() : !w.indexedDB && (w.PointerEvent || w.MSPointerEvent) ? on() : off();
+                } ).then( function ( pm ) {
+                    if ( pm ) {
+                        gaid( w, d, w.ct_ga, ct, 2 );
+                    } else {
+                        gaid( w, d, w.ct_ga, ct, 3 );
+                    }
+                } )
+            } else {
+                gaid( w, d, w.ct_ga, ct, 4 );
+            }
+        } else {
+            ct( w, d, 'script', cid, 1 );
+        }
+    })
+    ( window, document, navigator, localStorage, "46121340" );
+</script>
+<!-- /calltouch code -->
+
+<script src="//ulogin.ru/js/ulogin.js"></script>
+
+
+
+<script src="/style/js/tabs.js"></script>
+<script src="/style/js/jquery.formstyler.min.js"></script>
+<script src="/style/js/jquery.magnific-popup.min.js"></script>
+<script src="/style/js/script.js"></script>
+</body>
+</html>

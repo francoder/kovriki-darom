@@ -1,0 +1,99 @@
+<? /* Служебная часть */
+for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {
+  if ($fetch_row[$f_RowNum] instanceof Iterator) {
+    extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");
+  } else {
+    extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");
+  }
+  foreach ($iteration_RecordTemplate[$f_RowNum] as $value) {
+    extract($value);
+  }
+  eval($cc_env["convert2txt"]);
+  ob_start();
+  /* Конец служебной части */ ?>
+
+  <?= $f_AdminButtons; ?>
+  <?php
+  $item     = new nc_netshop_item($res[$f_RowNum]);
+  $carName  = $parent_sub_tree [0][Subdivision_Name];
+  $markName = $parent_sub_tree [1][Subdivision_Name];
+  ?>
+  <div class="card-of-product">
+    <div class="inner">
+      <div class="left">
+        <div>
+          <div class="navigation">
+            <a href="/">Главная</a>
+            <a href="<?= $parent_sub_tree [1][Hidden_URL] ?>"><?= $parent_sub_tree [1][Subdivision_Name] ?></a>
+            <span><?= $carName; ?></span>
+          </div>
+          <div class="title"><?= $carName; ?></div>
+          <?= $item['Description']; ?>
+          <div class="kit">
+            <div class="item">
+              <?= $f_Complect ? '<img src="/style/images/nakidka-half-off.svg" alt="">' : '<img src="/style/images/nakidka-half-on.svg" alt="">' ?>
+              <p>передний ряд</p>
+            </div>
+            <div class="item">
+              <?= $f_Complect ? '<img src="/style/images/nakidka-full-on.svg" alt="">' : '<img src="/style/images/nakidka-full-off.svg" alt="">' ?>
+              <p>комплект</p>
+            </div>
+          </div>
+          <div class="colors">
+            <p>Цвет комплекта</p>
+            <span>наличие может уточнить наш консультант</span>
+            <div class="list-of-colors">
+              <a class="black"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="tabs">
+          <ul>
+            <li><a href="#tab-1">Оформление</a></li>
+            <li><a href="#tab-2">Доставка</a></li>
+          </ul>
+        </div>
+        <div id="tab-1">
+          <div class="slider-card-of-product">
+            <div><img src="/style/images/image-7.png" alt="" class="img"></div>
+            <div><img src="/style/images/image-7.png" alt="" class="img"></div>
+          </div>
+          <form action="<?= nc_modules("netshop")->get_add_to_cart_url() ?>" method="post" id="formOrder">
+            <input type="hidden" name="redirect_url" value="/cart/"/>
+            <input type="hidden" name="cart_mode" value="add"/>
+
+            <div class="about">
+              <div class="left-block">
+                <span>Кол-во:</span>
+                <input id="count" type="number" name="cart<?= $item['RowID'] ?>" value="1" min="1"/>
+              </div>
+              <div class="right-block">
+                <span>Итого:</span>
+                <p id="sum"><?= $f_Price; ?></p>
+              </div>
+            </div>
+            <button type="submit" class="btn-red btn-add-order">Оформить заказ</button>
+          </form>
+          <button class="btn-gray ajax-mfp">или купить в 1 клик</button>
+        </div>
+
+        <div id="tab-2" class="shipping">
+          <p class="title-2">Почта России</p>
+          <p>Стоимость 400 рублей, срок до 10 дней в зависимости от региона доставки.</p>
+          <p class="title-2">Транспортной компанией</p>
+          <p>ПЭК, Деловые Линии, CDEK, КИТ, Энергия.</p>
+          <a href="/dostavka-i-oplata/" class="btn-gray" style="margin-left: 0%">Подробнее</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <?/* Служебная часть */
+  echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc,
+    $cc_env["Class_Name"], $no_cache_marks);
+}
+/* Конец служебной части */ ?>

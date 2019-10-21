@@ -1,0 +1,802 @@
+<!-- Header --><!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function ( w, d, s, l, i ) {
+      w[l] = w[l] || [];
+      w[l].push( {
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      } );
+      var f = d.getElementsByTagName( s )[0],
+        j = d.createElement( s ), dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore( j, f );
+    })( window, document, 'script', 'dataLayer', 'GTM-5P2G5K2' );</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title><?= ($nc_core->page->get_title() ? $nc_core->page->get_title() : strip_tags(nc_browse_path($browse_path))); ?></title>
+
+  <meta name='keywords' content=''>
+  <meta name="ahrefs-site-verification" content="87031d72bbdafaed5587e49db7eef81246142ddb43be8932352965f4bc3ba65e">
+  <link rel="canonical" href="<?= "https://".$current_catalogue['Domain'] ?>"/>
+  <?= ($nc_core->page->get_description() ? "<meta name='description' content='".$nc_core->page->get_description()."'>" : null); ?>
+
+
+  <script src="/style/js/jquery-1.12.4.min.js"></script>
+  <script src="/style/js/jquery.fancybox.min.js"></script>
+  <link rel="apple-touch-icon" sizes="76x76" href="/style/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/style/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/style/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/style/favicon/manifest.json">
+  <link rel="mask-icon" href="/style/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="stylesheet" href="/style/lightgallery.min.css">
+  <link rel="stylesheet" href="/style/lightslider.min.css">
+
+  <link rel="stylesheet" href="/style/css/normalize.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/style/css/slick.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/style/css/fonts.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/style/css/jquery.fancybox.min.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/style/css/magnific-popup.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/style/css/style.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/style/css/resp.css" type="text/css" media="all"/>
+  <meta name="theme-color" content="#ffffff">
+
+
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P2G5K2"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+  !function () {
+    "use strict";
+
+    function e( n ) {
+      return "undefined" == typeof this || Object.getPrototypeOf( this ) !== e.prototype ? new e( n ) : (O = this, O.version = "3.3.6", O.tools = new E, O.isSupported() ? (O.tools.extend( O.defaults, n || {} ), O.defaults.container = t( O.defaults ), O.store = {
+        elements: {},
+        containers: []
+      }, O.sequences = {}, O.history = [], O.uid = 0, O.initialized = !1) : "undefined" != typeof console && null !== console, O)
+    }
+
+    function t( e ) {
+      if ( e && e.container ) {
+        if ( "string" == typeof e.container ) return window.document.documentElement.querySelector( e.container );
+        if ( O.tools.isNode( e.container ) ) return e.container
+      }
+      return O.defaults.container
+    }
+
+    function n( e, t ) {
+      return "string" == typeof e ? Array.prototype.slice.call( t.querySelectorAll( e ) ) : O.tools.isNode( e ) ? [e] : O.tools.isNodeList( e ) ? Array.prototype.slice.call( e ) : []
+    }
+
+    function i() {
+      return ++O.uid
+    }
+
+    function o( e, t, n ) {
+      t.container && (t.container = n), e.config ? e.config = O.tools.extendClone( e.config, t ) : e.config = O.tools.extendClone( O.defaults, t ), "top" === e.config.origin || "bottom" === e.config.origin ? e.config.axis = "Y" : e.config.axis = "X"
+    }
+
+    function r( e ) {
+      var t = window.getComputedStyle( e.domEl );
+      e.styles || (e.styles = {
+        transition: {},
+        transform: {},
+        computed: {}
+      }, e.styles.inline = e.domEl.getAttribute( "style" ) || "", e.styles.inline += "; visibility: visible; ", e.styles.computed.opacity = t.opacity, t.transition && "all 0s ease 0s" !== t.transition ? e.styles.computed.transition = t.transition + ", " : e.styles.computed.transition = ""), e.styles.transition.instant = s( e, 0 ), e.styles.transition.delayed = s( e, e.config.delay ), e.styles.transform.initial = " -webkit-transform:", e.styles.transform.target = " -webkit-transform:", a( e ), e.styles.transform.initial += "transform:", e.styles.transform.target += "transform:", a( e )
+    }
+
+    function s( e, t ) {
+      var n = e.config;
+      return "-webkit-transition: " + e.styles.computed.transition + "-webkit-transform " + n.duration / 1e3 + "s " + n.easing + " " + t / 1e3 + "s, opacity " + n.duration / 1e3 + "s " + n.easing + " " + t / 1e3 + "s; transition: " + e.styles.computed.transition + "transform " + n.duration / 1e3 + "s " + n.easing + " " + t / 1e3 + "s, opacity " + n.duration / 1e3 + "s " + n.easing + " " + t / 1e3 + "s; "
+    }
+
+    function a( e ) {
+      var t, n = e.config, i = e.styles.transform;
+      t = "top" === n.origin || "left" === n.origin ? /^-/.test( n.distance ) ? n.distance.substr( 1 ) : "-" + n.distance : n.distance, parseInt( n.distance ) && (i.initial += " translate" + n.axis + "(" + t + ")", i.target += " translate" + n.axis + "(0)"), n.scale && (i.initial += " scale(" + n.scale + ")", i.target += " scale(1)"), n.rotate.x && (i.initial += " rotateX(" + n.rotate.x + "deg)", i.target += " rotateX(0)"), n.rotate.y && (i.initial += " rotateY(" + n.rotate.y + "deg)", i.target += " rotateY(0)"), n.rotate.z && (i.initial += " rotateZ(" + n.rotate.z + "deg)", i.target += " rotateZ(0)"), i.initial += "; opacity: " + n.opacity + ";", i.target += "; opacity: " + e.styles.computed.opacity + ";"
+    }
+
+    function l( e ) {
+      var t = e.config.container;
+      t && O.store.containers.indexOf( t ) === -1 && O.store.containers.push( e.config.container ), O.store.elements[e.id] = e
+    }
+
+    function c( e, t, n ) {
+      var i = { target: e, config: t, interval: n };
+      O.history.push( i )
+    }
+
+    function f() {
+      if ( O.isSupported() ) {
+        y();
+        for ( var e = 0; e < O.store.containers.length; e++ ) O.store.containers[e].addEventListener( "scroll", d ), O.store.containers[e].addEventListener( "resize", d );
+        O.initialized || (window.addEventListener( "scroll", d ), window.addEventListener( "resize", d ), O.initialized = !0)
+      }
+      return O
+    }
+
+    function d() {
+      T( y )
+    }
+
+    function u() {
+      var e, t, n, i;
+      O.tools.forOwn( O.sequences, function ( o ) {
+        i = O.sequences[o], e = !1;
+        for ( var r = 0; r < i.elemIds.length; r++ ) n = i.elemIds[r], t = O.store.elements[n], q( t ) && !e && (e = !0);
+        i.active = e
+      } )
+    }
+
+    function y() {
+      var e, t;
+      u(), O.tools.forOwn( O.store.elements, function ( n ) {
+        t = O.store.elements[n], e = w( t ), g( t ) ? (t.config.beforeReveal( t.domEl ), e ? t.domEl.setAttribute( "style", t.styles.inline + t.styles.transform.target + t.styles.transition.delayed ) : t.domEl.setAttribute( "style", t.styles.inline + t.styles.transform.target + t.styles.transition.instant ), p( "reveal", t, e ), t.revealing = !0, t.seen = !0, t.sequence && m( t, e )) : v( t ) && (t.config.beforeReset( t.domEl ), t.domEl.setAttribute( "style", t.styles.inline + t.styles.transform.initial + t.styles.transition.instant ), p( "reset", t ), t.revealing = !1)
+      } )
+    }
+
+    function m( e, t ) {
+      var n = 0, i = 0, o = O.sequences[e.sequence.id];
+      o.blocked = !0, t && "onload" === e.config.useDelay && (i = e.config.delay), e.sequence.timer && (n = Math.abs( e.sequence.timer.started - new Date ), window.clearTimeout( e.sequence.timer )), e.sequence.timer = { started: new Date }, e.sequence.timer.clock = window.setTimeout( function () {
+        o.blocked = !1, e.sequence.timer = null, d()
+      }, Math.abs( o.interval ) + i - n )
+    }
+
+    function p( e, t, n ) {
+      var i = 0, o = 0, r = "after";
+      switch ( e ) {
+        case"reveal":
+          o = t.config.duration, n && (o += t.config.delay), r += "Reveal";
+          break;
+        case"reset":
+          o = t.config.duration, r += "Reset"
+      }
+      t.timer && (i = Math.abs( t.timer.started - new Date ), window.clearTimeout( t.timer.clock )), t.timer = { started: new Date }, t.timer.clock = window.setTimeout( function () {
+        t.config[r]( t.domEl ), t.timer = null
+      }, o - i )
+    }
+
+    function g( e ) {
+      if ( e.sequence ) {
+        var t = O.sequences[e.sequence.id];
+        return t.active && !t.blocked && !e.revealing && !e.disabled
+      }
+      return q( e ) && !e.revealing && !e.disabled
+    }
+
+    function w( e ) {
+      var t = e.config.useDelay;
+      return "always" === t || "onload" === t && !O.initialized || "once" === t && !e.seen
+    }
+
+    function v( e ) {
+      if ( e.sequence ) {
+        var t = O.sequences[e.sequence.id];
+        return !t.active && e.config.reset && e.revealing && !e.disabled
+      }
+      return !q( e ) && e.config.reset && e.revealing && !e.disabled
+    }
+
+    function b( e ) {
+      return { width: e.clientWidth, height: e.clientHeight }
+    }
+
+    function h( e ) {
+      if ( e && e !== window.document.documentElement ) {
+        var t = x( e );
+        return { x: e.scrollLeft + t.left, y: e.scrollTop + t.top }
+      }
+      return { x: window.pageXOffset, y: window.pageYOffset }
+    }
+
+    function x( e ) {
+      var t = 0, n = 0, i = e.offsetHeight, o = e.offsetWidth;
+      do isNaN( e.offsetTop ) || (t += e.offsetTop), isNaN( e.offsetLeft ) || (n += e.offsetLeft), e = e.offsetParent; while ( e );
+      return { top: t, left: n, height: i, width: o }
+    }
+
+    function q( e ) {
+      function t() {
+        var t = c + a * s, n = f + l * s, i = d - a * s, y = u - l * s, m = r.y + e.config.viewOffset.top,
+          p = r.x + e.config.viewOffset.left, g = r.y - e.config.viewOffset.bottom + o.height,
+          w = r.x - e.config.viewOffset.right + o.width;
+        return t < g && i > m && n < w && y > p
+      }
+
+      function n() {
+        return "fixed" === window.getComputedStyle( e.domEl ).position
+      }
+
+      var i = x( e.domEl ), o = b( e.config.container ), r = h( e.config.container ), s = e.config.viewFactor,
+        a = i.height, l = i.width, c = i.top, f = i.left, d = c + a, u = f + l;
+      return t() || n()
+    }
+
+    function E() {
+    }
+
+    var O, T;
+    e.prototype.defaults = {
+      origin: "bottom",
+      distance: "20px",
+      duration: 500,
+      delay: 0,
+      rotate: { x: 0, y: 0, z: 0 },
+      opacity: 0,
+      scale: .9,
+      easing: "cubic-bezier(0.6, 0.2, 0.1, 1)",
+      container: window.document.documentElement,
+      mobile: !0,
+      reset: !1,
+      useDelay: "always",
+      viewFactor: .2,
+      viewOffset: { top: 0, right: 0, bottom: 0, left: 0 },
+      beforeReveal: function ( e ) {
+      },
+      beforeReset: function ( e ) {
+      },
+      afterReveal: function ( e ) {
+      },
+      afterReset: function ( e ) {
+      }
+    }, e.prototype.isSupported = function () {
+      var e = document.documentElement.style;
+      return "WebkitTransition" in e && "WebkitTransform" in e || "transition" in e && "transform" in e
+    }, e.prototype.reveal = function ( e, s, a, d ) {
+      var u, y, m, p, g, w;
+      if ( void 0 !== s && "number" == typeof s ? (a = s, s = {}) : void 0 !== s && null !== s || (s = {}), u = t( s ), y = n( e, u ), !y.length ) return O;
+      a && "number" == typeof a && (w = i(), g = O.sequences[w] = { id: w, interval: a, elemIds: [], active: !1 });
+      for ( var v = 0; v < y.length; v++ ) p = y[v].getAttribute( "data-sr-id" ), p ? m = O.store.elements[p] : (m = {
+        id: i(),
+        domEl: y[v],
+        seen: !1,
+        revealing: !1
+      }, m.domEl.setAttribute( "data-sr-id", m.id )), g && (m.sequence = {
+        id: g.id,
+        index: g.elemIds.length
+      }, g.elemIds.push( m.id )), o( m, s, u ), r( m ), l( m ), O.tools.isMobile() && !m.config.mobile || !O.isSupported() ? (m.domEl.setAttribute( "style", m.styles.inline ), m.disabled = !0) : m.revealing || m.domEl.setAttribute( "style", m.styles.inline + m.styles.transform.initial );
+      return !d && O.isSupported() && (c( e, s, a ), O.initTimeout && window.clearTimeout( O.initTimeout ), O.initTimeout = window.setTimeout( f, 0 )), O
+    }, e.prototype.sync = function () {
+      if ( O.history.length && O.isSupported() ) {
+        for ( var e = 0; e < O.history.length; e++ ) {
+          var t = O.history[e];
+          O.reveal( t.target, t.config, t.interval, !0 )
+        }
+        f()
+      }
+      return O
+    }, E.prototype.isObject = function ( e ) {
+      return null !== e && "object" == typeof e && e.constructor === Object
+    }, E.prototype.isNode = function ( e ) {
+      return "object" == typeof window.Node ? e instanceof window.Node : e && "object" == typeof e && "number" == typeof e.nodeType && "string" == typeof e.nodeName
+    }, E.prototype.isNodeList = function ( e ) {
+      var t = Object.prototype.toString.call( e ), n = /^\[object (HTMLCollection|NodeList|Object)\]$/;
+      return "object" == typeof window.NodeList ? e instanceof window.NodeList : e && "object" == typeof e && n.test( t ) && "number" == typeof e.length && (0 === e.length || this.isNode( e[0] ))
+    }, E.prototype.forOwn = function ( e, t ) {
+      if ( !this.isObject( e ) ) throw new TypeError( 'Expected "object", but received "' + typeof e + '".' );
+      for ( var n in e ) e.hasOwnProperty( n ) && t( n )
+    }, E.prototype.extend = function ( e, t ) {
+      return this.forOwn( t, function ( n ) {
+        this.isObject( t[n] ) ? (e[n] && this.isObject( e[n] ) || (e[n] = {}), this.extend( e[n], t[n] )) : e[n] = t[n]
+      }.bind( this ) ), e
+    }, E.prototype.extendClone = function ( e, t ) {
+      return this.extend( this.extend( {}, e ), t )
+    }, E.prototype.isMobile = function () {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent )
+    }, T = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function ( e ) {
+      window.setTimeout( e, 1e3 / 60 )
+    }, "function" == typeof define && "object" == typeof define.amd && define.amd ? define( function () {
+      return e
+    } ) : "undefined" != typeof module && module.exports ? module.exports = e : window.ScrollReveal = e
+  }();
+  window.sr = ScrollReveal();
+  sr.reveal( 'footer', { duration: 2000 }, 50 );
+  sr.reveal( '.btn' ), { duration: 2000 }, 50;
+  sr.reveal( 'span' ), { duration: 2000 }, 50;
+
+</script>
+<div id="wrapper">
+  <header id="header" class="header-index">
+    <div class="inner">
+      <a href="/" class="logo"><img src="/style/images/logo.png" alt=""></a>
+      <nav>
+        <div class="dropdown-menu">
+          <div class="line-1"></div>
+          <div class="line-2"></div>
+          <div class="line-3"></div>
+        </div>
+        <div class="mobile-fixed">
+          <ul>
+            <li><a href="/catalog/">Каталог</a></li>
+            <li><a href="/catalog/kovriki-eva/">Коврики EVA</a></li>
+            <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+            <li class="menu">
+              <a href="">
+									<span>
+										<span class="line-1"></span>
+										<span class="line-2"></span>
+										<span class="line-3"></span>
+									</span>
+                Полезное</a>
+              <ul>
+                <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+                <li><a href="/garantii/">Гарантии</a></li>
+                <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа</a></li>
+                <li><a href="/franshiza">Франшиза</a></li>
+                <li><a href="/contacts/">Контакты</a></li>
+                <li><a href="/proizvodstvo/">Производство</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="mobile-block">
+            <a href="" class="cart">
+              <img src="/style/images/cart-white.svg" alt="">
+              <span>Корзина</span>
+            </a>
+            <div class="bottom">
+              <a href="tel:84999554333" class="btn">Заказать</a>
+              <span>8 499 955 43 33</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="callback">
+        <button class="btn ajax-mfp" data-reason="Оставить заявку">Заказать звонок</button>
+      </div>
+      <div class="phone">
+        <a href="tel:84999554333"><span>8 499</span> 955 43 33</a>
+      </div>
+      <div class="icons">
+        <a href="/cart/">
+          <img src="/style/images/cart.svg" alt="">
+        </a>
+        <a href="/lk/" class="login">
+          <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.5"
+                  d="M4.16333 3.43232C5.44042 2.07079 7.2558 1.22021 9.26983 1.22021C13.1358 1.22021 16.2698 4.35422 16.2698 8.22021C16.2698 12.0862 13.1358 15.2202 9.26983 15.2202C7.55594 15.2202 5.98592 14.6043 4.76904 13.5817"
+                  stroke="white" stroke-linejoin="round"/>
+            <g opacity="0.5" class="arrow">
+              <line x1="0.5" y1="8.25635" x2="10.5672" y2="8.25635" stroke="white"/>
+              <path d="M7.85742 5.44092L10.6369 8.22037L7.85742 10.9998" stroke="white"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+
+	<!-- /Header -->
+
+<!-- Footer --></main>
+<footer id="footer">
+  <div class="inner">
+    <div class="footer-top">
+      <div class="lists">
+        <ul class="left">
+          <li><a href="/catalog/kovriki-eva/">Автоковрики</a></li>
+          <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+          <li><a href="/catalog/auto-shtory/">Шторки</a></li>
+          <li><a href="/catalog/nakidki/">Накидки</a></li>
+        </ul>
+        <ul>
+          <li class="title">Полезное</li>
+          <li><a href="/contacts/">О компании</a></li>
+          <li><a href="/proizvodstvo/">Производство</a></li>
+          <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+          <li><a href="/garantii/">Гарантии</a></li>
+          <li><a href="/politika-konfidentsialnosti/">Политика конфиденциальности</a></li>
+        </ul>
+        <ul>
+          <li class="title"></li>
+          <li><a href="/franshiza/">Франшиза</a></li>
+          <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа материала</a></li>
+          <li><a href="">Блог</a></li>
+        </ul>
+      </div>
+      <div class="social-networks">
+        <div class="title">мы в соцсетях</div>
+        <div class="list-of-social-networks">
+          <a href="https://vk.com/kovrikidarom"><img src="/style/images/vk.svg" alt=""></a>
+          <a href="https://www.instagram.com/kovriki_darom.ru/"><img src="/style/images/inst.svg" alt=""></a>
+        </div>
+        <a href="/lk/" class="logout">Войти в лк</a>
+      </div>
+      <div class="contacts">
+        <a href="tel:84999554333">8 499 955 43 33</a>
+        <a href="tel:89046704747" class="small-phone">8 904 670 47 47</a>
+        <p><a href="mailto:evakovrikoff@yandex.ru" class="mail">evakovrikoff@yandex.ru</a></p>
+        <button class="btn call-me ajax-mfp" data-reason="Оставить заявку">Сделать заказ</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="inner">
+      <div class="left">
+        <a href="/"><img src="/style/images/logo.png" alt=""></a>
+        <p>Коврики Даром - производство и продажа Ковриков EVA © Все права защищены.</p>
+      </div>
+      <div class="right">
+        <a href="https://t2agency.ru/"><img src="/style/images/t2agency.svg" alt=""></a>
+        <p>Дизайн, разработка и продвижение</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script src="/style/js/tabs.js"></script>
+<script src="/style/js/script.js"></script>
+<script type="text/javascript">
+
+  jQuery( document ).on( 'submit', 'form#myform2', function () {
+    var form = jQuery( this );
+    var phone = form.find( 'input[name="number"]' ).val();
+    var fio = form.find( 'input[name="name"]' ).val();
+
+    var sub = 'Заявка на звонок';
+    var ct_node_id = '7';
+    var ct_site_id = '23540';
+
+    var ct_data = {
+      fio: fio,
+      phoneNumber: phone,
+      subject: sub,
+      sessionId: window.call_value
+    };
+
+
+    jQuery.ajax( {
+      url: 'https://api-node' + ct_node_id + '.calltouch.ru/calls-service/RestAPI/requests/' + ct_site_id + '/register/',
+      dataType: 'json',
+      type: 'POST',
+      data: ct_data,
+      async: false
+    } );
+
+  } );
+</script>
+
+
+<script>
+  /*
+  var callme = document.querySelector( '.call-me' );
+  var callwnd = document.querySelector( '.call-window' );
+  var overlay = document.querySelector( '.overlay' );
+  var xbtn2 = document.querySelector( '.x-btn2' );
+  var burger = document.querySelector( '.burger' );
+  var mnav = document.querySelector( '.h-nav nav' );
+
+
+  callme.addEventListener( 'click', function () {
+    if ( !callwnd.classList.contains( 'a-cw' ) ) {
+      callwnd.classList.add( 'a-cw' );
+      overlay.classList.add( 'a-cw' );
+    }
+  } );
+
+  overlay.addEventListener( 'click', function () {
+    if ( callwnd.classList.contains( 'a-cw' ) ) {
+      callwnd.classList.remove( 'a-cw' );
+      overlay.classList.remove( 'a-cw' );
+    } else if ( mnav.classList.contains( 'mnav-active' ) ) {
+      mnav.classList.remove( 'mnav-active' );
+      overlay.classList.remove( 'a-cw' );
+    }
+  } );
+
+
+  xbtn2.addEventListener( 'click', function () {
+    if ( callwnd.classList.contains( 'a-cw' ) ) {
+      callwnd.classList.remove( 'a-cw' );
+      overlay.classList.remove( 'a-cw' );
+    }
+  } );
+
+  burger.addEventListener( 'click', function () {
+    if ( !mnav.classList.contains( 'mnav-active' ) ) {
+      mnav.classList.add( 'mnav-active' );
+      overlay.classList.add( 'a-cw' );
+    }
+  } );
+
+*/
+  function addEventListeners( selector, event, handler, useCapture ) {
+    useCapture = useCapture || false;
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll( selector )
+      , function ( el, ix ) {
+        el.addEventListener( event, handler, useCapture );
+      }
+    );
+  }
+
+  var readyToClose = false;
+  var geoselect = document.querySelector( '.geoselect' );
+
+
+  addEventListeners( '.geoselect', "mouseenter", function ( evt ) {
+    readyToClose = false;
+    if ( !this.classList.contains( 'act' ) ) {
+      this.classList.add( 'act' );
+    }
+  } );
+
+  addEventListeners( '.geoselect', "mouseleave", function ( evt ) {
+    readyToClose = true;
+    setTimeout( function () {
+      if ( readyToClose ) {
+        geoselect.classList.remove( 'act' );
+      }
+    }, 500 );
+
+  } );
+
+  var allLIcon = document.querySelectorAll( '.login-icon' );
+
+
+  function preview( token ) {
+    var xhr = new XMLHttpRequest();
+    var params = 'token=' + token;
+    xhr.open( "GET", '/login.php?' + params, true );
+
+    xhr.onreadystatechange = function () {
+      if ( this.readyState != 4 ) return;
+
+      console.log( this.responseText );
+      var res = JSON.parse( this.responseText );
+
+      allLIcon.forEach( function ( item ) {
+        item.classList.add( 'act' );
+        item.setAttribute( "href", "/lk/" );
+        item.setAttribute( 'style', "background-image: url(" + res.photo_big + ");" );
+      } );
+      window.location.href = "https://" + window.location.host + "/lk/";
+
+    }
+
+
+    xhr.send();
+  }
+</script>
+
+
+<!-- calltouch code -->
+<script type="text/javascript">
+  (function ( w, d, nv, ls, yac ) {
+    var lwait = function ( w, on, trf, dly, ma, orf, osf ) {
+      var pfx = "ct_await_", sfx = "_completed";
+      if ( !w[pfx + on + sfx] ) {
+        var ci = clearInterval, si = setInterval, st = setTimeout, cmld = function () {
+          if ( !w[pfx + on + sfx] ) {
+            w[pfx + on + sfx] = true;
+            if ( (w[pfx + on] && (w[pfx + on].timer)) ) {
+              ci( w[pfx + on].timer );
+              w[pfx + on] = null;
+            }
+            orf( w[on] );
+          }
+        };
+        if ( !w[on] || !osf ) {
+          if ( trf( w[on] ) ) {
+            cmld();
+          } else {
+            if ( !w[pfx + on] ) {
+              w[pfx + on] = {
+                timer: si( function () {
+                  if ( trf( w[on] ) || ma < ++w[pfx + on].attempt ) {
+                    cmld();
+                  }
+                }, dly ), attempt: 0
+              };
+            }
+          }
+        } else {
+          if ( trf( w[on] ) ) {
+            cmld();
+          } else {
+            osf( cmld );
+            st( function () {
+              lwait( w, on, trf, dly, ma, orf );
+            }, 0 );
+          }
+        }
+      } else {
+        orf( w[on] );
+      }
+    };
+    var ct = function ( w, d, e, c, n ) {
+      var a = 'all', b = 'tou', src = b + 'c' + 'h';
+      src = 'm' + 'o' + 'd.c' + a + src;
+      var jsHost = "https://" + src, s = d.createElement( e );
+      var jsf = function ( w, d, s, h, c, n, yc ) {
+        if ( yc !== null ) {
+          lwait( w, 'yaCounter' + yc, function ( obj ) {
+            return (obj && obj.getClientID ? true : false);
+          }, 50, 100, function ( yaCounter ) {
+            s.async = 1;
+            s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (yaCounter && yaCounter.getClientID ? "ya_client_id" + yaCounter.getClientID() + ";" : "") + (c ? "client_id" + c + ";" : "") + "ref" + escape( d.referrer ) + ";url" + escape( d.URL ) + ";cook" + escape( d.cookie ) + ";attrs" + escape( "{\"attrh\":" + n + ",\"ver\":171110}" ) + ";";
+            p = d.getElementsByTagName( e )[0];
+            p.parentNode.insertBefore( s, p );
+          }, function ( f ) {
+            if ( w.jQuery ) {
+              w.jQuery( d ).on( 'yacounter' + yc + 'inited', f );
+            }
+          } );
+        } else {
+          s.async = 1;
+          s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (c ? "client_id" + c + ";" : "") + "ref" + escape( d.referrer ) + ";url" + escape( d.URL ) + ";cook" + escape( d.cookie ) + ";attrs" + escape( "{\"attrh\":" + n + ",\"ver\":171110}" ) + ";";
+          p = d.getElementsByTagName( e )[0];
+          p.parentNode.insertBefore( s, p );
+        }
+      };
+      if ( !w.jQuery ) {
+        var jq = d.createElement( e );
+        jq.src = jsHost + "." + "r" + 'u/js/jquery-1.7.min.js';
+        jq.onload = function () {
+          lwait( w, 'jQuery', function ( obj ) {
+            return (obj ? true : false);
+          }, 30, 100, function () {
+            jsf( w, d, s, jsHost, c, n, yac );
+          } );
+        };
+        p = d.getElementsByTagName( e )[0];
+        p.parentNode.insertBefore( jq, p );
+      } else {
+        jsf( w, d, s, jsHost, c, n, yac );
+      }
+    };
+    var gaid = function ( w, d, o, ct, n ) {
+      if ( !!o ) {
+        lwait( w, o, function ( obj ) {
+          return (obj && obj.getAll ? true : false);
+        }, 200, (nv.userAgent.match( /Opera|OPR\// ) ? 10 : 20), function ( gaCounter ) {
+          var clId = null;
+          try {
+            var cnt = gaCounter && gaCounter.getAll ? gaCounter.getAll() : null;
+            clId = cnt && cnt.length > 0 && !!cnt[0] && cnt[0].get ? cnt[0].get( 'clientId' ) : null;
+          } catch ( e ) {
+            console.warn( "Unable to get clientId, Error: " + e.message );
+          }
+          ct( w, d, 'script', clId, n );
+        }, function ( f ) {
+          w[o]( function () {
+            f( w[o] );
+          } )
+        } );
+      } else {
+        ct( w, d, 'script', null, n );
+      }
+    };
+    var cid = function () {
+      try {
+        var m1 = d.cookie.match( '(?:^|;)\\s*_ga=([^;]*)' );
+        if ( !(m1 && m1.length > 1) ) return null;
+        var m2 = decodeURIComponent( m1[1] ).match( /(\d+\.\d+)$/ );
+        if ( !(m2 && m2.length > 1) ) return null;
+        return m2[1]
+      } catch ( err ) {
+      }
+    }();
+    if ( cid === null && !!w.GoogleAnalyticsObject ) {
+      if ( w.GoogleAnalyticsObject == 'ga_ckpr' ) w.ct_ga = 'ga'; else w.ct_ga = w.GoogleAnalyticsObject;
+      if ( typeof Promise !== "undefined" && Promise.toString().indexOf( "[native code]" ) !== -1 ) {
+        new Promise( function ( resolve ) {
+          var db, on = function () {
+            resolve( true )
+          }, off = function () {
+            resolve( false )
+          }, tryls = function tryls() {
+            try {
+              ls && ls.length ? off() : (ls.x = 1, ls.removeItem( "x" ), off());
+            } catch ( e ) {
+              nv.cookieEnabled ? on() : off();
+            }
+          };
+          w.webkitRequestFileSystem ? webkitRequestFileSystem( 0, 0, off, on ) : "MozAppearance" in d.documentElement.style ? (db = indexedDB.open( "test" ), db.onerror = on, db.onsuccess = off) : /constructor/i.test( w.HTMLElement ) ? tryls() : !w.indexedDB && (w.PointerEvent || w.MSPointerEvent) ? on() : off();
+        } ).then( function ( pm ) {
+          if ( pm ) {
+            gaid( w, d, w.ct_ga, ct, 2 );
+          } else {
+            gaid( w, d, w.ct_ga, ct, 3 );
+          }
+        } )
+      } else {
+        gaid( w, d, w.ct_ga, ct, 4 );
+      }
+    } else {
+      ct( w, d, 'script', cid, 1 );
+    }
+  })
+  ( window, document, navigator, localStorage, "46121340" );
+</script>
+<!-- /calltouch code -->
+
+<script src="//ulogin.ru/js/ulogin.js"></script>
+
+<!--<link rel="stylesheet" href="/style/main.css"> !-->
+<!--<link rel="stylesheet"  href="/style/lightgallery.css" />!-->
+<link href="/style/fonts/bebas.css" rel="stylesheet" type="text/css"/>
+<script src="/style/js/jquery.formstyler.min.js"></script>
+<script src="/style/js/jquery.magnific-popup.min.js"></script>
+<script src="/style/js/slick.min.js"></script>
+<script src="/js/lightslider.min.js"></script>
+<script src="/js/lightgallery.min.js"></script>
+<script src="/style/js/script.js?r=<?= rand(1, 1000) ?>"></script>
+<script>
+  $( '#lightgallery' ).lightSlider( {
+    gallery: false,
+    item: 4,
+    loop: true,
+    thumbItem: 4,
+    slideMargin: 0,
+    enableDrag: true,
+    responsive: [
+      {
+        breakpoint: 800,
+        settings: {
+          item: 3,
+          thumbItem: 3,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          item: 2,
+          thumbItem: 2,
+        }
+      },
+    ],
+    currentPagerPosition: 'left',
+    onSliderLoad: function ( el ) {
+      el.lightGallery( {
+        selector: '#lightgallery .lslide'
+      } );
+    }
+  } );
+</script>
+<style>
+  .block-1--new .title--new {
+    font-size: 75px;
+  }
+
+  @media only screen and (max-width: 650px) {
+    .block-1--new .title--new {
+      font-size: 50px;
+      line-height: 60px;
+    }
+  }
+
+  @media only screen and (max-width: 550px) {
+    .block-1--new .title--new {
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 0;
+    }
+  }
+
+  @media only screen and (max-width: 420px) {
+    .block-1--new .title--new {
+      font-size: 28px;
+      line-height: 32px;
+    }
+  }
+
+</style>
+</body>
+</html>
+<!-- /Footer -->

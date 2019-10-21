@@ -1,0 +1,383 @@
+<!-- Header --><!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5P2G5K2');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <?
+    if ($current_sub["EnglishName"] == "brelki") {
+        $hardTitle = "Купить авто аксессуары в интернет магазине Kovriki-Darom в " . $current_catalogue['regionName'];
+        $hardDesc = "На сайте Коврики Даром вы можете приобрести аксессуары для вашего авто по выгодным ценам в " . $current_catalogue['regionName'] . "! Доставка по всей России.";
+    } else if ($current_sub["EnglishName"] == "podpyatnik-v2") {
+        $hardTitle = "Купить металлический подпятник для коврика в авто " . $current_catalogue['regionName2'];
+        $hardDesc = "У нас в магазине вы можете приобрести металлический подпятник для вашего авто - Коврики Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "podpyatnik-variant-1") {
+        $hardTitle = "Купить подпятник для Ева Ковриков в " . $current_catalogue['regionName'];
+        $hardDesc = "На нашем сайте Kovriki-Darom в " . $current_catalogue['regionName'] . " вы можете приобрести подпятник из метала для EVA коврика.";
+    } else if ($current_sub["EnglishName"] == "sumka-v-bagazhnik") {
+        $hardTitle = "Сумка в багажник автомобиля - купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Ищите где можно купить сумку в бгажник вашего авто? Покупайте на сайте Kovriki-Darom в " . $current_catalogue['regionName'];
+    } else if ($current_sub["EnglishName"] == "mehovye-nakidki-avtopilot") {
+        $hardTitle = "Меховые накидки автопилот для авто купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Покупайте меховые накидки в нашем интернет магазине. Доставка по всей России - Коврики-Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "mehovye-nakidki-ves-salon-avtopilot") {
+        $hardTitle = "Меховые накидки на весь салон автомобиля в " . $current_catalogue['regionName'];
+        $hardDesc = "Приобретайте меховые накидки для всего салона вашего авто на сайте Коврики Даром в " . $current_catalogue['regionName'] . ".";
+    } else if ($current_sub["EnglishName"] == "nakidki-dlya-sideniy") {
+        $hardTitle = "Купить накидки на сиденья автомобиля в " . $current_catalogue['regionName'] . " - Коврики Даром";
+        $hardDesc = "Покупайте меховые накидки на сиденья авто в " . $current_catalogue['regionName'] . ". Искусственный мех, короткий ворс, удобные и теплые!";
+    } else if ($current_sub["EnglishName"] == "podpyatniki") {
+        $hardTitle = "Подпятники для автоковриков ЕВА - купить в " . $current_catalogue['regionName'];
+        $hardDesc = "Металлические подпятники для автомобильных ковриков. Заказать в " . $current_catalogue['regionName'] . ", недорого с доставкой!";
+    } else if ($current_sub["EnglishName"] == "aksessuary") {
+        $hardTitle = "Купить авто аксессуары в интернет магазине Kovriki-Darom город " . $current_catalogue['regionName2'];
+        $hardDesc = "На сайте Коврики Даром вы можете приобрести аксессуары для вашего авто по выгодным ценам в " . $current_catalogue['regionName'] . "! Доставка по всей России.";
+    }
+
+    $title = $nc_core->page->get_title();
+    if ($title === '' || $title === null) {
+        $title = $newTitle ?? $current_sub['Subdivision_Name'];
+    }
+    $title = $hardTitle ?? $title;
+
+    $description = $nc_core->page->get_description();
+
+    if ($description === '' || $description === null) {
+        $description = $hardDesc ?? ($newDesc ?? null);
+    }
+    ?>
+
+    <title><?= $title ?></title>
+    <?= ($description ? "<meta name='description' content='" . $description . "'>" : NULL); ?>
+
+    <meta name='keywords' content=''>
+    <link rel="canonical" href="<?= "https://" . $current_catalogue['Domain'] . $parent_sub_tree[0][Hidden_URL] ?>"/>
+
+    <?= ($nc_core->page->get_description() && empty($hardDesc) ? "<meta name='description' content='" . $nc_core->page->get_description() . "'>" : NULL); ?>
+    <script src="/style/js/jquery-1.12.4.min.js"></script>
+    <script src="/style/js/slick.min.js"></script>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/style/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/style/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/style/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/style/favicon/manifest.json">
+    <link rel="mask-icon" href="/style/favicon/safari-pinned-tab.svg" color="#5bbad5">
+
+    <link rel="stylesheet" href="/style/css/normalize.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/slick.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/fonts.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/jquery.fancybox.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/css/resp.css" type="text/css" media="all" />
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P2G5K2"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="wrapper">
+    <header id="header">
+        <div class="inner">
+            <a href="/" class="logo"><img src="/style/images/logo.png" alt=""></a>
+            <nav>
+                <div class="dropdown-menu">
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                    <div class="line-3"></div>
+                </div>
+                <div class="mobile-fixed">
+                    <ul>
+                        <li><a href="/catalog/">Каталог</a></li>
+                        <li><a href="/catalog/kovriki-eva/">Коврики EVA</a></li>
+                        <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+                        <li class="menu">
+                            <a href="">
+									<span>
+										<span class="line-1"></span>
+										<span class="line-2"></span>
+										<span class="line-3"></span>
+									</span>
+                                Полезное</a>
+                            <ul>
+                                <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+                                <li><a href="/garantii/">Гарантии</a></li>
+                                <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа</a></li>
+                                <li><a href="/franshiza">Франшиза</a></li>
+                                <li><a href="/contacts/">Контакты</a></li>
+                                <li><a href="/proizvodstvo/">Производство</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="mobile-block">
+                        <a href="" class="cart">
+                            <img src="images/cart-white.svg" alt="">
+                            <span>Корзина</span>
+                        </a>
+                        <div class="bottom">
+                            <a href="" class="btn">Заказать</a>
+                            <span>8 499 955 43 33</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="callback">
+                <button class="btn call-me">Заказать звонок</button>
+            </div>
+            <div class="phone">
+                <a href=""><span>8 499</span> 955 43 33</a>
+            </div>
+            <div class="icons">
+                <a href="/cart/">
+                    <img src="/style/images/cart.svg" alt="">
+                </a>
+                <a href="/lk/" class="login">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line class="arrow" x1="0.5" y1="7.68713" x2="10.5672" y2="7.68713" stroke="#D42F3B"/>
+                        <path d="M4.16333 2.8631C5.44042 1.50158 7.2558 0.651001 9.26983 0.651001C13.1358 0.651001 16.2698 3.78501 16.2698 7.651C16.2698 11.517 13.1358 14.651 9.26983 14.651C7.55594 14.651 5.98592 14.0351 4.76904 13.0124" stroke="#D42F3B" stroke-linejoin="round"/>
+                        <path class="arrow" d="M7.85742 4.8717L10.6369 7.65116L7.85742 10.4306" stroke="#D42F3B"/>
+                    </svg>
+
+                </a>
+            </div>
+        </div>
+    </header>
+    <main id="main">
+        <!-- /Header -->
+
+        <!-- Footer --></main>
+    <footer id="footer">
+        <div class="inner">
+            <div class="footer-top">
+                <div class="lists">
+                    <ul class="left">
+                        <li><a href="/catalog/kovriki-eva/">Автоковрики</a></li>
+                        <li><a href="/catalog/deflector/">Дефлекторы</a></li>
+                        <li><a href="/catalog/auto-shtory/">Шторки</a></li>
+                        <li><a href="/catalog/nakidki/">Накидки</a></li>
+                    </ul>
+                    <ul>
+                        <li class="title">Полезное</li>
+                        <li><a href="/contacts/">О компании</a></li>
+                        <li><a href="/proizvodstvo/">Производство</a></li>
+                        <li><a href="/dostavka-i-oplata/">Доставка и оплата</a></li>
+                        <li><a href="/garantii/">Гарантии</a></li>
+                        <li><a href="/politika-konfidentsialnosti/">Политика конфиденциальности</a></li>
+                    </ul>
+                    <ul>
+                        <li class="title"></li>
+                        <li><a href="/franshiza/">Франшиза</a></li>
+                        <li><a href="/optovaya-prodazha-materiala/">Оптовая продажа материала</a></li>
+                        <li><a href="">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="social-networks">
+                    <div class="title">мы в соцсетях</div>
+                    <div class="list-of-social-networks">
+                        <a href="https://vk.com/kovrikidarom"><img src="/style/images/vk.svg" alt=""></a>
+                        <a href="https://www.instagram.com/kovriki_darom.ru/"><img src="/style/images/inst.svg" alt=""></a>
+                    </div>
+                    <a href="/lk/" class="logout">Войти в лк</a>
+                </div>
+                <div class="contacts">
+                    <a href="">8 499 955 43 33</a>
+                    <a href="" class="small-phone">8 904 670 47 47</a>
+                    <p>evakovrikoff@yandex.ru</p>
+                    <button class="btn call-me">Сделать заказ</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="inner">
+                <div class="left">
+                    <a href="/"><img src="/style/images/logo.png" alt=""></a>
+                    <p>Коврики Даром - производство и продажа Ковриков EVA
+                        © Все права защищены.</p>
+                </div>
+                <div class="right">
+                    <a href="http://t2agency.ru/"><img src="/style/images/t2agency.svg" alt=""></a>
+                    <p>Дизайн, разработка
+                        и продвижение</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(document).on('submit', 'form#callback', function() {
+        var form = jQuery(this);
+        var phone = form.find('input[name="number"]').val();
+        var fio = form.find('input[name="name"]').val();
+
+        var sub = 'Купить в один клик';
+        var ct_node_id = '7';
+        var ct_site_id = '23540';
+
+        var ct_data = {
+            fio: fio,
+            phoneNumber: phone,
+            subject: sub,
+            sessionId: window.call_value
+        };
+
+
+
+        jQuery.ajax({
+            url: 'https://api-node'+ct_node_id+'.calltouch.ru/calls-service/RestAPI/requests/'+ct_site_id+'/register/',
+            dataType: 'json',
+            type: 'POST',
+            data: ct_data,
+            async: false
+        });
+
+    });
+</script>
+
+<script>
+    var callme = document.querySelector('.call-me');
+    var callwnd = document.querySelector('.call-window');
+    var overlay = document.querySelector('.overlay');
+    var xbtn2 = document.querySelector('.x-btn2');
+    var burger = document.querySelector('.burger');
+    var mnav = document.querySelector('.h-nav nav');
+
+
+    callme.addEventListener('click', function() {
+        if(!callwnd.classList.contains('a-cw')) {
+            callwnd.classList.add('a-cw');
+            overlay.classList.add('a-cw');
+        }
+    });
+
+    overlay.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        } else if(mnav.classList.contains('mnav-active')) {
+            mnav.classList.remove('mnav-active');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+
+
+    xbtn2.addEventListener('click', function() {
+        if(callwnd.classList.contains('a-cw')) {
+            callwnd.classList.remove('a-cw');
+            overlay.classList.remove('a-cw');
+        }
+    });
+
+    burger.addEventListener('click', function() {
+        if(!mnav.classList.contains('mnav-active')) {
+            mnav.classList.add('mnav-active');
+            overlay.classList.add('a-cw');
+        }
+    });
+
+
+    function addEventListeners(selector, event, handler, useCapture){
+        useCapture = useCapture || false;
+
+        Array.prototype.forEach.call(
+            document.querySelectorAll(selector)
+            ,function(el, ix) {
+                el.addEventListener(event, handler, useCapture);
+            }
+        );
+    }
+
+    var readyToClose = false;
+    var geoselect = document.querySelector('.geoselect');
+
+
+    addEventListeners('.geoselect', "mouseenter", function(evt){
+        readyToClose = false;
+        if (!this.classList.contains('act')) {
+            this.classList.add('act');
+        }
+    });
+
+    addEventListeners('.geoselect', "mouseleave", function(evt){
+        readyToClose = true;
+        setTimeout(function() {
+            if (readyToClose) {
+                geoselect.classList.remove('act');
+            }
+        }, 500);
+
+    });
+
+    var allLIcon = document.querySelectorAll('.login-icon');
+
+
+    function preview(token){
+        var xhr = new XMLHttpRequest();
+        var params = 'token=' + token;
+        xhr.open("GET", '/login.php?' + params, true);
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState != 4) return;
+
+            console.log( this.responseText );
+            var res = JSON.parse(this.responseText);
+
+            allLIcon.forEach(function(item) {
+                item.classList.add('act');
+                item.setAttribute("href", "/lk/");
+                item.setAttribute('style', "background-image: url(" + res.photo_big + ");");
+            });
+            window.location.href="https://"+window.location.host + "/lk/";
+
+        }
+
+        xhr.send();
+    }
+</script>
+<!-- calltouch code -->
+<script type="text/javascript">
+    (function (w, d, nv, ls, yac){
+        var lwait = function (w, on, trf, dly, ma, orf, osf) { var pfx = "ct_await_", sfx = "_completed";  if(!w[pfx + on + sfx]) { var ci = clearInterval, si = setInterval, st = setTimeout , cmld = function () { if (!w[pfx + on + sfx]) {  w[pfx + on + sfx] = true; if ((w[pfx + on] && (w[pfx + on].timer))) { ci(w[pfx + on].timer);  w[pfx + on] = null;   }  orf(w[on]);  } };if (!w[on] || !osf) { if (trf(w[on])) { cmld();  } else { if (!w[pfx + on]) { w[pfx + on] = {  timer: si(function () { if (trf(w[on]) || ma < ++w[pfx + on].attempt) { cmld(); } }, dly), attempt: 0 }; } } }   else { if (trf(w[on])) { cmld();  } else { osf(cmld); st(function () { lwait(w, on, trf, dly, ma, orf); }, 0); } }} else {orf(w[on]);}};
+        var ct = function (w, d, e, c, n) { var a = 'all', b = 'tou', src = b + 'c' + 'h';  src = 'm' + 'o' + 'd.c' + a + src; var jsHost = "https://" + src, s = d.createElement(e); var jsf = function (w, d, s, h, c, n, yc) { if (yc !== null) { lwait(w, 'yaCounter'+yc, function(obj) { return (obj && obj.getClientID ? true : false); }, 50, 100, function(yaCounter) { s.async = 1; s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (yaCounter  && yaCounter.getClientID ? "ya_client_id" + yaCounter.getClientID() + ";" : "") + (c ? "client_id" + c + ";" : "") + "ref" + escape(d.referrer) + ";url" + escape(d.URL) + ";cook" + escape(d.cookie) + ";attrs" + escape("{\"attrh\":" + n + ",\"ver\":171110}") + ";"; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(s, p); }, function (f) { if(w.jQuery) {  w.jQuery(d).on('yacounter' + yc + 'inited', f ); }}); } else { s.async = 1; s.src = jsHost + "." + "r" + "u/d_client.js?param;" + (c ? "client_id" + c + ";" : "") + "ref" + escape(d.referrer) + ";url" + escape(d.URL) + ";cook" + escape(d.cookie) + ";attrs" + escape("{\"attrh\":" + n + ",\"ver\":171110}") + ";"; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(s, p); } }; if (!w.jQuery) { var jq = d.createElement(e); jq.src = jsHost + "." + "r" + 'u/js/jquery-1.7.min.js'; jq.onload = function () { lwait(w, 'jQuery', function(obj) { return (obj ? true : false); }, 30, 100, function () { jsf(w, d, s, jsHost, c, n, yac); }); }; p = d.getElementsByTagName(e)[0]; p.parentNode.insertBefore(jq, p); } else { jsf(w, d, s, jsHost, c, n, yac); } };
+        var gaid = function (w, d, o, ct, n) { if (!!o) { lwait(w, o, function (obj) {  return (obj && obj.getAll ? true : false); }, 200, (nv.userAgent.match(/Opera|OPR\//) ? 10 : 20), function (gaCounter) { var clId = null; try {  var cnt = gaCounter && gaCounter.getAll ? gaCounter.getAll() : null; clId = cnt && cnt.length > 0 && !!cnt[0] && cnt[0].get ? cnt[0].get('clientId') : null; } catch (e) { console.warn("Unable to get clientId, Error: " + e.message); } ct(w, d, 'script', clId, n); }, function (f) { w[o](function () {  f(w[o]); })});} else{ ct(w, d, 'script', null, n); }};
+        var cid  = function () { try { var m1 = d.cookie.match('(?:^|;)\\s*_ga=([^;]*)');if (!(m1 && m1.length > 1)) return null; var m2 = decodeURIComponent(m1[1]).match(/(\d+\.\d+)$/); if (!(m2 && m2.length > 1)) return null; return m2[1]} catch (err) {}}();
+        if (cid === null && !!w.GoogleAnalyticsObject){
+            if (w.GoogleAnalyticsObject=='ga_ckpr') w.ct_ga='ga'; else w.ct_ga = w.GoogleAnalyticsObject;
+            if (typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1){new Promise(function (resolve) {var db, on = function () {  resolve(true)  }, off = function () {  resolve(false)}, tryls = function tryls() { try { ls && ls.length ? off() : (ls.x = 1, ls.removeItem("x"), off());} catch (e) { nv.cookieEnabled ? on() : off(); }};w.webkitRequestFileSystem ? webkitRequestFileSystem(0, 0, off, on) : "MozAppearance" in d.documentElement.style ? (db = indexedDB.open("test"), db.onerror = on, db.onsuccess = off) : /constructor/i.test(w.HTMLElement) ? tryls() : !w.indexedDB && (w.PointerEvent || w.MSPointerEvent) ? on() : off();}).then(function (pm){
+                if (pm){gaid(w, d, w.ct_ga, ct, 2);}else{gaid(w, d, w.ct_ga, ct, 3);}})}else{gaid(w, d, w.ct_ga, ct, 4);}
+        }else{ct(w, d, 'script', cid, 1);}})
+    (window, document, navigator, localStorage, "46121340");
+</script>
+<!-- /calltouch code -->
+
+<script src="//ulogin.ru/js/ulogin.js"></script>
+<script src="/style/js/jquery.fancybox.min.js"></script>
+
+<script src="/style/js/tabs.js"></script>
+<script src="/style/js/script.js"></script>
+</body>
+</html>
+<!-- /Footer -->

@@ -1,0 +1,119 @@
+.black {
+  background: #F5F5DC
+}
+
+.green {
+  background: #F5F5DC
+}
+
+.violet {
+background: #7F00FF
+}
+
+.choco {
+background: #7B3F00
+}
+
+.light-grey{
+background: #D3D3D3
+}
+.dark-grey{
+  background: #D3D3D3
+}
+
+.caramel {
+  background: #af6f09
+}
+
+.orange {
+  background: #af6f09
+}
+
+.red {
+  background: #af6f09
+}
+
+.blue {
+  background: #af6f09
+}
+
+
+
+.black.column {
+  background-image: url("/style/images/cel-black-column.png") !important;
+}
+
+.green.column {
+  background-image: url("/style/images/cel-green-column.png") !important;
+}
+
+.violet.column {
+  background-image: url("/style/images/cel-violet-column.png") !important;
+}
+
+.choco.column {
+  background-image: url("/style/images/cel-choco-column.png") !important;
+}
+
+.light-grey.column  {
+  background-image: url("/style/images/cel-light-grey-column.png") !important;
+}
+.dark-grey.column {
+  background-image: url("/style/images/cel-dark-grey-column.png") !important;
+}
+
+.caramel.column {
+  background-image: url("/style/images/cel-caramel-column.png") !important;
+}
+
+.orange.column {
+  background-image: url("/style/images/cel-orange-column.png") !important;
+}
+
+.red.column {
+  background-image: url("/style/images/cel-red-column.png") !important;
+}
+
+.blue.column {
+  background-image: url("/style/images/cel-blue-column.png") !important;
+}
+
+
+.black.row {
+  background-image: url("/style/images/cel-black-row.png") !important;
+}
+
+.green.row {
+  background-image: url("/style/images/cel-green-row.png") !important;
+}
+
+.violet.row {
+  background-image: url("/style/images/cel-violet-row.png") !important;
+}
+
+.choco.row {
+  background-image: url("/style/images/cel-choco-row.png") !important;
+}
+
+.light-grey.row  {
+  background-image: url("/style/images/cel-light-grey-row.png") !important;
+}
+.dark-grey.row {
+  background-image: url("/style/images/cel-dark-grey-row.png") !important;
+}
+
+.caramel.row {
+  background-image: url("/style/images/cel-caramel-row.png") !important;
+}
+
+.orange.row {
+  background-image: url("/style/images/cel-orange-row.png") !important;
+}
+
+.red.row {
+  background-image: url("/style/images/cel-red-row.png") !important;
+}
+
+.blue.row {
+  background-image: url("/style/images/cel-blue-row.png") !important;
+}

@@ -1,0 +1,68 @@
+<?= $f_AdminButtons; ?>
+
+<?
+$type          = 3;
+$idTypeMessage = 155;
+
+if (isset($_POST['TypeProduct'])) {
+  $type = $_POST['TypeProduct'];
+}
+
+$marksId   = array();
+$models    = array();
+$allModels = array();
+$modelName = null;
+
+if ($current_sub['Parent_Sub_ID'] != 4) {
+  $modelName = $current_sub['Subdivision_Name'];
+} else {
+  switch ($current_sub['EnglishName']) {
+    case 'kovriki-eva':
+      $type = 1;
+      break;
+    case 'podlokotniki':
+      $type = 2;
+      $idTypeMessage = 162;
+      break;
+    case 'deflector':
+      $type = 5;
+      $idTypeMessage = 158;
+      break;
+    case 'nakidka':
+      $type = 3;
+      $idTypeMessage = 155;
+      break;
+  }
+}
+
+
+$tableName = 'Message' . $idTypeMessage;
+
+//Получаем продукты(товары) с определенным типом
+
+$nc_core->db->query("SELECT * FROM `$tableName` WHERE Type = $type");
+
+$results = $nc_core->db->last_result;
+
+
+
+  ?>
+  <div class="inner">
+    <div class="catalog-4">
+      <div class="navigation">
+        <a href="/">Главная</a>
+        <span>Каталог</span>
+      </div>
+      <div class="title">Накидки и подлокотники для авто</div>
+      <div class="list-of-items">
+        <?php foreach ($results as $item) : ?>
+        <?php
+          $subItem = $nc_core->subdivision->get_by_id($item->Subdivision_ID);
+        ?>
+        <a href="<?= $subItem['Hidden_URL'] ?>" class="item">
+          <span><?= $subItem['Subdivision_Name'] ?></span>
+        </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
